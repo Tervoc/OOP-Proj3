@@ -1,15 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package models;
-//Hello group ayeeeeeeeeeee
 
-/**
- *
- * @author chris
- */
 public class Character {
+    private int bullets;
+    private int arrows;
     
+    public Character(int bullets) {
+        this.bullets = bullets;
+        this.arrows = 0;
+    }
+
+    public int getBullets() {
+        return bullets;
+    }
+
+    public void addBullets(int bullets) {
+        this.bullets += bullets;
+    }
+
+    public int getArrows() {
+        return arrows;
+    }
+
+    public void addArrows(int arrows) {
+        this.arrows += arrows;
+    }
 }
