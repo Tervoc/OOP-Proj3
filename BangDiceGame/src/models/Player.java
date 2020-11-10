@@ -10,5 +10,12 @@ package models;
  * @author chris
  */
 public class Player {
+    private Character myChar;
+    
+    public Player() {
+        
+    }
+    
+  
     
 }
