@@ -1,26 +1,30 @@
 package models;
 
 public class Character {
+    private int maxBullets;
     private int bullets;
     private int arrows;
     
     public Character(int bullets) {
-        this.bullets = bullets;
+        this.maxBullets = bullets;
+        this.bullets = this.maxBullets;
         this.arrows = 0;
     }
 
     public int getBullets() {
         return bullets;
     }
-
+    
     public void addBullets(int bullets) {
-        this.bullets += bullets;
+        if (this.bullets != this.maxBullets) {
+            this.bullets += bullets;
+        }
     }
     
     public void removeBullets(int bullets) {
         this.bullets -= bullets;
     }
-
+    
     public int getArrows() {
         return arrows;
     }
@@ -41,4 +45,5 @@ public class Character {
         this.bullets = this.bullets - this.arrows;
         this.arrows = 0; 
     }
+
 }
