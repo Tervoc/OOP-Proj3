@@ -7,15 +7,17 @@ package models;
 
 /**
  *
- * @author chris
+ * @author Darrel
  */
 public class Player {
     private Character myChar;
     
-    public Player() {
-        
+    public Player(Character myChar) {
+        this.myChar = myChar;
     }
     
-  
-    
+    public Character getMycharacter(){
+        return myChar;
+    }
+
 }
