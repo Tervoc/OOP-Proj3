@@ -38,6 +38,24 @@ public class Die {
         //get a value between 0 and 5 bc we have 6 sides
         
     }
+    //returns the side of the die object asa string
+    public String getSideAsString(){
+        switch(side){
+            case arrow:
+                return "arrow";
+            case dynamite:
+                return "dynamite";
+            case gatling:
+                return "gatling";
+            case one_shot:
+                return "one Shot";
+            case two_shot:
+                return "two shot";
+            case beer:
+                return "beer";           
+        }
+        return "error";
+    }
     public Sides getSide(){
         return side;
     }

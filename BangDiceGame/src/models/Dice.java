@@ -39,7 +39,7 @@ public class Dice {
             }
         }
     }
-    
+    //returns array of Die objects to get the side of a certian Die call dice[i].getSide()
     public Die[] getDice(){
         return dice;
     }
