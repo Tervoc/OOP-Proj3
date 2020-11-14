@@ -47,7 +47,7 @@ public class bangMain extends Application {
      */
     public static void main(String[] args) {
        
-        System.out.println("Bang Game Rules! \n");
+        System.out.println("Bang Game Rules! \n");\
 
         //Basic information pregame
         System.out.println("There are 12 character cards and 4 in game roles. \n");
