@@ -9,6 +9,8 @@ package models;
  *
  * @author mtbol
  */
-public class belleStar {
-    
+public class belleStar extends Character {
+    public belleStar(Roles thisRole) {
+    super(8, thisRole);
+    }
 }

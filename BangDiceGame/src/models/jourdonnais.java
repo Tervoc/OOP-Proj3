@@ -7,8 +7,10 @@ package models;
 
 /**
  *
- * @author mtbol
+ * @author Darrel
  */
-public class jourdonnais {
-    
+public class jourdonnais extends Character{
+        public jourdonnais(Roles thisRole) {
+        super(7, thisRole);
+    }
 }

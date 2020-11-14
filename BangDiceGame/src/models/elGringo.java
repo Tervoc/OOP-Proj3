@@ -7,8 +7,10 @@ package models;
 
 /**
  *
- * @author mtbol
+ * @author Michael
  */
-public class elGringo {
-    
+public class elGringo extends Character {
+        public elGringo(Roles thisRole) {
+        super(7, thisRole);
+    }
 }
