@@ -1,13 +1,22 @@
 package models;
 
 public class Character {
-    private int maxBullets;
-    private int bullets;
-    private int arrows;
+    protected int maxBullets;
+    protected int bullets;
+    protected int arrows;
+    protected Roles role;
     
-    public Character(int bullets) {
-        this.maxBullets = bullets;
-        this.bullets = this.maxBullets;
+    public Character(int bullets, Roles roleIn) {
+        this.role = roleIn;
+        if(this.role == Roles.Sheriff){
+            this.maxBullets = bullets + 2;
+            this.bullets = this.maxBullets;
+        }
+        else{
+            this.maxBullets = bullets;
+            this.bullets = this.maxBullets;
+        }
+        
         this.arrows = 0;
     }
 

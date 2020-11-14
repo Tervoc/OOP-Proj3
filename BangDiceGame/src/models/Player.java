@@ -10,7 +10,8 @@ package models;
  * @author Darrel
  */
 public class Player {
-    private Character myChar;
+    
+    Character myChar;
     
     public Player(Character myChar) {
         this.myChar = myChar;
