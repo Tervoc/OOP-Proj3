@@ -1,14 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package views;
 
-/**
- *
- * @author chris
- */
+import game.bangMain;
+
 public class StartViewController {
+    private bangMain main;
     
+    public void setMain(bangMain main) {
+        this.main = main;
+    }
 }
