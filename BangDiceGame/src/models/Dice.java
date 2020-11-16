@@ -39,6 +39,22 @@ public class Dice {
             }
         }
     }
+    
+    //prints the sides of the dice to the consol
+    public void printDice(){ 
+        for(int i=0; i<numDie; i++){
+            System.out.println(dice[i].getSideAsString());
+        }
+    }
+    
+    //returns list of enum values instead of die objects
+    public Die.Sides[] getDiceSides(){
+        Die.Sides[] diceEnums = null;
+        for(int i=0; i<numDie; i++){
+            diceEnums[i] = dice[i].getSide();
+        }
+        return diceEnums;
+    }
     //returns array of Die objects to get the side of a certian Die call dice[i].getSide()
     public Die[] getDice(){
         return dice;
