@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+
+
+<Group fx:id="player_Group" layoutX="224.0" layoutY="9.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.StartViewController">
+    <children>
+        <Circle fill="#d71e09" layoutX="21.0" layoutY="28.0" radius="29.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="3.0" />
+        <Label fx:id="player_Label" layoutX="-4" layoutY="19.0" text="Player " textFill="WHITE" />
+        <Label fx:id="role_Label" layoutX="78.0" text="Role: " />
+        <Label fx:id="character_Label" layoutX="51.0" layoutY="10.0" text="Character: " />
+        <Label fx:id="health_Label" layoutX="67.0" layoutY="23.0" text="Health: " />
+        <Label fx:id="arrows_Label" layoutX="65.0" layoutY="34.0" text="Arrows: " />
+       
+    </children>
+</Group>
+

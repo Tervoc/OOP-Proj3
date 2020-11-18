@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -27,7 +28,6 @@ public class bangMain extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(bangMain.class.getResource("/views/StartView.fxml"));
             AnchorPane anchorPane = (AnchorPane) loader.load();
-
             this.primaryStage.setScene(new Scene(anchorPane));
             this.primaryStage.show();
             this.primaryStage.centerOnScreen();
@@ -41,9 +41,10 @@ public class bangMain extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-       this.primaryStage = primaryStage;
+        this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Bang! The Dice Game");
-        
+        this.primaryStage.getIcons().add(new Image(bangMain.class.getResourceAsStream("GameLogo.png")));
+
         showStartView();
     }
 
