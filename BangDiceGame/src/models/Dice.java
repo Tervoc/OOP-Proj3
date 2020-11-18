@@ -59,4 +59,8 @@ public class Dice {
     public Die[] getDice(){
         return dice;
     }
+    
+    public int getNumDice(){
+        return numDie;
+    }
 }
