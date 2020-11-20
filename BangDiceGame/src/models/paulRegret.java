@@ -14,4 +14,13 @@ public class paulRegret extends Character{
     public paulRegret(Roles thisRole) {
         super(9, thisRole);
     }
+       public void removeBullets(int bullets) {
+        if(this.gatling >= 3) //If gatling roll is 3 or more, 1 total damage happens
+        {
+            this.bullets -= 0; //Subtract zero becuase of character special ability
+            //of no damage from gatling gun.
+        }
+        
+        this.bullets -= bullets;
+    }
 }

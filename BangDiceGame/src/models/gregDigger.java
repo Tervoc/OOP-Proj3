@@ -13,4 +13,5 @@ public class gregDigger extends Character {
         public gregDigger (Roles thisRole) {
         super(7, thisRole);
     }
+        
 }

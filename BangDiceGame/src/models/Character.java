@@ -4,6 +4,7 @@ public class Character {
     protected int maxBullets;
     protected int bullets;
     protected int arrows;
+    protected int gatling;
     protected Roles role;
     protected Dice charDice;
     protected int numRolls;
@@ -21,6 +22,7 @@ public class Character {
         
         this.charDice = new Dice(5);
         
+        this.gatling = 0;
         this.arrows = 0;
     }
 
@@ -104,6 +106,10 @@ public class Character {
     public void indianAttack() {
         this.bullets = this.bullets - this.arrows;
         this.arrows = 0; 
+    }
+    
+    public void gatling() {
+        this.gatling = 3;
     }
     
     public void initRoll() {

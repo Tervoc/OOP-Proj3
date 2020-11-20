@@ -7,10 +7,11 @@ package models;
 
 /**
  *
- * @author Andrew
+ * @author mtbol
  */
-public class calamityJanet extends Character {
-        public calamityJanet (Roles thisRole) {
+public class willytheKid extends Character {
+        public willytheKid (Roles thisRole) {
         super(8, thisRole);
     }
+        
 }
