@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
 
+
+package models;
+import javafx.scene.Group;
 /**
  *
  * @author Darrel
  */
 public class Player {
-    
-    Character myChar;
+    private Group playerGroup;
+    private Character myChar;
     
     public Player(Character myChar) {
         this.myChar = myChar;
@@ -20,5 +22,12 @@ public class Player {
     public Character getMycharacter(){
         return myChar;
     }
-
+    
+    //this is the player group set on the gui
+    public void setPlayerGroup(Group playerGroup){
+            this.playerGroup = playerGroup;
+    }
+    public Group getPlayerGroup(){
+        return playerGroup;
+    }
 }

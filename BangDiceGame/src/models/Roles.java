@@ -5,10 +5,35 @@
  */
 package models;
 
+import java.util.HashMap;
+
+
 /**
  *
  * @author chris
  */
 public enum Roles {
-    Sheriff,Deputy,Outlaw,Renegade
+    Sheriff("Sheriff"),
+    Deputy("Deputy"),
+    Outlaw("Outlaw"),
+    Renegade("Renegade");
+    
+    private String value;
+    private static HashMap map = new HashMap<>();
+    
+    private Roles(String value){
+        this.value = value;
+    }
+    static {
+        for(Roles role: Roles.values()){
+            map.put(role.value, role);
+        }
+    }
+    public static Roles stringToRole(String role){
+        return (Roles) map.get(role);
+    }
+    
+    public String getRoleAsString(){
+        return value;
+    }
 }
