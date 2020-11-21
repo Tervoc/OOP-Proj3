@@ -19,7 +19,7 @@ public class Player {
         this.myChar = myChar;
     }
     
-    public Character getMycharacter(){
+    public Character getMyCharacter(){
         return myChar;
     }
     

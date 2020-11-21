@@ -19,6 +19,7 @@ public class Game {
     protected int numPlayers;
     protected ArrayList <Roles> rolesList; 
     protected ArrayList <charactersList> enumChars;
+    protected ArrayList <Player> players;
     protected Player playerOne;
     protected Player playerTwo;
     protected Player playerThree;
@@ -36,6 +37,7 @@ public class Game {
         this.addRoles();
         this.addCharacters();
         this.addPlayers();
+        
         
         
     }
@@ -123,6 +125,11 @@ public class Game {
                 this.playerTwo = new Player(assignCharacter(1));
                 this.playerThree = new Player(assignCharacter(2));
                 this.playerFour = new Player(assignCharacter(3));
+                
+                this.players.add(playerOne);
+                this.players.add(playerTwo);
+                this.players.add(playerThree);
+                this.players.add(playerFour);
                 break;
             case 5:
                 this.playerOne = new Player(assignCharacter(0));
@@ -130,6 +137,12 @@ public class Game {
                 this.playerThree = new Player(assignCharacter(2));
                 this.playerFour = new Player(assignCharacter(3));
                 this.playerFive = new Player(assignCharacter(4));
+                
+                this.players.add(playerOne);
+                this.players.add(playerTwo);
+                this.players.add(playerThree);
+                this.players.add(playerFour);
+                this.players.add(playerFive);
                 break;
             case 6:
                 this.playerOne = new Player(assignCharacter(0));
@@ -138,6 +151,13 @@ public class Game {
                 this.playerFour = new Player(assignCharacter(3));
                 this.playerFive = new Player(assignCharacter(4));
                 this.playerSix = new Player(assignCharacter(5));
+                
+                this.players.add(playerOne);
+                this.players.add(playerTwo);
+                this.players.add(playerThree);
+                this.players.add(playerFour);
+                this.players.add(playerFive);
+                this.players.add(playerSix);
                 break;
             case 7:
                 this.playerOne = new Player(assignCharacter(0));
@@ -147,6 +167,14 @@ public class Game {
                 this.playerFive = new Player(assignCharacter(4));
                 this.playerSix = new Player(assignCharacter(5));
                 this.playerSeven = new Player(assignCharacter(6));
+                this.players.add(playerOne);
+                this.players.add(playerTwo);
+                this.players.add(playerThree);
+                this.players.add(playerFour);
+                this.players.add(playerFive);
+                this.players.add(playerSix);
+                this.players.add(playerSeven);
+                
                 break;
             case 8:
                 this.playerOne = new Player(assignCharacter(0));
@@ -157,6 +185,15 @@ public class Game {
                 this.playerSix = new Player(assignCharacter(5));
                 this.playerSeven = new Player(assignCharacter(6));
                 this.playerEight = new Player(assignCharacter(7));
+                
+                this.players.add(playerOne);
+                this.players.add(playerTwo);
+                this.players.add(playerThree);
+                this.players.add(playerFour);
+                this.players.add(playerFive);
+                this.players.add(playerSix);
+                this.players.add(playerSeven);
+                this.players.add(playerEight);
                 break;
             default:
                 System.out.println("error, Idiot");
@@ -242,6 +279,10 @@ public class Game {
 
     public Player getPlayerEight() {
         return playerEight;
+    }
+    
+    public ArrayList<Player> getPlayers(){
+        return players;
     }
     
     public void indianAttack () {
