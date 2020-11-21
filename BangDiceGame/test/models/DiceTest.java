@@ -28,31 +28,31 @@ public class DiceTest {
     }
 
     /**
-     * Test of rollDice method, of class Dice.
+     * Test of rollDice method, of class DiceBase.
      */
     @Test
     public void testRollDice() {
         System.out.println("rollDice");
-        Dice instance = null;
+        DiceBase instance = null;
         instance.rollDice();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of rerollAllDice method, of class Dice.
+     * Test of rerollAllDice method, of class DiceBase.
      */
     @Test
     public void testRerollAllDice() {
         System.out.println("rerollAllDice");
-        Dice instance = null;
+        DiceBase instance = null;
         instance.rerollAllDice();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of rerollDice method, of class Dice.
+     * Test of rerollDice method, of class DiceBase.
      */
     @Test
     public void testRerollDice() {
@@ -63,19 +63,19 @@ public class DiceTest {
         Integer d = null;
         Integer e = null;
         Integer f = null;
-        Dice instance = null;
+        DiceBase instance = null;
         instance.rerollDice(a, b, c, d, e, f);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getDice method, of class Dice.
+     * Test of getDice method, of class DiceBase.
      */
     @Test
     public void testGetDice() {
         System.out.println("getDice");
-        Dice instance = null;
+        DiceBase instance = null;
         WhiteDie[] expResult = null;
         WhiteDie[] result = instance.getDice();
         assertArrayEquals(expResult, result);

@@ -9,11 +9,11 @@ package models;
  *
  * @author Troll
  */
-public class Dice {
+public class DiceBase {
     private WhiteDie[] dice;
     private final int numDie;
     
-    public Dice(int numDie){
+    public DiceBase(int numDie){
         this.numDie = numDie;
         rollDice();
     }

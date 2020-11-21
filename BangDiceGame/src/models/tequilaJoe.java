@@ -9,6 +9,8 @@ package models;
  *
  * @author mtbol
  */
-public class tequilaJoe {
-    
+public class tequilaJoe extends Character {
+    public tequilaJoe(Roles thisRole) {
+    super(7, thisRole);
+    }
 }

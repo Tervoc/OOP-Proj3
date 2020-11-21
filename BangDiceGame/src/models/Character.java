@@ -6,7 +6,7 @@ public class Character {
     protected int arrows;
     protected int gatling;
     protected Roles role;
-    protected Dice charDice;
+    protected DiceBase charDice;
     protected int numRolls;
     
     public Character(int bullets, Roles roleIn) {
@@ -20,7 +20,7 @@ public class Character {
             this.bullets = this.maxBullets;
         }
         
-        this.charDice = new Dice(5);
+        this.charDice = new DiceBase(5);
         
         this.gatling = 0;
         this.arrows = 0;
@@ -34,7 +34,7 @@ public class Character {
         return role;
     }
 
-    public Dice getCharDice() {
+    public DiceBase getCharDice() {
         return charDice;
     }
 
