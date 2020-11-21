@@ -11,14 +11,14 @@ import java.lang.Math;
  * @author Troll
  */
 //instantiatting the die class creates an object with a random Sides value
-public class Die {
+public class WhiteDie {
     public enum Sides{arrow,
                       dynamite,
                       gatling,
                       one_shot,
                       two_shot,
                       beer}; 
-    //To use the Sides enum in other classes ues Die.Sides.arrow or whichever
+    //To use the Sides enum in other classes ues WhiteDie.Sides.arrow or whichever
     //you need.
     
     public Sides[] sidesList = Sides.values();
@@ -28,7 +28,7 @@ public class Die {
     private Sides side;  
     
               
-    public Die(){
+    public WhiteDie(){
        roll(); 
     }
     

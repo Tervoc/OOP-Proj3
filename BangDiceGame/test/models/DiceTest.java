@@ -76,8 +76,8 @@ public class DiceTest {
     public void testGetDice() {
         System.out.println("getDice");
         Dice instance = null;
-        Die[] expResult = null;
-        Die[] result = instance.getDice();
+        WhiteDie[] expResult = null;
+        WhiteDie[] result = instance.getDice();
         assertArrayEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

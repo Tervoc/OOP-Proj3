@@ -10,7 +10,7 @@ package models;
  * @author Troll
  */
 public class Dice {
-    private Die[] dice;
+    private WhiteDie[] dice;
     private final int numDie;
     
     public Dice(int numDie){
@@ -20,7 +20,7 @@ public class Dice {
     
     public void rollDice(){
         for(int i=0; i<numDie; i++){
-            dice[i] = new Die(); 
+            dice[i] = new WhiteDie(); 
         }
     }
     public void rerollAllDice(){
@@ -48,15 +48,15 @@ public class Dice {
     }
     
     //returns list of enum values instead of die objects
-    public Die.Sides[] getDiceSides(){
-        Die.Sides[] diceEnums = null;
+    public WhiteDie.Sides[] getDiceSides(){
+        WhiteDie.Sides[] diceEnums = null;
         for(int i=0; i<numDie; i++){
             diceEnums[i] = dice[i].getSide();
         }
         return diceEnums;
     }
-    //returns array of Die objects to get the side of a certian Die call dice[i].getSide()
-    public Die[] getDice(){
+    //returns array of WhiteDie objects to get the side of a certian WhiteDie call dice[i].getSide()
+    public WhiteDie[] getDice(){
         return dice;
     }
     

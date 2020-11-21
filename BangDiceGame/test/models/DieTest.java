@@ -28,14 +28,14 @@ public class DieTest {
     }
 
     /**
-     * Test of getSide method, of class Die.
+     * Test of getSide method, of class WhiteDie.
      */
     @Test
     public void testGetSide() {
         System.out.println("getSide");
-        Die instance = new Die();
-        Die.Sides expResult = null;
-        Die.Sides result = instance.getSide();
+        WhiteDie instance = new WhiteDie();
+        WhiteDie.Sides expResult = null;
+        WhiteDie.Sides result = instance.getSide();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
