@@ -13,4 +13,12 @@ public class elGringo extends Character {
         public elGringo(Roles thisRole) {
         super(7, thisRole);
     }
+        public void removeBullets(int bullets)
+        {
+            this.bullets -= bullets;
+            if(this.bullets < bullets)
+            {
+                this.arrows += arrows;
+            }
+        }
 }

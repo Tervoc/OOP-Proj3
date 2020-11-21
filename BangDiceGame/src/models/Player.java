@@ -12,8 +12,36 @@ import javafx.scene.Group;
  * @author Darrel
  */
 public class Player {
+<<<<<<< Updated upstream
     private Group playerGroup;
     private Character myChar;
+=======
+    
+<<<<<<< Updated upstream
+    Character myChar;
+=======
+    private String Role = "";
+    private String Character = "";
+    private String ability = "";
+    private String number = "";
+    private boolean AI = true;
+    private Character myChar;
+>>>>>>> Stashed changes
+    
+    public void setUser(){
+        AI = false;
+    }
+    
+    public String getRole()
+    {
+        return Role;
+    }
+    
+    public void setRole(String temp)
+    {
+        Role = temp;
+    }
+>>>>>>> Stashed changes
     
     public Player(Character myChar) {
         this.myChar = myChar;
@@ -23,6 +51,7 @@ public class Player {
         return myChar;
     }
     
+<<<<<<< Updated upstream
     //this is the player group set on the gui
     public void setPlayerGroup(Group playerGroup){
             this.playerGroup = playerGroup;
@@ -30,4 +59,17 @@ public class Player {
     public Group getPlayerGroup(){
         return playerGroup;
     }
+=======
+    public String getAbility()
+    {
+        return ability;
+    }
+    
+     public void setCharacterTraits(int num)
+    {
+       
+        
+    }
+
+>>>>>>> Stashed changes
 }
