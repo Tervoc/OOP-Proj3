@@ -14,4 +14,12 @@ public class elGringo extends Character {
         super(7, thisRole);
         this.charType = EnumCharacters.elGringo;
     }
+        public void removeBullets(int bullets)
+        {
+            this.bullets -= bullets;
+            if(this.bullets < bullets)
+            {
+                this.arrows += arrows;
+            }
+        }
 }
