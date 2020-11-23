@@ -17,9 +17,9 @@ public class Game {
     protected int bulletPile;
     protected int arrowPile;
     protected int numPlayers;
-    protected ArrayList <Roles> rolesList; 
-    protected ArrayList <charactersList> enumChars;
-    protected ArrayList <Player> players;
+    protected ArrayList <EnumRoles> rolesList = new ArrayList<EnumRoles>(); 
+    protected ArrayList <EnumCharacters> charsList = new ArrayList<EnumCharacters>();
+    protected ArrayList <Player> players = new ArrayList<Player>();
     protected Player playerOne;
     protected Player playerTwo;
     protected Player playerThree;
@@ -44,52 +44,52 @@ public class Game {
     private void addRoles () {
         switch(this.numPlayers){
             case 4:
-                rolesList.add(Roles.Sheriff);
-                rolesList.add(Roles.Renegade);
-                rolesList.add(Roles.Outlaw);
-                rolesList.add(Roles.Outlaw);
+                rolesList.add(EnumRoles.Sheriff);
+                rolesList.add(EnumRoles.Renegade);
+                rolesList.add(EnumRoles.Outlaw);
+                rolesList.add(EnumRoles.Outlaw);
                 break;
             case 5:
-                rolesList.add(Roles.Sheriff);
-                rolesList.add(Roles.Deputy);
-                rolesList.add(Roles.Renegade);
-                rolesList.add(Roles.Outlaw);
-                rolesList.add(Roles.Outlaw);
+                rolesList.add(EnumRoles.Sheriff);
+                rolesList.add(EnumRoles.Deputy);
+                rolesList.add(EnumRoles.Renegade);
+                rolesList.add(EnumRoles.Outlaw);
+                rolesList.add(EnumRoles.Outlaw);
                 break;
             case 6:
-                rolesList.add(Roles.Sheriff);
-                rolesList.add(Roles.Deputy);
-                rolesList.add(Roles.Renegade);
-                rolesList.add(Roles.Outlaw);
-                rolesList.add(Roles.Outlaw);
-                rolesList.add(Roles.Outlaw);
+                rolesList.add(EnumRoles.Sheriff);
+                rolesList.add(EnumRoles.Deputy);
+                rolesList.add(EnumRoles.Renegade);
+                rolesList.add(EnumRoles.Outlaw);
+                rolesList.add(EnumRoles.Outlaw);
+                rolesList.add(EnumRoles.Outlaw);
                 break;
             case 7:
-                rolesList.add(Roles.Sheriff);
-                rolesList.add(Roles.Deputy);
-                rolesList.add(Roles.Deputy);
-                rolesList.add(Roles.Renegade);
-                rolesList.add(Roles.Outlaw);
-                rolesList.add(Roles.Outlaw);
-                rolesList.add(Roles.Outlaw);
+                rolesList.add(EnumRoles.Sheriff);
+                rolesList.add(EnumRoles.Deputy);
+                rolesList.add(EnumRoles.Deputy);
+                rolesList.add(EnumRoles.Renegade);
+                rolesList.add(EnumRoles.Outlaw);
+                rolesList.add(EnumRoles.Outlaw);
+                rolesList.add(EnumRoles.Outlaw);
                 break;
             case 8:
-                rolesList.add(Roles.Sheriff);
-                rolesList.add(Roles.Deputy);
-                rolesList.add(Roles.Deputy);
-                rolesList.add(Roles.Renegade);
-                rolesList.add(Roles.Renegade);
-                rolesList.add(Roles.Outlaw);
-                rolesList.add(Roles.Outlaw);
-                rolesList.add(Roles.Outlaw);
+                rolesList.add(EnumRoles.Sheriff);
+                rolesList.add(EnumRoles.Deputy);
+                rolesList.add(EnumRoles.Deputy);
+                rolesList.add(EnumRoles.Renegade);
+                rolesList.add(EnumRoles.Renegade);
+                rolesList.add(EnumRoles.Outlaw);
+                rolesList.add(EnumRoles.Outlaw);
+                rolesList.add(EnumRoles.Outlaw);
                 break;
             default:
                 System.out.println("idiot put in a correct number");
         }
         for (int i = 0; i < this.rolesList.size(); i++) { 
             int swapLocation = (int) (Math.random() * this.rolesList.size());
-            Roles tempCard1 = this.rolesList.get(swapLocation);
-            Roles tempCard2 = this.rolesList.get(i);
+            EnumRoles tempCard1 = this.rolesList.get(swapLocation);
+            EnumRoles tempCard2 = this.rolesList.get(i);
             this.rolesList.set(i, tempCard1);
             this.rolesList.set(swapLocation, tempCard2);
         }
@@ -97,23 +97,23 @@ public class Game {
     }
     
     private void addCharacters () {
-        this.enumChars.add(charactersList.belleStar);
-        this.enumChars.add(charactersList.paulRegret);
-        this.enumChars.add(charactersList.jourdonnais);
-        this.enumChars.add(charactersList.luckyDuke);
-        this.enumChars.add(charactersList.pedroRamirez);
-        this.enumChars.add(charactersList.gregDigger);
-        this.enumChars.add(charactersList.elGringo);
-        this.enumChars.add(charactersList.willyTheKid);
-        this.enumChars.add(charactersList.tequilaJoe);
-        this.enumChars.add(charactersList.joseDelgado);
+        this.charsList.add(EnumCharacters.belleStar);
+        this.charsList.add(EnumCharacters.paulRegret);
+        this.charsList.add(EnumCharacters.jourdonnais);
+        this.charsList.add(EnumCharacters.luckyDuke);
+        this.charsList.add(EnumCharacters.pedroRamirez);
+        this.charsList.add(EnumCharacters.gregDigger);
+        this.charsList.add(EnumCharacters.elGringo);
+        this.charsList.add(EnumCharacters.willyTheKid);
+        this.charsList.add(EnumCharacters.tequilaJoe);
+        this.charsList.add(EnumCharacters.joseDelgado);
         
-        for (int i = 0; i < this.enumChars.size(); i++) { 
-            int swapLocation = (int) (Math.random() * this.enumChars.size());
-            charactersList tempCard1 = this.enumChars.get(swapLocation);
-            charactersList tempCard2 = this.enumChars.get(i);
-            this.enumChars.set(i, tempCard1);
-            this.enumChars.set(swapLocation, tempCard2);
+        for (int i = 0; i < this.charsList.size(); i++) { 
+            int swapLocation = (int) (Math.random() * this.charsList.size());
+            EnumCharacters tempCard1 = this.charsList.get(swapLocation);
+            EnumCharacters tempCard2 = this.charsList.get(i);
+            this.charsList.set(i, tempCard1);
+            this.charsList.set(swapLocation, tempCard2);
         }
     }
     
@@ -202,49 +202,49 @@ public class Game {
     
     private Character assignCharacter (int x) {
         
-        if(this.enumChars.get(x) == charactersList.belleStar){
+        if(this.charsList.get(x) == EnumCharacters.belleStar){
             belleStar a = new belleStar(this.rolesList.get(x));
             return a;
         }
-        else if(this.enumChars.get(x) == charactersList.paulRegret){
+        else if(this.charsList.get(x) == EnumCharacters.paulRegret){
             paulRegret b =  new paulRegret(this.rolesList.get(x));
             return b;
         }
-        else if(this.enumChars.get(x) == charactersList.jourdonnais){
+        else if(this.charsList.get(x) == EnumCharacters.jourdonnais){
             jourdonnais c = new jourdonnais(this.rolesList.get(x));
             return c;
         }
-        else if(this.enumChars.get(x) == charactersList.luckyDuke){
+        else if(this.charsList.get(x) == EnumCharacters.luckyDuke){
             luckyDuke d = new luckyDuke(this.rolesList.get(x));
             return d;
         }
-        else if(this.enumChars.get(x) == charactersList.pedroRamirez){
+        else if(this.charsList.get(x) == EnumCharacters.pedroRamirez){
             pedroRamirez e = new pedroRamirez(this.rolesList.get(x));
             return e;
         }
-        else if(this.enumChars.get(x) == charactersList.gregDigger){
+        else if(this.charsList.get(x) == EnumCharacters.gregDigger){
             gregDigger f = new gregDigger(this.rolesList.get(x));
             return f;
         }
-        else if(this.enumChars.get(x) == charactersList.elGringo){
+        else if(this.charsList.get(x) == EnumCharacters.elGringo){
             elGringo g = new elGringo(this.rolesList.get(x));
             return g;
         }
-        /*else if(this.enumChars.get(x) == charactersList.willyTheKid){
-            willyTheKid h
-            return new willyTheKid(this.rolesList.get(x));
-        }*/
-        /*else if(this.enumChars.get(x) == charactersList.tequilaJoe){
-            tequilaJoe i
-            return new tequilaJoe(this.rolesList.get(x));
-        }*/
-        else if (this.enumChars.get(x) == charactersList.joseDelgado){
+        else if(this.charsList.get(x) == EnumCharacters.willyTheKid){
+            willyTheKid h = new willyTheKid(this.rolesList.get(x));
+            return h;
+        }
+        else if(this.charsList.get(x) == EnumCharacters.tequilaJoe){
+            tequilaJoe i = new tequilaJoe(this.rolesList.get(x));
+            return i;
+        }
+        else if (this.charsList.get(x) == EnumCharacters.joseDelgado){
             joseDelgado j = new joseDelgado(this.rolesList.get(x));
             return j;
         }
         
         else {
-            return new Character(11,Roles.Sheriff);
+            return new Character(11,EnumRoles.Sheriff);
         }
             
     }

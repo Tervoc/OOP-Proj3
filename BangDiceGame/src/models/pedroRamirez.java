@@ -13,8 +13,9 @@ public class pedroRamirez extends Character {
     
     protected boolean discard = true;
     
-    public pedroRamirez(Roles thisRole) {
+    public pedroRamirez(EnumRoles thisRole) {
         super(8, thisRole);
+        this.charType = EnumCharacters.pedroRamirez;
     }
     
     public void removeBullets(int bullets) {

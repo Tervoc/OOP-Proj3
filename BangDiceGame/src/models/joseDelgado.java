@@ -10,7 +10,8 @@ package models;
  * @author mtbol
  */
 public class joseDelgado extends Character {
-    public joseDelgado(Roles thisRole) {
-    super(7, thisRole);
+    public joseDelgado(EnumRoles thisRole) {
+        super(7, thisRole);
+        this.charType = EnumCharacters.joseDelgado;
     }
 }

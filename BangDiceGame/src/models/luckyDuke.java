@@ -11,8 +11,9 @@ package models;
  */
 public class luckyDuke extends Character{
     
-    public luckyDuke(Roles thisRole) {
+    public luckyDuke(EnumRoles thisRole) {
         super(8, thisRole);
+        this.charType = EnumCharacters.luckyDuke;
     }
     
     public void reRoll(Integer aa, Integer bb, Integer cc, Integer dd, Integer ee, Integer ff) {

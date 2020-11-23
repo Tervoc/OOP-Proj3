@@ -11,8 +11,9 @@ package models;
  */
 public class paulRegret extends Character{
     
-    public paulRegret(Roles thisRole) {
+    public paulRegret(EnumRoles thisRole) {
         super(9, thisRole);
+        this.charType = EnumCharacters.paulRegret;
     }
        public void removeBullets(int bullets) {
         if(this.gatling >= 3) //If gatling roll is 3 or more, 1 total damage happens

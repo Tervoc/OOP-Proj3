@@ -10,8 +10,9 @@ package models;
  * @author Darrel
  */
 public class jourdonnais extends Character{
-        public jourdonnais(Roles thisRole) {
+    public jourdonnais(EnumRoles thisRole) {
         super(7, thisRole);
+        this.charType = EnumCharacters.jourdonnais;
     }
         
         public void indianAttack() {

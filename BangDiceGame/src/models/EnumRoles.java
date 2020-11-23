@@ -12,25 +12,25 @@ import java.util.HashMap;
  *
  * @author chris
  */
-public enum Roles {
+public enum EnumRoles {
     Sheriff("Sheriff"),
     Deputy("Deputy"),
     Outlaw("Outlaw"),
     Renegade("Renegade");
     
-    private String value;
-    private static HashMap map = new HashMap<>();
+    private final String value;
+    private static final HashMap map = new HashMap<>();
     
-    private Roles(String value){
+    EnumRoles(final String value){
         this.value = value;
     }
     static {
-        for(Roles role: Roles.values()){
+        for(EnumRoles role: EnumRoles.values()){
             map.put(role.value, role);
         }
     }
-    public static Roles stringToRole(String role){
-        return (Roles) map.get(role);
+    public static EnumRoles stringToRole(String role){
+        return (EnumRoles) map.get(role);
     }
     
     public String getRoleAsString(){

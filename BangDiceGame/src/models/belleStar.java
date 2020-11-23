@@ -10,7 +10,12 @@ package models;
  * @author mtbol
  */
 public class belleStar extends Character {
-    public belleStar(Roles thisRole) {
-    super(8, thisRole);
+   
+    public belleStar(EnumRoles thisRole){
+        super(8, thisRole);
+        this.charType = EnumCharacters.belleStar;
     }
+
+    
+    
 }

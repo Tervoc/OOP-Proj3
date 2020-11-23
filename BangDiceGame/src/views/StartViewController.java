@@ -91,10 +91,11 @@ public class StartViewController {
                 //we assign each player a player_group
                 game.getPlayers().get(i).setPlayerGroup(player_Group);
                  
-                updatePlayerGroups(game);
+                
                 
                 
             }
+            updatePlayerGroups(game);
         }else{
             messages_TextArea.setText("Please enter a number between 4 and 8");                         
         }
@@ -107,6 +108,9 @@ public class StartViewController {
             Label roleLabel = (Label) playerGroup.getChildren().get(2);
             roleLabel.setText("Role: " + player.getMyCharacter().getRole().getRoleAsString());
             
+            Label charLabel = (Label) playerGroup.getChildren().get(3);
+            charLabel.setText("Character: " + player.getMyCharacter().getCharType().getCharacterAsString());
+            
             Label bulletsLabel = (Label) playerGroup.getChildren().get(4);
             bulletsLabel.setText("Bullets: " + player.getMyCharacter().getBullets());
             
@@ -114,7 +118,9 @@ public class StartViewController {
             arrowLabel.setText("Arrows: " + player.getMyCharacter().getArrows());
             
             
+            
             playerGroup.getChildren().get(2).equals(roleLabel);
+            playerGroup.getChildren().get(3).equals(charLabel);
             playerGroup.getChildren().get(4).equals(bulletsLabel);
             playerGroup.getChildren().get(5).equals(arrowLabel);
             

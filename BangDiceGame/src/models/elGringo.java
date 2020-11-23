@@ -10,7 +10,8 @@ package models;
  * @author Michael
  */
 public class elGringo extends Character {
-        public elGringo(Roles thisRole) {
+    public elGringo(EnumRoles thisRole) {
         super(7, thisRole);
+        this.charType = EnumCharacters.elGringo;
     }
 }
