@@ -72,15 +72,15 @@ public class DiceTest {
     /**
      * Test of getDice method, of class DiceBase.
      */
-    @Test
-    public void testGetDice() {
-        System.out.println("getDice");
-        DiceBase instance = null;
-        WhiteDie[] expResult = null;
-        WhiteDie[] result = instance.getDice();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
+//    @Test
+//    public void testGetDice() {
+//        System.out.println("getDice");
+//        DiceBase instance = null;
+//        WhiteDie[] expResult = null;
+//        //WhiteDie[] result = instance.getDice();
+//        assertArrayEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//    
 }
