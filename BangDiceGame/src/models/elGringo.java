@@ -7,19 +7,19 @@ package models;
 
 /**
  *
- * @author Michael
+ * @author Jared
  */
 public class elGringo extends Character {
     public elGringo(EnumRoles thisRole) {
         super(7, thisRole);
         this.charType = EnumCharacters.elGringo;
     }
-        public void removeBullets(int bullets)
+        public void removeBullets(int bullets, Character charIn)
         {
-            this.bullets -= bullets;
-            if(this.bullets < bullets)
-            {
-                this.arrows += arrows;
+            this.bullets -= bullets; //remove bullets
+            if(charIn != null) //if a player attacked el gringo, that player gets an arrow
+            { 
+                charIn.addArrows(1);
             }
         }
 }

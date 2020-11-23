@@ -38,8 +38,6 @@ public class Game {
         this.addCharacters();
         this.addPlayers();
         
-        
-        
     }
     private void addRoles () {
         switch(this.numPlayers){
@@ -238,11 +236,10 @@ public class Game {
             tequilaJoe i = new tequilaJoe(this.rolesList.get(x));
             return i;
         }
-        else if (this.charsList.get(x) == EnumCharacters.joseDelgado){
+        else if(this.charsList.get(x) == EnumCharacters.joseDelgado){
             joseDelgado j = new joseDelgado(this.rolesList.get(x));
             return j;
         }
-        
         else {
             return new Character(11,EnumRoles.Sheriff);
         }
