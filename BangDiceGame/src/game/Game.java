@@ -284,7 +284,7 @@ public class Game {
     public ArrayList<Player> getPlayers(){
         return players;
     }
-    
+    // Stop being an idiot.,
     public void indianAttack () {
         
     }
