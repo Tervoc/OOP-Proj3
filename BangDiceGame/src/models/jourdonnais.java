@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package models;
+import game.Game;
 
 /**
  *
@@ -15,14 +16,10 @@ public class jourdonnais extends Character{
         this.charType = EnumCharacters.jourdonnais;
     }
         
-        public void indianAttack() {
+        public void indianAttack(Game theGame) {
             if(this.arrows >= 1){
                 this.bullets = this.bullets - 1; //Jourdonnais only lose 1 bullet due to his ablity.
-                this.arrows = 0;
             }
-            else{
-                 this.bullets = this.bullets - 0; //Jourdonnais would not lose any health for indian attack.
-                 this.arrows = 0;
-            } 
+            this.clearArrows(theGame);
     }
 }

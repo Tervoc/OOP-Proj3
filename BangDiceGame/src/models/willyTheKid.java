@@ -16,14 +16,6 @@ public class willyTheKid extends Character{
         super(8, thisRole);
         this.charType = EnumCharacters.willyTheKid;
     }
-//    public void removeBullets(int bullets) {
-//        if(this.gatling >= 2) //If gatling roll is 2 or more, 1 total damage happens
-//           {
-//         this.bullets -= 0; //Subtract zero becuase of character special ability
-//         //of no damage from gatling gun.
-//     }
-//
-//     this.bullets -= bullets;
-// }
+
 }
 

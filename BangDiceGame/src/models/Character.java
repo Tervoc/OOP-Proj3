@@ -1,15 +1,17 @@
 package models;
+import game.*;
+import java.util.ArrayList;
 
 public class Character {
 
     protected int maxBullets;
     protected int bullets;
     protected int arrows;
-    protected int gatling;
     protected EnumCharacters charType;
     protected EnumRoles role;
     protected DiceBase charDice;
     protected int numRolls;
+    protected boolean amIDead = false;
 
     public Character(int bullets, EnumRoles roleIn) {
         this.role = roleIn;
@@ -20,10 +22,7 @@ public class Character {
             this.maxBullets = bullets;
             this.bullets = this.maxBullets;
         }
-
-        this.charDice = new DiceBase(5);
-
-        this.gatling = 0;
+        
         this.arrows = 0;
     }
 
@@ -43,84 +42,57 @@ public class Character {
         return numRolls;
     }
 
-    /**
-     * returns number of bullets
-     *
-     * @return
-     */
-    public int getBullets() {
+    public int getBullets() { //returns number of bullets
         return bullets;
     }
 
-    /**
-     * add a number of bullets to character
-     *
-     * @param bullets
-     */
-    public void addBullets(int bullets) {
+    public void addBullets(int bullets, Game theGame) { //add a number of bullets to character
         if (this.bullets != this.maxBullets) {
             this.bullets += bullets;
+            if(this.bullets > this.maxBullets) {
+                this.bullets = this.maxBullets;
+            }
+            theGame.setBulletPile(theGame.getBulletPile()-bullets);
         }
     }
 
-    /**
-     * remove a number of bullets from a character
-     *
-     * @param bullets
-     */
-    public void removeBullets(int bullets) {
+    public void removeBullets(int bullets, Game theGame) { //remove a number of bullets from a character
         this.bullets -= bullets;
+        theGame.setBulletPile(theGame.getBulletPile()+bullets);
+        
+        if (this.bullets == 0) {
+            this.killMe(theGame);
+        }
     }
 
-    /**
-     * return current number of arrows
-     *
-     * @return
-     */
-    public int getArrows() {
+    public int getArrows() { //return current number of arrows
         return arrows;
     }
 
-    /**
-     * add number of arrows to character
-     *
-     * @param arrows
-     */
-    public void addArrows(int arrows) {
+    public void addArrows(int arrows, Game theGame) { //add number of arrows to character
         this.arrows += arrows;
+        theGame.setArrowPile(theGame.getArrowPile()-arrows);
     }
 
-    /**
-     * remove number of arrows from character
-     *
-     * @param arrows
-     */
-    public void removeArrows(int arrows) {
+    public void removeArrows(int arrows, Game theGame) { //remove number of arrows from character
         this.arrows -= arrows;
+        theGame.setArrowPile(theGame.getArrowPile()+arrows);
     }
 
-    /**
-     * clear the number of arrows currently assigned to player
-     */
-    public void clearArrows() {
+    public void clearArrows(Game theGame) { //clear the number of arrows currently assigned to player
+        theGame.setArrowPile(theGame.getArrowPile() + this.arrows);
         this.arrows = 0;
     }
 
-    /**
-     * subtract the number of arrows from the character's health set number of
-     * arrows to zero
-     */
-    public void indianAttack() {
-        this.bullets = this.bullets - this.arrows;
-        this.arrows = 0;
-    }
-
-    public void gatling() {
-        this.gatling = 3;
+    public void indianAttack(Game theGame) {
+        //subtract the number of arrows from the character's health set number of
+        //arrows to zero
+        this.removeBullets(this.arrows, theGame);
+        this.clearArrows(theGame);
     }
 
     public void initRoll() {
-        charDice.rerollAllDice();
+        this.charDice = new DiceBase(5);
         this.numRolls = 1;
     }
 
@@ -134,4 +106,30 @@ public class Character {
     public EnumCharacters getCharType() {
         return charType;
     }
+
+    public boolean amIDead() {
+        return amIDead;
+    }
+
+    public void setDead() {
+        this.amIDead = true;
+    }
+    
+    public void killMe (Game theGame) {
+        this.setDead();
+        for (int i = 0; i < theGame.getPlayers().size();i++) {
+            if(theGame.getPlayers().get(i).getMyCharacter().getCharType() == this.getCharType()) {
+                ArrayList <Player> temp = new ArrayList <Player> ();
+                temp = theGame.getPlayers();
+                temp.remove(i);
+                theGame.setPlayers(temp);
+            }
+        }
+        /*if(this.role == EnumRoles.Sheriff) {
+            theGame.setOutlawWin(true);
+        }*/
+        
+    }
+    
+    
 }

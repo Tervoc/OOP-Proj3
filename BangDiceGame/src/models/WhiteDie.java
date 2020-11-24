@@ -27,6 +27,9 @@ public class WhiteDie {
 
     private Sides side;  
     
+    private boolean locked = false;
+    private boolean rerolled = false;
+    
               
     public WhiteDie(){
        roll(); 
@@ -59,4 +62,22 @@ public class WhiteDie {
     public Sides getSide(){
         return side;
     }
+    public void lockDie () {
+        this.locked = true;
+    }
+    /*public void unlockDie () {
+        this.locked = false;
+    }*/
+    public boolean isLocked (){
+        return locked;
+    }
+
+    public boolean isRerolled() {
+        return rerolled;
+    }
+
+    public void setRerolled(boolean rerolled) {
+        this.rerolled = rerolled;
+    }
+    
 }

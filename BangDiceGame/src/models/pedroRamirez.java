@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package models;
+import game.Game;
 
 /**
  *
@@ -18,12 +19,13 @@ public class pedroRamirez extends Character {
         this.charType = EnumCharacters.pedroRamirez;
     }
     
-    public void removeBullets(int bullets) {
+    public void removeBullets(int bullets, Game theGame) {
         if(this.arrows != 0 && discard){
             this.arrows -= 1; 
         }
         
         this.bullets -= bullets;
+        theGame.setBulletPile(theGame.getBulletPile()+bullets);
     }
     
 }
