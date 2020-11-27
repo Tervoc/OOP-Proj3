@@ -12,10 +12,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import models.DiceBase;
 import models.Player;
 
 public class StartViewController {
@@ -38,10 +42,31 @@ public class StartViewController {
     @FXML
     private TextField numPlayers_TextField;
     
+    @FXML
+    private ImageView die1_ImageView;
+    
+    @FXML
+    private ImageView die2_ImageView;
+    
+    @FXML
+    private ImageView die3_ImageView;
+    
+    @FXML
+    private ImageView die4_ImageView;
+    
+    @FXML
+    private ImageView die5_ImageView;
+    
+    @FXML
+    private Rectangle playArea_Rectangle;
+    
+    @FXML
+    private Label arrowPile_Label;
+    private Game game;
     //int numPlayers = 7;
     //the distance in poxels that the player circles are from the center of
     //theGame_Pane
-    double distance = 115; 
+    double distance = 200; 
     @FXML
     //the gui opens with inputting the settings for the game, after pressing
     //enter settings the game pane is shown
@@ -53,11 +78,11 @@ public class StartViewController {
         int numPlayers = Integer.parseInt(numPlayers_TextField.getText()); 
         if(numPlayers > 3 && numPlayers < 9){
             //create the game
-            Game game = new Game(numPlayers);
-            
+            game = new Game(numPlayers);
+            arrowPile_Label.setText("Arrows: " + game.getArrowPile());
             //find the center of theGame_Pane
-            double centerX = (theGame_Pane.getWidth() - theGame_Pane.getLayoutX())/2; 
-            double centerY = (theGame_Pane.getHeight() - theGame_Pane.getLayoutY())/2;    
+            double centerX = (playArea_Rectangle.getWidth() - theGame_Pane.getLayoutX())/2-50; 
+            double centerY = (playArea_Rectangle.getHeight() - theGame_Pane.getLayoutY())/2;    
 
             //Swithc from gameSetup_Pane to theGame_Pane
             gameSetup_Pane.setVisible(false); 
@@ -95,12 +120,12 @@ public class StartViewController {
                 
                 
             }
-            updatePlayerGroups(game);
+            updatePlayerGroups();
         }else{
             messages_TextArea.setText("Please enter a number between 4 and 8");                         
         }
     }
-    public void updatePlayerGroups(Game game){
+    public void updatePlayerGroups(){
         for(int i=0; i<game.getPlayers().size(); i++){
             Player player = game.getPlayers().get(i);
             Group playerGroup = player.getPlayerGroup();
@@ -126,8 +151,26 @@ public class StartViewController {
             
             player.setPlayerGroup(playerGroup);
             
+            arrowPile_Label.setText("Arrows: " + game.getArrowPile());
+            
         }
     }
+    
+    @FXML
+    private void handleRoll(){
+        game.getGameDice().rerollAllDice();
+        Image die1 = new Image(StartViewController.class.getResourceAsStream(game.getGameDice().getDice().get(0).getSideImageFL()));
+        Image die2 = new Image(StartViewController.class.getResourceAsStream(game.getGameDice().getDice().get(1).getSideImageFL()));
+        Image die3 = new Image(StartViewController.class.getResourceAsStream(game.getGameDice().getDice().get(2).getSideImageFL()));
+        Image die4 = new Image(StartViewController.class.getResourceAsStream(game.getGameDice().getDice().get(3).getSideImageFL()));
+        Image die5 = new Image(StartViewController.class.getResourceAsStream(game.getGameDice().getDice().get(4).getSideImageFL()));
+        die1_ImageView.setImage(die1);
+        die2_ImageView.setImage(die2);
+        die3_ImageView.setImage(die3);
+        die4_ImageView.setImage(die4);
+        die5_ImageView.setImage(die5);
+    }
+    
     public void setMain(bangMain main) {
         this.main = main;
     }

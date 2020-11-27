@@ -12,12 +12,13 @@ import java.lang.Math;
  */
 //instantiatting the die class creates an object with a random Sides value
 public class WhiteDie {
-    public enum Sides{arrow,
-                      dynamite,
-                      gatling,
-                      one_shot,
-                      two_shot,
-                      beer}; 
+    public enum Sides{
+        arrow,
+        dynamite,
+        gatling,
+        one_shot,
+        two_shot,
+        beer}; 
     //To use the Sides enum in other classes ues WhiteDie.Sides.arrow or whichever
     //you need.
     
@@ -56,6 +57,24 @@ public class WhiteDie {
                 return "two shot";
             case beer:
                 return "beer";           
+        }
+        return "error";
+    }
+    
+    public String getSideImageFL(){
+        switch(side){
+            case arrow:
+                return "DiceImages/Arrow.jpg";
+            case dynamite:
+                return "DiceImages/Dynamite.jpg";
+            case gatling:
+                return "DiceImages/Gatling.jpg";
+            case one_shot:
+                return "DiceImages/One.jpg";
+            case two_shot:
+                return "DiceImages/Two.jpg";
+            case beer:
+                return "DiceImages/Beer.jpg";           
         }
         return "error";
     }

@@ -39,6 +39,10 @@ public class Game {
     protected boolean outlawWin = false;
     protected boolean renegadeWin = false;
     
+    private DiceBase gameDice;
+
+   
+    
     
     
     
@@ -50,6 +54,8 @@ public class Game {
         this.addRoles();
         this.addCharacters();
         this.addPlayers();
+        
+        gameDice = new DiceBase(5);
         
     }
     
@@ -383,6 +389,10 @@ public class Game {
         }
         
     }
+    
+    public void rollDice(){
+        gameDice.rollDice();
+    }
  
     public void useBeer () {
         //gui thing pick a character and add a bullet
@@ -423,6 +433,14 @@ public class Game {
 
     public int getArrowPile() {
         return arrowPile;
+    }
+    
+     public DiceBase getGameDice() {
+        return gameDice;
+    }
+
+    public void setGameDice(DiceBase gameDice) {
+        this.gameDice = gameDice;
     }
     
     public void playerTurn (Character charIn) {
