@@ -61,7 +61,7 @@ public class Character {
         theGame.setBulletPile(theGame.getBulletPile()+bullets);
         
         if (this.bullets == 0) {
-            this.killMe(theGame);
+           // this.killMe(theGame);
         }
     }
 
@@ -107,29 +107,29 @@ public class Character {
         return charType;
     }
 
-    public boolean amIDead() {
-        return amIDead;
-    }
-
-    public void setDead() {
-        this.amIDead = true;
-    }
-    
-    public void killMe (Game theGame) {
-        this.setDead();
-        for (int i = 0; i < theGame.getPlayers().size();i++) {
-            if(theGame.getPlayers().get(i).getMyCharacter().getCharType() == this.getCharType()) {
-                ArrayList <Player> temp = new ArrayList <Player> ();
-                temp = theGame.getPlayers();
-                temp.remove(i);
-                theGame.setPlayers(temp);
-            }
-        }
+//    public boolean amIDead() {
+//        return amIDead;
+//    }
+//
+//    public void setDead() {
+//        this.amIDead = true;
+//    }
+//    
+//    public void killMe (Game theGame) {
+//        this.setDead();
+//        for (int i = 0; i < theGame.getPlayers().size();i++) {
+//            if(theGame.getPlayers().get(i).getMyCharacter().getCharType() == this.getCharType()) {
+//                ArrayList <Player> temp = new ArrayList <Player> ();
+//                temp = theGame.getPlayers();
+//                temp.remove(i);
+//                theGame.setPlayers(temp);
+//            }
+//        }
         /*if(this.role == EnumRoles.Sheriff) {
             theGame.setOutlawWin(true);
         }*/
         
-    }
+//    }
     
     
 }

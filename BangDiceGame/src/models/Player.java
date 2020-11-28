@@ -7,7 +7,9 @@
 
 package models;
 import game.Game;
+import java.util.ArrayList;
 import javafx.scene.Group;
+//import models.*;
 /**
  *
  * @author Darrel
@@ -25,7 +27,7 @@ public class Player {
     private String ability = "";
     private String number = "";
     private boolean AI = true;
-    
+    protected boolean amIDead = false;
     
 
     
@@ -50,6 +52,30 @@ public class Player {
         if (this.bullets == 0) {
             this.killMe(theGame);
         }
+    }
+    
+     public boolean amIDead() {
+        return amIDead;
+    }
+
+    public void setDead() {
+        this.amIDead = true;
+    }
+    
+    public void killMe (Game theGame) {
+        this.setDead();
+        for (int i = 0; i < theGame.getPlayers().size();i++) {
+            if(theGame.getPlayers().get(i).getMyCharacter().getCharType() == this.getMyCharacter().getCharType()) {
+                ArrayList <Player> temp = new ArrayList <Player> ();
+                temp = theGame.getPlayers();
+                temp.remove(i);
+                theGame.setPlayers(temp);
+            }
+        }
+        /*if(this.role == EnumRoles.Sheriff) {
+            theGame.setOutlawWin(true);
+        }*/
+        
     }
 
     public int getArrows() { //return current number of arrows
