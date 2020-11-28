@@ -98,7 +98,7 @@ public class StartViewController {
             arrowPile_Label.setText("Arrows: " + game.getArrowPile());
             //find the center of theGame_Pane
             double centerX = (playArea_Rectangle.getWidth() - theGame_Pane.getLayoutX()) / 2 - 50;
-            double centerY = (playArea_Rectangle.getHeight() - theGame_Pane.getLayoutY()) / 2;
+            double centerY = (playArea_Rectangle.getHeight() - theGame_Pane.getLayoutY()) / 2 + 25;
 
             //Swithc from gameSetup_Pane to theGame_Pane
             gameSetup_Pane.setVisible(false);
