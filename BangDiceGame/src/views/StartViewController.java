@@ -151,10 +151,10 @@ public class StartViewController {
             charLabel.setText("Character: " + player.getMyCharacter().getCharType().getCharacterAsString());
 
             Label bulletsLabel = (Label) playerGroup.getChildren().get(4);
-            bulletsLabel.setText("Bullets: " + player.getMyCharacter().getBullets());
+            bulletsLabel.setText("Bullets: " + player.getBullets());
 
             Label arrowLabel = (Label) playerGroup.getChildren().get(5);
-            arrowLabel.setText("Arrows: " + player.getMyCharacter().getArrows());
+            arrowLabel.setText("Arrows: " + player.getArrows());
 
             playerGroup.getChildren().get(2).equals(roleLabel);
             playerGroup.getChildren().get(3).equals(charLabel);
@@ -174,7 +174,6 @@ public class StartViewController {
     //Handles what heappens when the roll button is clicked
     private void handleRoll_Button(ActionEvent event) {
         //reroll tells us if the dice is to be re reolled or not. true meaning reroll
-        boolean[] reroll = {true, true, true, true, true};
         for(Integer i=0; i<5; i++){
             if((!dice_CheckBoxes.get(i).isSelected() && game.getGameDice().getDice().get(i).getSide() != models.WhiteDie.Sides.dynamite)){
                 game.getGameDice().rollDice(i);
@@ -203,7 +202,20 @@ public class StartViewController {
     
     @FXML
     private void handleConfirmDice_Button(ActionEvent event){
-        
+        for(int i=0; i<5; i++){
+             models.WhiteDie.Sides currSide = game.getGameDice().getDice().get(i).getSide();
+            if(!dice_ChoiceBoxes.get(i).isDisabled()){
+                if(currSide == models.WhiteDie.Sides.one_shot || currSide == models.WhiteDie.Sides.two_shot){
+                    game.getGameDice().getDice().get(i).setWhosGettingShot(Integer.parseInt(dice_ChoiceBoxes.get(i).getValue().toString().substring(dice_ChoiceBoxes.get(i).getValue().toString().length()-1))-1);
+                }
+                else if(currSide == models.WhiteDie.Sides.beer){
+                    game.getGameDice().getDice().get(i).setWhosGettingABeer(Integer.parseInt(dice_ChoiceBoxes.get(i).getValue().toString().substring(dice_ChoiceBoxes.get(i).getValue().toString().length()-1))-1);
+                }
+            }
+            
+        }
+       game.useRoll();
+       updateGamePane();
     }
     @FXML
     private void handleDie1_CheckBox(){
@@ -235,31 +247,31 @@ public class StartViewController {
         int player2LeftNumber = -1;
         int player2RightNumber = -1;
         int currPlayerNum = game.getCurrentPlayerNumber();
-        int numPlayers = game.getNumPlayers()-1;
+        int numPlayers = game.getNumPlayers() -1;
         if(currPlayerNum > 1 && currPlayerNum < numPlayers - 1){
             playerLeftNumber = currPlayerNum - 1;
-            playerRightNumber = currPlayerNum + 1;
             player2LeftNumber = currPlayerNum - 2;
+            playerRightNumber = currPlayerNum + 1;
             player2RightNumber = currPlayerNum + 2;
         }else if(currPlayerNum == 1){
             playerLeftNumber = currPlayerNum - 1;
-            playerRightNumber = currPlayerNum + 1;
             player2LeftNumber = numPlayers;
+            playerRightNumber = currPlayerNum + 1;
             player2RightNumber = currPlayerNum + 2;
         }else if(currPlayerNum == 0){
             playerLeftNumber = numPlayers;
-            playerRightNumber = currPlayerNum + 1;
             player2LeftNumber = numPlayers - 1;
+            playerRightNumber = currPlayerNum + 1;
             player2RightNumber = currPlayerNum + 2;
         }else if(currPlayerNum == numPlayers-1){
             playerLeftNumber = currPlayerNum - 1;
-            playerRightNumber = currPlayerNum + 1;
             player2LeftNumber = currPlayerNum - 2;
+            playerRightNumber = currPlayerNum + 1;
             player2RightNumber = 0;
         }else if(currPlayerNum == numPlayers){
             playerLeftNumber = currPlayerNum - 1;
-            playerRightNumber = 0;
             player2LeftNumber = currPlayerNum - 2;
+            playerRightNumber = 0;
             player2RightNumber = 1;
         }
         

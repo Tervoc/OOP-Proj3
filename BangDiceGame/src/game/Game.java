@@ -39,7 +39,8 @@ public class Game {
     protected boolean sheriffWin = false;
     protected boolean outlawWin = false;
     protected boolean renegadeWin = false;
-
+    
+    private int numGameDice = 5;
     private DiceBase gameDice;
     private Player currentPlayer;
     private int currentPlayerNumber;
@@ -53,7 +54,7 @@ public class Game {
         this.addCharacters();
         this.addPlayers();
 
-        gameDice = new DiceBase(5);
+        gameDice = new DiceBase(numGameDice);
         currentPlayer = players.get(0);
         currentPlayerNumber = 0;
 
@@ -323,29 +324,21 @@ public class Game {
         }
     }
 
-    public void useRoll(Character charIn) {
-        for (int i = 0; i < charIn.getCharDice().getNumDice(); i++) {
-            if (charIn.getCharDice().getDice().get(i).getSide() == WhiteDie.Sides.beer) {
-                this.beer += 1;
-            } else if (charIn.getCharDice().getDice().get(i).getSide() == WhiteDie.Sides.one_shot) {
-                this.oneShot += 1;
-            } else if (charIn.getCharDice().getDice().get(i).getSide() == WhiteDie.Sides.two_shot) {
-                this.twoShot += 1;
-            } else if (charIn.getCharDice().getDice().get(i).getSide() == WhiteDie.Sides.gatling) {
+    public void useRoll() {
+        for (int i = 0; i < numGameDice; i++) {
+            if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.beer) {
+                useBeer(i);
+            } else if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.one_shot) {
+                useOneShot(i);
+            } else if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.two_shot) {
+                useTwoShot(i);
+            } else if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.gatling) {
                 this.gatling += 1;
             }
         }
-        for (int i = 0; i < this.beer; i++) {
-            this.useBeer();
-        }
-        for (int i = 0; i < this.oneShot; i++) {
-            this.useOneShot();
-        }
-        for (int i = 0; i < this.twoShot; i++) {
-            this.useTwoShot();
-        }
-        if (this.gatling >= 3 || (charIn.getCharType() == EnumCharacters.willyTheKid && this.gatling >= 2)) {
-            this.useGatling(charIn);
+       
+        if (this.gatling >= 3 || (currentPlayer.getMyCharacter().getCharType() == EnumCharacters.willyTheKid && this.gatling >= 2)) {
+            this.useGatling(currentPlayer.getMyCharacter());
         }
 
     }
@@ -358,16 +351,16 @@ public class Game {
         gameDice.rollDice(i);
     }
 
-    public void useBeer() {
-        //gui thing pick a character and add a bullet
+    public void useBeer(int die) {
+        players.get(gameDice.getDice().get(die).getWhosGettingABeer()).addBullets(1, this);
     }
 
-    public void useOneShot() {
-        //gui thing pick a character and remove a bullet
+    public void useOneShot(int die) {
+        players.get(gameDice.getDice().get(die).getWhosGettingShot()).removeBullets(1, this);
     }
 
-    public void useTwoShot() {
-        //gui thing pick a character and remove a bullet
+    public void useTwoShot(int die) {
+        players.get(gameDice.getDice().get(die).getWhosGettingShot()).removeBullets(1, this);
     }
 
     public void useGatling(Character charIn) {

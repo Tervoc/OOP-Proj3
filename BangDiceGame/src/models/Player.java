@@ -33,6 +33,10 @@ public class Player {
     
     public Player(Character myChar) {
         this.myChar = myChar;
+        this.maxBullets = myChar.maxBullets;
+        this.bullets = myChar.bullets;
+        this.arrows = myChar.arrows;
+        this.numRolls = myChar.numRolls;
     }
     
     public void addBullets(int bullets, Game theGame) { //add a number of bullets to character
@@ -50,7 +54,7 @@ public class Player {
         theGame.setBulletPile(theGame.getBulletPile()+bullets);
         
         if (this.bullets == 0) {
-            this.killMe(theGame);
+            //this.killMe(theGame);
         }
     }
     

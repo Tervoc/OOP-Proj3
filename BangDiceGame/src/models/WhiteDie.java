@@ -30,6 +30,8 @@ public class WhiteDie {
     
     private boolean locked = false;
     private boolean rerolled = false;
+    private int whosGettingShot = -1;
+    private int whosGettingABeer = -1;
     
               
     public WhiteDie(){
@@ -37,6 +39,8 @@ public class WhiteDie {
     }
     
     public void roll(){
+        whosGettingShot = -1;
+        whosGettingABeer = -1;
         this.side = sidesList[(int)(Math.random() * 5)];
         //math .random retunrs a value between 0 and 1 and we multiply by 5 to
         //get a value between 0 and 5 bc we have 6 sides
@@ -97,6 +101,18 @@ public class WhiteDie {
 
     public void setRerolled(boolean rerolled) {
         this.rerolled = rerolled;
+    }
+    public int getWhosGettingShot(){
+        return this.whosGettingShot;
+    }
+    public void setWhosGettingShot(int player){
+        this.whosGettingShot = player;
+    }
+    public void setWhosGettingABeer(int player){
+        this.whosGettingABeer = player;
+    }
+    public int getWhosGettingABeer(){
+        return this.whosGettingABeer;
     }
     
 }
