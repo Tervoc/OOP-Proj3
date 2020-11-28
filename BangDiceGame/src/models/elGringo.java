@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package models;
+
 import game.*;
 
 /**
@@ -11,16 +12,17 @@ import game.*;
  * @author Jared
  */
 public class elGringo extends Character {
+
     public elGringo(EnumRoles thisRole) {
         super(7, thisRole);
         this.charType = EnumCharacters.elGringo;
     }
-        public void removeBullets(int bullets, Game theGame, Character charIn)
+
+    public void removeBullets(int bullets, Game theGame, Character charIn) {
+        this.bullets -= bullets; //remove bullets
+        if (charIn != null) //if a player attacked el gringo, that player gets an arrow
         {
-            this.bullets -= bullets; //remove bullets
-            if(charIn != null) //if a player attacked el gringo, that player gets an arrow
-            { 
-                charIn.addArrows(1,theGame);
-            }
+            charIn.addArrows(1, theGame);
         }
+    }
 }

@@ -17,19 +17,20 @@ public class DiceBase {
     
     public DiceBase(int numDie){
         this.numDie = numDie;
-        rollDice();
-    }
-    
-    public void rollDice(){
-        for(int i=0; i<numDie; i++){
+        for(int i=0; i<this.numDie; i++){
             dice.add(new WhiteDie()); 
         }
     }
-    public void rerollAllDice(){
+    
+    public void rollDice(int i){
+        dice.get(i).roll();
+    }
+    public void rollAllDice(){
         for(int i=0; i<numDie; i++){
             dice.get(i).roll();
         }
     }
+   //just ignore this function it doesnt work like i wanted it too
     public void rerollDice(Integer a, Integer b, Integer c, Integer d, Integer e, Integer f){
         //you can specify up too 6 dice to re roll, all arguments are optional
         //I thought this might be useful to say I want to reroll dice 1 2 and 4
@@ -42,6 +43,7 @@ public class DiceBase {
         }
     }
     
+   
     //prints the sides of the dice to the consol
     public void printDice(){ 
         for(int i=0; i<numDie; i++){
