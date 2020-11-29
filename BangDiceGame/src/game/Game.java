@@ -326,14 +326,16 @@ public class Game {
 
     public void useRoll() {
         for (int i = 0; i < numGameDice; i++) {
-            if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.beer) {
-                useBeer(i);
-            } else if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.one_shot) {
-                useOneShot(i);
-            } else if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.two_shot) {
-                useTwoShot(i);
-            } else if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.gatling) {
-                this.gatling += 1;
+            if(gameDice.getDice().get(i).isLocked()){
+                if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.beer) {
+                    useBeer(i);
+                } else if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.one_shot) {
+                    useOneShot(i);
+                } else if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.two_shot) {
+                    useTwoShot(i);
+                } else if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.gatling) {
+                    this.gatling += 1;
+                }
             }
         }
        
@@ -357,10 +359,16 @@ public class Game {
 
     public void useOneShot(int die) {
         players.get(gameDice.getDice().get(die).getWhosGettingShot()).removeBullets(1, this);
+        System.out.println("Whoes Getting shot 1: " + gameDice.getDice().get(die).getWhosGettingShot());
+                System.out.println("Die num: " + die);
+
     }
 
     public void useTwoShot(int die) {
         players.get(gameDice.getDice().get(die).getWhosGettingShot()).removeBullets(1, this);
+        System.out.println("Whoes Getting shot 2: " + gameDice.getDice().get(die).getWhosGettingShot());
+        System.out.println("Die num: " + die);
+
     }
 
     public void useGatling(Character charIn) {

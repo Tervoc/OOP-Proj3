@@ -204,9 +204,11 @@ public class StartViewController {
     private void handleConfirmDice_Button(ActionEvent event){
         for(int i=0; i<5; i++){
              models.WhiteDie.Sides currSide = game.getGameDice().getDice().get(i).getSide();
-            if(!dice_ChoiceBoxes.get(i).isDisabled()){
+            if(dice_CheckBoxes.get(i).isSelected()){
+                game.getGameDice().getDice().get(i).lockDie();
                 if(currSide == models.WhiteDie.Sides.one_shot || currSide == models.WhiteDie.Sides.two_shot){
                     game.getGameDice().getDice().get(i).setWhosGettingShot(Integer.parseInt(dice_ChoiceBoxes.get(i).getValue().toString().substring(dice_ChoiceBoxes.get(i).getValue().toString().length()-1))-1);
+                    
                 }
                 else if(currSide == models.WhiteDie.Sides.beer){
                     game.getGameDice().getDice().get(i).setWhosGettingABeer(Integer.parseInt(dice_ChoiceBoxes.get(i).getValue().toString().substring(dice_ChoiceBoxes.get(i).getValue().toString().length()-1))-1);

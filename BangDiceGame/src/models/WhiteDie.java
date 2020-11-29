@@ -42,6 +42,7 @@ public class WhiteDie {
         whosGettingShot = -1;
         whosGettingABeer = -1;
         this.side = sidesList[(int)(Math.random() * 5)];
+        this.locked = false;
         //math .random retunrs a value between 0 and 1 and we multiply by 5 to
         //get a value between 0 and 5 bc we have 6 sides
         
@@ -88,9 +89,9 @@ public class WhiteDie {
     public void lockDie () {
         this.locked = true;
     }
-    /*public void unlockDie () {
+    public void unlockDie () {
         this.locked = false;
-    }*/
+    }
     public boolean isLocked (){
         return locked;
     }
