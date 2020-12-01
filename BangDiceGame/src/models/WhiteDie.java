@@ -12,12 +12,13 @@ import java.lang.Math;
  */
 //instantiatting the die class creates an object with a random Sides value
 public class WhiteDie {
-    public enum Sides{arrow,
-                      dynamite,
-                      gatling,
-                      one_shot,
-                      two_shot,
-                      beer}; 
+    public enum Sides{
+        arrow,
+        dynamite,
+        gatling,
+        one_shot,
+        two_shot,
+        beer}; 
     //To use the Sides enum in other classes ues WhiteDie.Sides.arrow or whichever
     //you need.
     
@@ -27,13 +28,21 @@ public class WhiteDie {
 
     private Sides side;  
     
+    private boolean locked = false;
+    private boolean rerolled = false;
+    private int whosGettingShot = -1;
+    private int whosGettingABeer = -1;
+    
               
     public WhiteDie(){
        roll(); 
     }
     
     public void roll(){
+        whosGettingShot = -1;
+        whosGettingABeer = -1;
         this.side = sidesList[(int)(Math.random() * 5)];
+        this.locked = false;
         //math .random retunrs a value between 0 and 1 and we multiply by 5 to
         //get a value between 0 and 5 bc we have 6 sides
         
@@ -56,7 +65,55 @@ public class WhiteDie {
         }
         return "error";
     }
+    
+    public String getSideImageFL(){
+        switch(side){
+            case arrow:
+                return "DiceImages/Arrow.jpg";
+            case dynamite:
+                return "DiceImages/Dynamite.jpg";
+            case gatling:
+                return "DiceImages/Gatling.jpg";
+            case one_shot:
+                return "DiceImages/One.jpg";
+            case two_shot:
+                return "DiceImages/Two.jpg";
+            case beer:
+                return "DiceImages/Beer.jpg";           
+        }
+        return "error";
+    }
     public Sides getSide(){
         return side;
     }
+    public void lockDie () {
+        this.locked = true;
+    }
+    public void unlockDie () {
+        this.locked = false;
+    }
+    public boolean isLocked (){
+        return locked;
+    }
+
+    public boolean isRerolled() {
+        return rerolled;
+    }
+
+    public void setRerolled(boolean rerolled) {
+        this.rerolled = rerolled;
+    }
+    public int getWhosGettingShot(){
+        return this.whosGettingShot;
+    }
+    public void setWhosGettingShot(int player){
+        this.whosGettingShot = player;
+    }
+    public void setWhosGettingABeer(int player){
+        this.whosGettingABeer = player;
+    }
+    public int getWhosGettingABeer(){
+        return this.whosGettingABeer;
+    }
+    
 }

@@ -9,6 +9,6 @@ package models;
  *
  * @author Troll
  */
-public enum PlayerGroupLabels {
+public enum EnumPlayerGroupLabels {
     circle, playerNum, role, character, health, arrows
 }

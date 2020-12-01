@@ -10,8 +10,9 @@ package models;
  * @author mtbol
  */
 public class gregDigger extends Character {
-        public gregDigger (Roles thisRole) {
+    public gregDigger (EnumRoles thisRole) {
         super(7, thisRole);
+        this.charType = EnumCharacters.gregDigger;
     }
         
 }

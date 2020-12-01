@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package game;
+
 import models.Character;
 import models.*;
 import java.util.ArrayList;
@@ -14,12 +14,20 @@ import java.util.ArrayList;
  * @author chris
  */
 public class Game {
+
     protected int bulletPile;
     protected int arrowPile;
     protected int numPlayers;
-    protected ArrayList <Roles> rolesList; 
-    protected ArrayList <charactersList> enumChars;
-    protected ArrayList <Player> players;
+    protected int dynamite;
+    protected int gatling;
+    protected int beer;
+    protected int oneShot;
+    protected int twoShot;
+    protected int numOutlaws;
+    protected int numRenegades;
+    protected ArrayList<EnumRoles> rolesList = new ArrayList<EnumRoles>();
+    protected ArrayList<EnumCharacters> charsList = new ArrayList<EnumCharacters>();
+    protected ArrayList<Player> players = new ArrayList<Player>();
     protected Player playerOne;
     protected Player playerTwo;
     protected Player playerThree;
@@ -28,104 +36,134 @@ public class Game {
     protected Player playerSix;
     protected Player playerSeven;
     protected Player playerEight;
+    protected boolean sheriffWin = false;
+    protected boolean outlawWin = false;
+    protected boolean renegadeWin = false;
     
-    public Game (int numPlayers) {
+    private int numGameDice = 5;
+    private DiceBase gameDice;
+    private Player currentPlayer;
+    private int currentPlayerNumber;
+
+    public Game(int numPlayers) {
         this.bulletPile = 70;
-        this.arrowPile = 9; 
+        this.arrowPile = 9;
         this.numPlayers = numPlayers;
-        
+
         this.addRoles();
         this.addCharacters();
         this.addPlayers();
-        
-        
-        
+
+        gameDice = new DiceBase(numGameDice);
+        currentPlayer = players.get(0);
+        currentPlayerNumber = 0;
+
     }
-    private void addRoles () {
-        switch(this.numPlayers){
+
+    public void nextTurn() {
+        if (currentPlayerNumber == numPlayers) {
+            currentPlayerNumber = 0;
+        } else {
+            currentPlayerNumber++;
+        }
+        currentPlayer = players.get(currentPlayerNumber);
+    }
+
+    private void addRoles() {
+        switch (this.numPlayers) {
             case 4:
-                rolesList.add(Roles.Sheriff);
-                rolesList.add(Roles.Renegade);
-                rolesList.add(Roles.Outlaw);
-                rolesList.add(Roles.Outlaw);
+                rolesList.add(EnumRoles.Sheriff);
+                rolesList.add(EnumRoles.Renegade);
+                rolesList.add(EnumRoles.Outlaw);
+                rolesList.add(EnumRoles.Outlaw);
+                this.numOutlaws = 2;
+                this.numRenegades = 1;
                 break;
             case 5:
-                rolesList.add(Roles.Sheriff);
-                rolesList.add(Roles.Deputy);
-                rolesList.add(Roles.Renegade);
-                rolesList.add(Roles.Outlaw);
-                rolesList.add(Roles.Outlaw);
+                rolesList.add(EnumRoles.Sheriff);
+                rolesList.add(EnumRoles.Deputy);
+                rolesList.add(EnumRoles.Renegade);
+                rolesList.add(EnumRoles.Outlaw);
+                rolesList.add(EnumRoles.Outlaw);
+                this.numOutlaws = 2;
+                this.numRenegades = 1;
                 break;
             case 6:
-                rolesList.add(Roles.Sheriff);
-                rolesList.add(Roles.Deputy);
-                rolesList.add(Roles.Renegade);
-                rolesList.add(Roles.Outlaw);
-                rolesList.add(Roles.Outlaw);
-                rolesList.add(Roles.Outlaw);
+                rolesList.add(EnumRoles.Sheriff);
+                rolesList.add(EnumRoles.Deputy);
+                rolesList.add(EnumRoles.Renegade);
+                rolesList.add(EnumRoles.Outlaw);
+                rolesList.add(EnumRoles.Outlaw);
+                rolesList.add(EnumRoles.Outlaw);
+                this.numOutlaws = 3;
+                this.numRenegades = 1;
                 break;
             case 7:
-                rolesList.add(Roles.Sheriff);
-                rolesList.add(Roles.Deputy);
-                rolesList.add(Roles.Deputy);
-                rolesList.add(Roles.Renegade);
-                rolesList.add(Roles.Outlaw);
-                rolesList.add(Roles.Outlaw);
-                rolesList.add(Roles.Outlaw);
+                rolesList.add(EnumRoles.Sheriff);
+                rolesList.add(EnumRoles.Deputy);
+                rolesList.add(EnumRoles.Deputy);
+                rolesList.add(EnumRoles.Renegade);
+                rolesList.add(EnumRoles.Outlaw);
+                rolesList.add(EnumRoles.Outlaw);
+                rolesList.add(EnumRoles.Outlaw);
+                this.numOutlaws = 3;
+                this.numRenegades = 1;
                 break;
             case 8:
-                rolesList.add(Roles.Sheriff);
-                rolesList.add(Roles.Deputy);
-                rolesList.add(Roles.Deputy);
-                rolesList.add(Roles.Renegade);
-                rolesList.add(Roles.Renegade);
-                rolesList.add(Roles.Outlaw);
-                rolesList.add(Roles.Outlaw);
-                rolesList.add(Roles.Outlaw);
+                rolesList.add(EnumRoles.Sheriff);
+                rolesList.add(EnumRoles.Deputy);
+                rolesList.add(EnumRoles.Deputy);
+                rolesList.add(EnumRoles.Renegade);
+                rolesList.add(EnumRoles.Renegade);
+                rolesList.add(EnumRoles.Outlaw);
+                rolesList.add(EnumRoles.Outlaw);
+                rolesList.add(EnumRoles.Outlaw);
+                this.numOutlaws = 3;
+                this.numRenegades = 2;
                 break;
             default:
                 System.out.println("idiot put in a correct number");
         }
-        for (int i = 0; i < this.rolesList.size(); i++) { 
+        for (int i = 0; i < this.rolesList.size(); i++) {
             int swapLocation = (int) (Math.random() * this.rolesList.size());
-            Roles tempCard1 = this.rolesList.get(swapLocation);
-            Roles tempCard2 = this.rolesList.get(i);
+            EnumRoles tempCard1 = this.rolesList.get(swapLocation);
+            EnumRoles tempCard2 = this.rolesList.get(i);
             this.rolesList.set(i, tempCard1);
             this.rolesList.set(swapLocation, tempCard2);
         }
-        
+
     }
-    
-    private void addCharacters () {
-        this.enumChars.add(charactersList.belleStar);
-        this.enumChars.add(charactersList.paulRegret);
-        this.enumChars.add(charactersList.jourdonnais);
-        this.enumChars.add(charactersList.luckyDuke);
-        this.enumChars.add(charactersList.pedroRamirez);
-        this.enumChars.add(charactersList.gregDigger);
-        this.enumChars.add(charactersList.elGringo);
-        this.enumChars.add(charactersList.willyTheKid);
-        this.enumChars.add(charactersList.tequilaJoe);
-        this.enumChars.add(charactersList.joseDelgado);
-        
-        for (int i = 0; i < this.enumChars.size(); i++) { 
-            int swapLocation = (int) (Math.random() * this.enumChars.size());
-            charactersList tempCard1 = this.enumChars.get(swapLocation);
-            charactersList tempCard2 = this.enumChars.get(i);
-            this.enumChars.set(i, tempCard1);
-            this.enumChars.set(swapLocation, tempCard2);
+
+    private void addCharacters() {
+        this.charsList.add(EnumCharacters.belleStar);
+        this.charsList.add(EnumCharacters.paulRegret);
+        this.charsList.add(EnumCharacters.jourdonnais);
+        this.charsList.add(EnumCharacters.luckyDuke);
+        this.charsList.add(EnumCharacters.pedroRamirez);
+        this.charsList.add(EnumCharacters.gregDigger);
+        this.charsList.add(EnumCharacters.elGringo);
+        this.charsList.add(EnumCharacters.willyTheKid);
+        this.charsList.add(EnumCharacters.tequilaJoe);
+        this.charsList.add(EnumCharacters.joseDelgado);
+
+        for (int i = 0; i < this.charsList.size(); i++) {
+            int swapLocation = (int) (Math.random() * this.charsList.size());
+            EnumCharacters tempCard1 = this.charsList.get(swapLocation);
+            EnumCharacters tempCard2 = this.charsList.get(i);
+            this.charsList.set(i, tempCard1);
+            this.charsList.set(swapLocation, tempCard2);
         }
     }
-    
-    private void addPlayers () {
-        
-        switch(this.numPlayers){
-            case 4: 
+
+    private void addPlayers() {
+
+        switch (this.numPlayers) {
+            case 4:
                 this.playerOne = new Player(assignCharacter(0));
                 this.playerTwo = new Player(assignCharacter(1));
                 this.playerThree = new Player(assignCharacter(2));
                 this.playerFour = new Player(assignCharacter(3));
-                
+
                 this.players.add(playerOne);
                 this.players.add(playerTwo);
                 this.players.add(playerThree);
@@ -137,7 +175,7 @@ public class Game {
                 this.playerThree = new Player(assignCharacter(2));
                 this.playerFour = new Player(assignCharacter(3));
                 this.playerFive = new Player(assignCharacter(4));
-                
+
                 this.players.add(playerOne);
                 this.players.add(playerTwo);
                 this.players.add(playerThree);
@@ -151,7 +189,7 @@ public class Game {
                 this.playerFour = new Player(assignCharacter(3));
                 this.playerFive = new Player(assignCharacter(4));
                 this.playerSix = new Player(assignCharacter(5));
-                
+
                 this.players.add(playerOne);
                 this.players.add(playerTwo);
                 this.players.add(playerThree);
@@ -174,7 +212,7 @@ public class Game {
                 this.players.add(playerFive);
                 this.players.add(playerSix);
                 this.players.add(playerSeven);
-                
+
                 break;
             case 8:
                 this.playerOne = new Player(assignCharacter(0));
@@ -185,7 +223,7 @@ public class Game {
                 this.playerSix = new Player(assignCharacter(5));
                 this.playerSeven = new Player(assignCharacter(6));
                 this.playerEight = new Player(assignCharacter(7));
-                
+
                 this.players.add(playerOne);
                 this.players.add(playerTwo);
                 this.players.add(playerThree);
@@ -199,54 +237,172 @@ public class Game {
                 System.out.println("error, Idiot");
         }
     }
-    
-    private Character assignCharacter (int x) {
-        
-        if(this.enumChars.get(x) == charactersList.belleStar){
+
+    private Character assignCharacter(int x) {
+
+        if (this.charsList.get(x) == EnumCharacters.belleStar) {
             belleStar a = new belleStar(this.rolesList.get(x));
             return a;
-        }
-        else if(this.enumChars.get(x) == charactersList.paulRegret){
-            paulRegret b =  new paulRegret(this.rolesList.get(x));
+        } else if (this.charsList.get(x) == EnumCharacters.paulRegret) {
+            paulRegret b = new paulRegret(this.rolesList.get(x));
             return b;
-        }
-        else if(this.enumChars.get(x) == charactersList.jourdonnais){
+        } else if (this.charsList.get(x) == EnumCharacters.jourdonnais) {
             jourdonnais c = new jourdonnais(this.rolesList.get(x));
             return c;
-        }
-        else if(this.enumChars.get(x) == charactersList.luckyDuke){
+        } else if (this.charsList.get(x) == EnumCharacters.luckyDuke) {
             luckyDuke d = new luckyDuke(this.rolesList.get(x));
             return d;
-        }
-        else if(this.enumChars.get(x) == charactersList.pedroRamirez){
+        } else if (this.charsList.get(x) == EnumCharacters.pedroRamirez) {
             pedroRamirez e = new pedroRamirez(this.rolesList.get(x));
             return e;
-        }
-        else if(this.enumChars.get(x) == charactersList.gregDigger){
+        } else if (this.charsList.get(x) == EnumCharacters.gregDigger) {
             gregDigger f = new gregDigger(this.rolesList.get(x));
             return f;
-        }
-        else if(this.enumChars.get(x) == charactersList.elGringo){
+        } else if (this.charsList.get(x) == EnumCharacters.elGringo) {
             elGringo g = new elGringo(this.rolesList.get(x));
             return g;
-        }
-        /*else if(this.enumChars.get(x) == charactersList.willyTheKid){
-            willyTheKid h
-            return new willyTheKid(this.rolesList.get(x));
-        }*/
-        /*else if(this.enumChars.get(x) == charactersList.tequilaJoe){
-            tequilaJoe i
-            return new tequilaJoe(this.rolesList.get(x));
-        }*/
-        else if (this.enumChars.get(x) == charactersList.joseDelgado){
+        } else if (this.charsList.get(x) == EnumCharacters.willyTheKid) {
+            willyTheKid h = new willyTheKid(this.rolesList.get(x));
+            return h;
+        } else if (this.charsList.get(x) == EnumCharacters.tequilaJoe) {
+            tequilaJoe i = new tequilaJoe(this.rolesList.get(x));
+            return i;
+        } else if (this.charsList.get(x) == EnumCharacters.joseDelgado) {
             joseDelgado j = new joseDelgado(this.rolesList.get(x));
             return j;
+        } else {
+            return new Character(11, EnumRoles.Sheriff);
         }
-        
-        else {
-            return new Character(11,Roles.Sheriff);
+
+    }
+
+    public void interpretRoll(Character charIn) {
+        if (charIn.getNumRolls() == 1) {
+            this.dynamite = 0;
+            this.beer = 0;
+            this.gatling = 0;
+            this.oneShot = 0;
+            this.twoShot = 0;
+
+            for (int i = 0; i < charIn.getCharDice().getNumDice(); i++) {
+                if (charIn.getCharDice().getDice().get(i).getSide() == WhiteDie.Sides.arrow) {
+                    charIn.addArrows(1, this);
+                    this.setArrowPile(this.getArrowPile() - 1);
+
+                    if (this.getArrowPile() == 0) {
+                        this.indianAttack();
+                    }
+                } else if (charIn.getCharDice().getDice().get(i).getSide() == WhiteDie.Sides.dynamite) {
+                    this.dynamite += 1;
+                    charIn.getCharDice().getDice().get(i).lockDie();
+                    if (this.dynamite >= 3) {
+                        charIn.removeBullets(1, this);
+                        break;
+                    }
+                }
+                charIn.getCharDice().getDice().get(i).setRerolled(false);
+            }
+
+        } else if (charIn.getNumRolls() <= 3) {
+            for (int i = 0; i < charIn.getCharDice().getNumDice(); i++) {
+                if (charIn.getCharDice().getDice().get(i).getSide() == WhiteDie.Sides.arrow && charIn.getCharDice().getDice().get(i).isRerolled()) {
+                    charIn.addArrows(1, this);
+                    this.setArrowPile(this.getArrowPile() - 1);
+
+                    if (this.getArrowPile() == 0) {
+                        this.indianAttack();
+                    }
+                } else if (charIn.getCharDice().getDice().get(i).getSide() == WhiteDie.Sides.dynamite && charIn.getCharDice().getDice().get(i).isRerolled()) {
+                    this.dynamite += 1;
+                    charIn.getCharDice().getDice().get(i).lockDie();
+                    if (this.dynamite >= 3) {
+                        break;
+                    }
+                }
+                charIn.getCharDice().getDice().get(i).setRerolled(false);
+            }
         }
-            
+    }
+
+    public void useRoll() {
+        for (int i = 0; i < numGameDice; i++) {
+            if(gameDice.getDice().get(i).isLocked()){
+                if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.beer) {
+                    useBeer(i);
+                } else if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.one_shot) {
+                    useOneShot(i);
+                } else if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.two_shot) {
+                    useTwoShot(i);
+                } else if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.gatling) {
+                    this.gatling += 1;
+                }
+            }
+        }
+       
+        if (this.gatling >= 3 || (currentPlayer.getMyCharacter().getCharType() == EnumCharacters.willyTheKid && this.gatling >= 2)) {
+            this.useGatling(currentPlayer.getMyCharacter());
+        }
+
+    }
+
+    public void rollDice() {
+        gameDice.rollAllDice();
+    }
+
+    public void rollDice(int i) {
+        gameDice.rollDice(i);
+    }
+
+    public void useBeer(int die) {
+        players.get(gameDice.getDice().get(die).getWhosGettingABeer()).addBullets(1, this);
+    }
+
+    public void useOneShot(int die) {
+        players.get(gameDice.getDice().get(die).getWhosGettingShot()).removeBullets(1, this);
+        System.out.println("Whoes Getting shot 1: " + gameDice.getDice().get(die).getWhosGettingShot());
+                System.out.println("Die num: " + die);
+
+    }
+
+    public void useTwoShot(int die) {
+        players.get(gameDice.getDice().get(die).getWhosGettingShot()).removeBullets(1, this);
+        System.out.println("Whoes Getting shot 2: " + gameDice.getDice().get(die).getWhosGettingShot());
+        System.out.println("Die num: " + die);
+
+    }
+
+    public void useGatling(Character charIn) {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getMyCharacter() != charIn || players.get(i).getMyCharacter().getCharType() != EnumCharacters.paulRegret) {
+                players.get(i).getMyCharacter().removeBullets(1, this);
+            }
+        }
+        this.setArrowPile(this.arrowPile + charIn.getArrows());
+        charIn.clearArrows(this);
+    }
+
+    public void indianAttack() {
+        for (int i = 0; i < this.players.size(); i++) {
+            this.players.get(i).getMyCharacter().indianAttack(this);
+        }
+    }
+
+    public void playerTurn(Character charIn) {
+        charIn.initRoll();
+
+    }
+    
+    
+    public Player getCurrentPlayer(){
+        return currentPlayer;
+    }
+    
+    public int getCurrentPlayerNumber(){
+        return currentPlayerNumber;
+    }
+    
+    public int getNumPlayers(){
+        return this.numPlayers;
     }
     
     public Player getPlayerOne() {
@@ -280,12 +436,61 @@ public class Game {
     public Player getPlayerEight() {
         return playerEight;
     }
-    
-    public ArrayList<Player> getPlayers(){
+
+    public ArrayList<Player> getPlayers() {
         return players;
     }
-    
-    public void indianAttack () {
-        
+
+    public void setPlayers(ArrayList<Player> playersIn) {
+        this.players = playersIn;
     }
+
+    public int getBulletPile() {
+        return bulletPile;
+    }
+
+    public void setBulletPile(int bulletPile) {
+        this.bulletPile = bulletPile;
+    }
+
+    public int getArrowPile() {
+        return arrowPile;
+    }
+
+    public void setArrowPile(int arrowPile) {
+        this.arrowPile = arrowPile;
+    }
+
+    public DiceBase getGameDice() {
+        return gameDice;
+    }
+
+    public void setGameDice(DiceBase gameDice) {
+        this.gameDice = gameDice;
+    }
+
+    public boolean isSheriffWin() {
+        return sheriffWin;
+    }
+
+    public void setSheriffWin(boolean sheriffWin) {
+        this.sheriffWin = sheriffWin;
+    }
+
+    public boolean isOutlawWin() {
+        return outlawWin;
+    }
+
+    public void setOutlawWin(boolean outlawWin) {
+        this.outlawWin = outlawWin;
+    }
+
+    public boolean isRenegadeWin() {
+        return renegadeWin;
+    }
+
+    public void setRenegadeWin(boolean renegadeWin) {
+        this.renegadeWin = renegadeWin;
+    }
+
 }

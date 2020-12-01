@@ -44,7 +44,7 @@ public class bangMain extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Bang! The Dice Game");
         this.primaryStage.getIcons().add(new Image(bangMain.class.getResourceAsStream("GameLogo.png")));
-
+        
         showStartView();
     }
 
