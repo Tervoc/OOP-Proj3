@@ -54,11 +54,10 @@ public class Game {
         this.addPlayers();
 
 
-        //this.initRoll(5, 0, 0, 0);
         currentPlayer = players.get(0);
         currentPlayerNumber = 0;
 
-        this.gameDice = new Dice(numGameDice);
+        this.gameDice = new Dice(5, 0, 0, 0);
         this.currentPlayer = this.players.get(0);
         this.currentPlayerNumber = 0;
 
@@ -81,8 +80,7 @@ public class Game {
             }
             if(!this.players.get(this.currentPlayerNumber).amIDead()){
                 this.currentPlayer = this.players.get(this.currentPlayerNumber);
-
-                this.currentPlayer.setNumRolls(0); 
+ 
                 findNextPlayer = false;
             }
 
@@ -287,16 +285,13 @@ public class Game {
                         //next turn?
                         break;
                     }
-                
-                
                 }
-                gameDice.getDice().get(i).setRerolled(false);
             }
         }
         
         else if (turnRolls <= 3 || ( (currentPlayer.getMyCharacter().getCharType() == EnumCharacters.luckyDuke) && turnRolls <=4)) {
             for (int i = 0; i < numGameDice; i++) {
-                if (gameDice.getDice().get(i).getSide() == Die.Sides.arrow && gameDice.getDice().get(i).isRerolled() && (this.currentPlayer.getMyCharacter().getCharType() != EnumCharacters.billNoFace)) {
+                if (gameDice.getDice().get(i).getSide() == Die.Sides.arrow && gameDice.getDice().get(i).isLocked() && (this.currentPlayer.getMyCharacter().getCharType() != EnumCharacters.billNoFace)) {
                     currentPlayer.addArrows(1, this);
                     this.setArrowPile(this.getArrowPile() - 1);
 
@@ -304,7 +299,7 @@ public class Game {
                         this.indianAttack();
                     }
                 } 
-                else if (gameDice.getDice().get(i).getSide() == Die.Sides.dynamite && gameDice.getDice().get(i).isRerolled()) {
+                else if (gameDice.getDice().get(i).getSide() == Die.Sides.dynamite && gameDice.getDice().get(i).isLocked()) {
                     this.numDynamite += 1;
                     gameDice.getDice().get(i).lockDie();
                     if (this.numDynamite >= 3) {
@@ -313,14 +308,13 @@ public class Game {
                         break;
                     }
                 }
-                gameDice.getDice().get(i).setRerolled(false);
             }
         }
     }
 
     public void useRoll() {
         for (int i = 0; i < numGameDice; i++) {
-            if(gameDice.getDice().get(i).isLocked()){
+            if(gameDice.getDice().get(i).isLocked() ) {
                 if ( (gameDice.getDice().get(i).getSide() == Die.Sides.arrow) && (currentPlayer.getMyCharacter().getCharType() == EnumCharacters.billNoFace) ) {
                     currentPlayer.addArrows(1, this);
                     this.setArrowPile(this.getArrowPile() - 1);
@@ -354,6 +348,7 @@ public class Game {
     public void initRoll() {
         this.gameDice = new Dice(this.numWhiteDie, this.numCowardDie, this.numLoudmouthDie, this.numBlackDie);
     }
+    
     public void rollDice() {
         
         gameDice.rollAllDice();

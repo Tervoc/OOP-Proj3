@@ -45,7 +45,6 @@ public class Die {
     protected Sides side;  
     
     protected boolean locked = false;
-    protected boolean rerolled = false;
     protected int whosGettingShot = -1;
     protected int whosGettingABeer = -1;
     private DieType dieType;
@@ -149,13 +148,6 @@ public class Die {
         return locked;
     }
 
-    public boolean isRerolled() {
-        return rerolled;
-    }
-
-    public void setRerolled(boolean rerolled) {
-        this.rerolled = rerolled;
-    }
     public int getWhosGettingShot(){
         return this.whosGettingShot;
     }
