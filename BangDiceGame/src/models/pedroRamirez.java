@@ -19,13 +19,10 @@ public class pedroRamirez extends Character {
         this.charType = EnumCharacters.pedroRamirez;
     }
     
-    public void removeBullets(int bullets, Game theGame) {
-        if(this.arrows != 0 && discard){
-            this.arrows -= 1; 
+    public void pedroAbility(int bullets,Player myPlayer, Game theGame) {
+        if(myPlayer.getArrows() != 0 && discard){
+            myPlayer.removeArrows(1, theGame); 
         }
-        
-        this.bullets -= bullets;
-        theGame.setBulletPile(theGame.getBulletPile()+bullets);
     }
     
 }

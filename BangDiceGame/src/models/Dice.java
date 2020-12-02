@@ -11,14 +11,23 @@ import java.util.ArrayList;
  *
  * @author Troll
  */
-public class DiceBase {
-    private ArrayList<WhiteDie> dice = new ArrayList<WhiteDie>();
+public class Dice {
+    private ArrayList<Die> dice = new ArrayList<Die>();
     private final int numDie;
     
-    public DiceBase(int numDie){
-        this.numDie = numDie;
-        for(int i=0; i<this.numDie; i++){
-            dice.add(new WhiteDie()); 
+    public Dice(int whiteDie, int cowardDie, int loudmouthDie, int blackDie){
+        this.numDie = whiteDie+cowardDie+loudmouthDie+blackDie;
+        for(int i=0; i<whiteDie; i++){
+            dice.add(new Die(Die.DieType.white)); 
+        }
+        for(int i=0; i<cowardDie; i++){
+            dice.add(new Die(Die.DieType.coward)); 
+        }
+        for(int i=0; i<loudmouthDie; i++){
+            dice.add(new Die(Die.DieType.loudmouth)); 
+        }
+        for(int i=0; i<blackDie; i++){
+            dice.add(new Die(Die.DieType.black)); 
         }
     }
     
@@ -52,15 +61,15 @@ public class DiceBase {
     }
     
     //returns list of enum values instead of die objects
-    public ArrayList<WhiteDie.Sides> getDiceSides(){
-        ArrayList<WhiteDie.Sides> diceEnums = new ArrayList<WhiteDie.Sides>();
+    public ArrayList<Die.Sides> getDiceSides(){
+        ArrayList<Die.Sides> diceEnums = new ArrayList<Die.Sides>();
         for(int i=0; i<numDie; i++){
             diceEnums.set(i,dice.get(i).getSide());
         }
         return diceEnums;
     }
-    //returns array of WhiteDie objects to get the side of a certian WhiteDie call dice[i].getSide()
-    public ArrayList<WhiteDie> getDice(){
+    //returns array of Die objects to get the side of a certian Die call dice[i].getSide()
+    public ArrayList<Die> getDice(){
         return dice;
     }
     

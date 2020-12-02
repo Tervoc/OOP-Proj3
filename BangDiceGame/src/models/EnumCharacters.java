@@ -20,8 +20,9 @@ public enum EnumCharacters {
     gregDigger("gregDigger"),
     elGringo("elGringo"),
     willyTheKid("willyTheKid"),
-    tequilaJoe("tequilaJoe"),
-    joseDelgado("joseDelgado");
+    apacheKid("apacheKid"),
+    billNoFace("billNoFace");
+    
     
     private final String value;
     private static final HashMap map = new HashMap<>();

@@ -7,12 +7,12 @@ package models;
 
 /**
  *
- * @author Darrel
+ * @author chris
  */
-public class luckyDuke extends Character{
+public class apacheKid extends Character{
     
-    public luckyDuke(EnumRoles thisRole) {
-        super(8, thisRole);
-        this.charType = EnumCharacters.luckyDuke;
+    public apacheKid (EnumRoles thisRole) {
+        super (9, thisRole);
+        this.charType = EnumCharacters.apacheKid;
     }
 }

@@ -17,50 +17,50 @@ public class Game {
 
     protected int bulletPile;
     protected int arrowPile;
+    protected int chiefArrow;
     protected int numPlayers;
-    protected int dynamite;
-    protected int gatling;
-    protected int beer;
-    protected int oneShot;
-    protected int twoShot;
+    protected int numDynamite;
+    protected int numGatling;
+    protected int numBeer;
+    protected int numOneShot;
+    protected int numTwoShot;
     protected int numOutlaws;
     protected int numRenegades;
     protected ArrayList<EnumRoles> rolesList = new ArrayList<EnumRoles>();
     protected ArrayList<EnumCharacters> charsList = new ArrayList<EnumCharacters>();
     protected ArrayList<Player> players = new ArrayList<Player>();
-    protected Player playerOne;
-    protected Player playerTwo;
-    protected Player playerThree;
-    protected Player playerFour;
-    protected Player playerFive;
-    protected Player playerSix;
-    protected Player playerSeven;
-    protected Player playerEight;
     protected boolean sheriffWin = false;
     protected boolean outlawWin = false;
     protected boolean renegadeWin = false;
     
     private int numGameDice = 5;
-    private DiceBase gameDice;
+    private int numWhiteDie;
+    private int numCowardDie;
+    private int numLoudmouthDie;
+    private int numBlackDie;
+    private int turnRolls = 0;
+    private Dice gameDice;
     private Player currentPlayer;
     private int currentPlayerNumber;
 
     public Game(int numPlayers) {
         this.bulletPile = 70;
         this.arrowPile = 9;
+        this.chiefArrow = 1;
         this.numPlayers = numPlayers;
 
         this.addRoles();
         this.addCharacters();
         this.addPlayers();
 
-        gameDice = new DiceBase(numGameDice);
+        //this.initRoll(5, 0, 0, 0);
         currentPlayer = players.get(0);
         currentPlayerNumber = 0;
 
     }
 
     public void nextTurn() {
+        turnRolls = 0;
         if (currentPlayerNumber == numPlayers) {
             currentPlayerNumber = 0;
         } else {
@@ -143,8 +143,8 @@ public class Game {
         this.charsList.add(EnumCharacters.gregDigger);
         this.charsList.add(EnumCharacters.elGringo);
         this.charsList.add(EnumCharacters.willyTheKid);
-        this.charsList.add(EnumCharacters.tequilaJoe);
-        this.charsList.add(EnumCharacters.joseDelgado);
+        this.charsList.add(EnumCharacters.apacheKid);
+        this.charsList.add(EnumCharacters.billNoFace);
 
         for (int i = 0; i < this.charsList.size(); i++) {
             int swapLocation = (int) (Math.random() * this.charsList.size());
@@ -159,79 +159,45 @@ public class Game {
 
         switch (this.numPlayers) {
             case 4:
-                this.playerOne = new Player(assignCharacter(0));
-                this.playerTwo = new Player(assignCharacter(1));
-                this.playerThree = new Player(assignCharacter(2));
-                this.playerFour = new Player(assignCharacter(3));
-
-                this.players.add(playerOne);
-                this.players.add(playerTwo);
-                this.players.add(playerThree);
-                this.players.add(playerFour);
+                this.players.add(new Player(assignCharacter(0)));
+                this.players.add(new Player(assignCharacter(1)));
+                this.players.add(new Player(assignCharacter(2)));
+                this.players.add(new Player(assignCharacter(3)));
                 break;
             case 5:
-                this.playerOne = new Player(assignCharacter(0));
-                this.playerTwo = new Player(assignCharacter(1));
-                this.playerThree = new Player(assignCharacter(2));
-                this.playerFour = new Player(assignCharacter(3));
-                this.playerFive = new Player(assignCharacter(4));
-
-                this.players.add(playerOne);
-                this.players.add(playerTwo);
-                this.players.add(playerThree);
-                this.players.add(playerFour);
-                this.players.add(playerFive);
+                this.players.add(new Player(assignCharacter(0)));
+                this.players.add(new Player(assignCharacter(1)));
+                this.players.add(new Player(assignCharacter(2)));
+                this.players.add(new Player(assignCharacter(3)));
+                this.players.add(new Player(assignCharacter(4)));
                 break;
             case 6:
-                this.playerOne = new Player(assignCharacter(0));
-                this.playerTwo = new Player(assignCharacter(1));
-                this.playerThree = new Player(assignCharacter(2));
-                this.playerFour = new Player(assignCharacter(3));
-                this.playerFive = new Player(assignCharacter(4));
-                this.playerSix = new Player(assignCharacter(5));
-
-                this.players.add(playerOne);
-                this.players.add(playerTwo);
-                this.players.add(playerThree);
-                this.players.add(playerFour);
-                this.players.add(playerFive);
-                this.players.add(playerSix);
+                this.players.add(new Player(assignCharacter(0)));
+                this.players.add(new Player(assignCharacter(1)));
+                this.players.add(new Player(assignCharacter(2)));
+                this.players.add(new Player(assignCharacter(3)));
+                this.players.add(new Player(assignCharacter(4)));
+                this.players.add(new Player(assignCharacter(5)));
                 break;
             case 7:
-                this.playerOne = new Player(assignCharacter(0));
-                this.playerTwo = new Player(assignCharacter(1));
-                this.playerThree = new Player(assignCharacter(2));
-                this.playerFour = new Player(assignCharacter(3));
-                this.playerFive = new Player(assignCharacter(4));
-                this.playerSix = new Player(assignCharacter(5));
-                this.playerSeven = new Player(assignCharacter(6));
-                this.players.add(playerOne);
-                this.players.add(playerTwo);
-                this.players.add(playerThree);
-                this.players.add(playerFour);
-                this.players.add(playerFive);
-                this.players.add(playerSix);
-                this.players.add(playerSeven);
+                this.players.add(new Player(assignCharacter(0)));
+                this.players.add(new Player(assignCharacter(1)));
+                this.players.add(new Player(assignCharacter(2)));
+                this.players.add(new Player(assignCharacter(3)));
+                this.players.add(new Player(assignCharacter(4)));
+                this.players.add(new Player(assignCharacter(5)));
+                this.players.add(new Player(assignCharacter(6)));
 
                 break;
             case 8:
-                this.playerOne = new Player(assignCharacter(0));
-                this.playerTwo = new Player(assignCharacter(1));
-                this.playerThree = new Player(assignCharacter(2));
-                this.playerFour = new Player(assignCharacter(3));
-                this.playerFive = new Player(assignCharacter(4));
-                this.playerSix = new Player(assignCharacter(5));
-                this.playerSeven = new Player(assignCharacter(6));
-                this.playerEight = new Player(assignCharacter(7));
-
-                this.players.add(playerOne);
-                this.players.add(playerTwo);
-                this.players.add(playerThree);
-                this.players.add(playerFour);
-                this.players.add(playerFive);
-                this.players.add(playerSix);
-                this.players.add(playerSeven);
-                this.players.add(playerEight);
+                this.players.add(new Player(assignCharacter(0)));
+                this.players.add(new Player(assignCharacter(1)));
+                this.players.add(new Player(assignCharacter(2)));
+                this.players.add(new Player(assignCharacter(3)));
+                this.players.add(new Player(assignCharacter(4)));
+                this.players.add(new Player(assignCharacter(5)));
+                this.players.add(new Player(assignCharacter(6)));
+                this.players.add(new Player(assignCharacter(7)));
                 break;
             default:
                 System.out.println("error, Idiot");
@@ -264,11 +230,11 @@ public class Game {
         } else if (this.charsList.get(x) == EnumCharacters.willyTheKid) {
             willyTheKid h = new willyTheKid(this.rolesList.get(x));
             return h;
-        } else if (this.charsList.get(x) == EnumCharacters.tequilaJoe) {
-            tequilaJoe i = new tequilaJoe(this.rolesList.get(x));
+        } else if (this.charsList.get(x) == EnumCharacters.apacheKid) {
+            apacheKid i = new apacheKid(this.rolesList.get(x));
             return i;
-        } else if (this.charsList.get(x) == EnumCharacters.joseDelgado) {
-            joseDelgado j = new joseDelgado(this.rolesList.get(x));
+        } else if (this.charsList.get(x) == EnumCharacters.billNoFace) {
+            billNoFace j = new billNoFace(this.rolesList.get(x));
             return j;
         } else {
             return new Character(11, EnumRoles.Sheriff);
@@ -276,50 +242,58 @@ public class Game {
 
     }
 
-    public void interpretRoll(Character charIn) {
-        if (charIn.getNumRolls() == 1) {
-            this.dynamite = 0;
-            this.beer = 0;
-            this.gatling = 0;
-            this.oneShot = 0;
-            this.twoShot = 0;
+    public void interpretRoll() {
+        if (this.turnRolls == 1) {
+            this.numDynamite = 0;
+            this.numBeer = 0;
+            this.numGatling = 0;
+            this.numOneShot = 0;
+            this.numTwoShot = 0;
 
-            for (int i = 0; i < charIn.getCharDice().getNumDice(); i++) {
-                if (charIn.getCharDice().getDice().get(i).getSide() == WhiteDie.Sides.arrow) {
-                    charIn.addArrows(1, this);
+            for (int i = 0; i < this.numGameDice; i++) {
+                if ( (this.gameDice.getDice().get(i).getSide() == Die.Sides.arrow) && (this.currentPlayer.getMyCharacter().getCharType() != EnumCharacters.billNoFace) ){
+                    this.currentPlayer.addArrows(1, this);
                     this.setArrowPile(this.getArrowPile() - 1);
 
                     if (this.getArrowPile() == 0) {
                         this.indianAttack();
                     }
-                } else if (charIn.getCharDice().getDice().get(i).getSide() == WhiteDie.Sides.dynamite) {
-                    this.dynamite += 1;
-                    charIn.getCharDice().getDice().get(i).lockDie();
-                    if (this.dynamite >= 3) {
-                        charIn.removeBullets(1, this);
+                } 
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.dynamite) {
+                    this.numDynamite += 1;
+                    this.gameDice.getDice().get(i).lockDie();
+                    if (this.numDynamite >= 3) {
+                        this.currentPlayer.removeBullets(1, this);
+                        //next turn?
                         break;
                     }
+                
+                
                 }
-                charIn.getCharDice().getDice().get(i).setRerolled(false);
+                gameDice.getDice().get(i).setRerolled(false);
             }
-
-        } else if (charIn.getNumRolls() <= 3) {
-            for (int i = 0; i < charIn.getCharDice().getNumDice(); i++) {
-                if (charIn.getCharDice().getDice().get(i).getSide() == WhiteDie.Sides.arrow && charIn.getCharDice().getDice().get(i).isRerolled()) {
-                    charIn.addArrows(1, this);
+        }
+        
+        else if (turnRolls <= 3 || ( (currentPlayer.getMyCharacter().getCharType() == EnumCharacters.luckyDuke) && turnRolls <=4)) {
+            for (int i = 0; i < numGameDice; i++) {
+                if (gameDice.getDice().get(i).getSide() == Die.Sides.arrow && gameDice.getDice().get(i).isRerolled() && (this.currentPlayer.getMyCharacter().getCharType() != EnumCharacters.billNoFace)) {
+                    currentPlayer.addArrows(1, this);
                     this.setArrowPile(this.getArrowPile() - 1);
 
                     if (this.getArrowPile() == 0) {
                         this.indianAttack();
                     }
-                } else if (charIn.getCharDice().getDice().get(i).getSide() == WhiteDie.Sides.dynamite && charIn.getCharDice().getDice().get(i).isRerolled()) {
-                    this.dynamite += 1;
-                    charIn.getCharDice().getDice().get(i).lockDie();
-                    if (this.dynamite >= 3) {
+                } 
+                else if (gameDice.getDice().get(i).getSide() == Die.Sides.dynamite && gameDice.getDice().get(i).isRerolled()) {
+                    this.numDynamite += 1;
+                    gameDice.getDice().get(i).lockDie();
+                    if (this.numDynamite >= 3) {
+                        this.currentPlayer.removeBullets(1, this);
+                        //next turn?
                         break;
                     }
                 }
-                charIn.getCharDice().getDice().get(i).setRerolled(false);
+                gameDice.getDice().get(i).setRerolled(false);
             }
         }
     }
@@ -327,30 +301,41 @@ public class Game {
     public void useRoll() {
         for (int i = 0; i < numGameDice; i++) {
             if(gameDice.getDice().get(i).isLocked()){
-                if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.beer) {
-                    useBeer(i);
-                } else if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.one_shot) {
-                    useOneShot(i);
-                } else if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.two_shot) {
-                    useTwoShot(i);
-                } else if (gameDice.getDice().get(i).getSide() == WhiteDie.Sides.gatling) {
-                    this.gatling += 1;
+                if ( (gameDice.getDice().get(i).getSide() == Die.Sides.arrow) && (currentPlayer.getMyCharacter().getCharType() == EnumCharacters.billNoFace) ) {
+                    currentPlayer.addArrows(1, this);
+                    this.setArrowPile(this.getArrowPile() - 1);
+
+                    if (this.getArrowPile() == 0) {
+                        this.indianAttack();
+                    }
                 }
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.beer) {
+                    this.useBeer(i);
+                } 
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.one_shot) {
+                    this.useOneShot(i);
+                } 
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.two_shot) {
+                    this.useTwoShot(i);
+                } 
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.gatling) {
+                    this.numGatling += 1;
+                }  
             }
         }
        
-        if (this.gatling >= 3 || (currentPlayer.getMyCharacter().getCharType() == EnumCharacters.willyTheKid && this.gatling >= 2)) {
-            this.useGatling(currentPlayer.getMyCharacter());
+        if (this.numGatling >= 3 || (this.currentPlayer.getMyCharacter().getCharType() == EnumCharacters.willyTheKid && this.numGatling >= 2)) {
+            this.useGatling();
         }
 
     }
 
-    public void rollDice() {
-        gameDice.rollAllDice();
+    public void initRoll() {
+        this.gameDice = new Dice(this.numWhiteDie, this.numCowardDie, this.numLoudmouthDie, this.numBlackDie);
     }
 
     public void rollDice(int i) {
-        gameDice.rollDice(i);
+        this.gameDice.rollDice(i);
     }
 
     public void useBeer(int die) {
@@ -359,6 +344,9 @@ public class Game {
 
     public void useOneShot(int die) {
         players.get(gameDice.getDice().get(die).getWhosGettingShot()).removeBullets(1, this);
+        if (players.get(gameDice.getDice().get(die).getWhosGettingShot()).getMyCharacter().getCharType() == EnumCharacters.elGringo ){
+            currentPlayer.addArrows(1, this);
+        }
         System.out.println("Whoes Getting shot 1: " + gameDice.getDice().get(die).getWhosGettingShot());
                 System.out.println("Die num: " + die);
 
@@ -366,32 +354,35 @@ public class Game {
 
     public void useTwoShot(int die) {
         players.get(gameDice.getDice().get(die).getWhosGettingShot()).removeBullets(1, this);
+        if (players.get(gameDice.getDice().get(die).getWhosGettingShot()).getMyCharacter().getCharType() == EnumCharacters.elGringo ){
+            currentPlayer.addArrows(1, this);
+        }
         System.out.println("Whoes Getting shot 2: " + gameDice.getDice().get(die).getWhosGettingShot());
         System.out.println("Die num: " + die);
 
     }
 
-    public void useGatling(Character charIn) {
+    public void useGatling() {
         for (int i = 0; i < players.size(); i++) {
-            if (players.get(i).getMyCharacter() != charIn || players.get(i).getMyCharacter().getCharType() != EnumCharacters.paulRegret) {
-                players.get(i).getMyCharacter().removeBullets(1, this);
+            if ( (players.get(i).getMyCharacter().getCharType() != currentPlayer.getMyCharacter().getCharType() ) || ( players.get(i).getMyCharacter().getCharType() != EnumCharacters.paulRegret) ) {
+                players.get(i).removeBullets(1, this);
+                if (players.get(i).getMyCharacter().getCharType() == EnumCharacters.elGringo ){
+                    currentPlayer.addArrows(1, this);
+                }
             }
         }
-        this.setArrowPile(this.arrowPile + charIn.getArrows());
-        charIn.clearArrows(this);
+        currentPlayer.clearArrows(this);
     }
 
     public void indianAttack() {
         for (int i = 0; i < this.players.size(); i++) {
-            this.players.get(i).getMyCharacter().indianAttack(this);
+            this.players.get(i).indianAttack(this);
         }
     }
 
     public void playerTurn(Character charIn) {
-        charIn.initRoll();
-
+        initRoll();
     }
-    
     
     public Player getCurrentPlayer(){
         return currentPlayer;
@@ -403,38 +394,6 @@ public class Game {
     
     public int getNumPlayers(){
         return this.numPlayers;
-    }
-    
-    public Player getPlayerOne() {
-        return playerOne;
-    }
-
-    public Player getPlayerTwo() {
-        return playerTwo;
-    }
-
-    public Player getPlayerThree() {
-        return playerThree;
-    }
-
-    public Player getPlayerFour() {
-        return playerFour;
-    }
-
-    public Player getPlayerFive() {
-        return playerFive;
-    }
-
-    public Player getPlayerSix() {
-        return playerSix;
-    }
-
-    public Player getPlayerSeven() {
-        return playerSeven;
-    }
-
-    public Player getPlayerEight() {
-        return playerEight;
     }
 
     public ArrayList<Player> getPlayers() {
@@ -461,11 +420,19 @@ public class Game {
         this.arrowPile = arrowPile;
     }
 
-    public DiceBase getGameDice() {
+    public int getChiefArrow() {
+        return chiefArrow;
+    }
+
+    public void setChiefArrow(int chiefArrow) {
+        this.chiefArrow = chiefArrow;
+    }
+
+    public Dice getGameDice() {
         return gameDice;
     }
 
-    public void setGameDice(DiceBase gameDice) {
+    public void setGameDice(Dice gameDice) {
         this.gameDice = gameDice;
     }
 
@@ -492,5 +459,22 @@ public class Game {
     public void setRenegadeWin(boolean renegadeWin) {
         this.renegadeWin = renegadeWin;
     }
+
+    public int getNumOutlaws() {
+        return numOutlaws;
+    }
+
+    public void setNumOutlaws(int numOutlaws) {
+        this.numOutlaws = numOutlaws;
+    }
+
+    public int getNumRenegades() {
+        return numRenegades;
+    }
+
+    public void setNumRenegades(int numRenegades) {
+        this.numRenegades = numRenegades;
+    }
+    
 
 }

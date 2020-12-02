@@ -19,7 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import models.DiceBase;
+import models.Dice;
 import models.Player;
 
 public class StartViewController {
@@ -175,7 +175,7 @@ public class StartViewController {
     private void handleRoll_Button(ActionEvent event) {
         //reroll tells us if the dice is to be re reolled or not. true meaning reroll
         for(Integer i=0; i<5; i++){
-            if((!dice_CheckBoxes.get(i).isSelected() && game.getGameDice().getDice().get(i).getSide() != models.WhiteDie.Sides.dynamite)){
+            if((!dice_CheckBoxes.get(i).isSelected() && game.getGameDice().getDice().get(i).getSide() != models.Die.Sides.dynamite)){
                 game.getGameDice().rollDice(i);
                 dice_ImageViews.get(i).setImage(new Image(StartViewController.class.getResourceAsStream(game.getGameDice().getDice().get(i).getSideImageFL())));
                 
@@ -203,14 +203,14 @@ public class StartViewController {
     @FXML
     private void handleConfirmDice_Button(ActionEvent event){
         for(int i=0; i<5; i++){
-             models.WhiteDie.Sides currSide = game.getGameDice().getDice().get(i).getSide();
+             models.Die.Sides currSide = game.getGameDice().getDice().get(i).getSide();
             if(dice_CheckBoxes.get(i).isSelected()){
                 game.getGameDice().getDice().get(i).lockDie();
-                if(currSide == models.WhiteDie.Sides.one_shot || currSide == models.WhiteDie.Sides.two_shot){
+                if(currSide == models.Die.Sides.one_shot || currSide == models.Die.Sides.two_shot){
                     game.getGameDice().getDice().get(i).setWhosGettingShot(Integer.parseInt(dice_ChoiceBoxes.get(i).getValue().toString().substring(dice_ChoiceBoxes.get(i).getValue().toString().length()-1))-1);
                     
                 }
-                else if(currSide == models.WhiteDie.Sides.beer){
+                else if(currSide == models.Die.Sides.beer){
                     game.getGameDice().getDice().get(i).setWhosGettingABeer(Integer.parseInt(dice_ChoiceBoxes.get(i).getValue().toString().substring(dice_ChoiceBoxes.get(i).getValue().toString().length()-1))-1);
                 }
             }
@@ -278,16 +278,16 @@ public class StartViewController {
         }
         
         
-        models.WhiteDie.Sides currSide = game.getGameDice().getDice().get(dieNum).getSide();
-        if(dice_CheckBoxes.get(dieNum).isSelected() && (currSide == models.WhiteDie.Sides.one_shot || currSide == models.WhiteDie.Sides.two_shot||currSide == models.WhiteDie.Sides.beer)){
+        models.Die.Sides currSide = game.getGameDice().getDice().get(dieNum).getSide();
+        if(dice_CheckBoxes.get(dieNum).isSelected() && (currSide == models.Die.Sides.one_shot || currSide == models.Die.Sides.two_shot||currSide == models.Die.Sides.beer)){
             dice_ChoiceBoxes.get(dieNum).setDisable(false);
-            if(currSide == models.WhiteDie.Sides.one_shot){
+            if(currSide == models.Die.Sides.one_shot){
                 dice_ChoiceBoxes.get(dieNum).getItems().clear();
                 ObservableList<String> list = dice_ChoiceBoxes.get(dieNum).getItems();
                 list.add("Player " + (playerRightNumber+1));
                 list.add("Player " + (playerLeftNumber+1));
             }
-            if(currSide == models.WhiteDie.Sides.two_shot){
+            if(currSide == models.Die.Sides.two_shot){
                 dice_ChoiceBoxes.get(dieNum).getItems().clear();
                 ObservableList<String> list = dice_ChoiceBoxes.get(dieNum).getItems();
                 list.add("Player " + (player2RightNumber+1));

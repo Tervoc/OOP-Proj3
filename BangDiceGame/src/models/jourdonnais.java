@@ -15,11 +15,5 @@ public class jourdonnais extends Character{
         super(7, thisRole);
         this.charType = EnumCharacters.jourdonnais;
     }
-        
-        public void indianAttack(Game theGame) {
-            if(this.arrows >= 1){
-                this.bullets = this.bullets - 1; //Jourdonnais only lose 1 bullet due to his ablity.
-            }
-            this.clearArrows(theGame);
-    }
+
 }

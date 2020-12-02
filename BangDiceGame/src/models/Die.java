@@ -6,42 +6,95 @@
 
 package models;
 import java.lang.Math; 
+import java.util.ArrayList;
 /**
  *
  * @author Troll
  */
 //instantiatting the die class creates an object with a random Sides value
-public class WhiteDie {
+public class Die {
     public enum Sides{
         arrow,
         dynamite,
         gatling,
         one_shot,
         two_shot,
-        beer}; 
-    //To use the Sides enum in other classes ues WhiteDie.Sides.arrow or whichever
+        beer,
+        double_one_shot,
+        double_two_shot,
+        double_gatling,
+        bullet,
+        double_beer,
+        broken_arrow,
+        duel,
+        whiskey_bottle
+    }; 
+    public enum DieType {
+      white,
+      coward,
+      loudmouth,
+      black
+    };
+    //To use the Sides enum in other classes ues Die.Sides.arrow or whichever
     //you need.
     
     public Sides[] sidesList = Sides.values();
     //sidesList is created so we can access the sides enum by index Sides.values
     //retunrs the values of the enum as an array. This is used in the roll function
 
-    private Sides side;  
+    protected Sides side;  
     
-    private boolean locked = false;
-    private boolean rerolled = false;
-    private int whosGettingShot = -1;
-    private int whosGettingABeer = -1;
+    protected boolean locked = false;
+    protected boolean rerolled = false;
+    protected int whosGettingShot = -1;
+    protected int whosGettingABeer = -1;
+    private DieType dieType;
+    private ArrayList <Sides> validSides = new ArrayList <Sides>();
     
               
-    public WhiteDie(){
+    public Die(DieType type){
+        this.dieType = type;
+        
        roll(); 
     }
     
-    public void roll(){
+    public void roll() {
+        this.validSides.clear();
+       if(this.dieType == DieType.white){
+            this.validSides.add(Sides.arrow);
+            this.validSides.add(Sides.beer);
+            this.validSides.add(Sides.one_shot);
+            this.validSides.add(Sides.two_shot);
+            this.validSides.add(Sides.gatling);
+            this.validSides.add(Sides.dynamite);
+        }
+        else if(this.dieType == DieType.loudmouth){
+            this.validSides.add(Sides.arrow);
+            this.validSides.add(Sides.bullet);
+            this.validSides.add(Sides.double_one_shot);
+            this.validSides.add(Sides.double_two_shot);
+            this.validSides.add(Sides.double_gatling);
+            this.validSides.add(Sides.dynamite);
+        }
+        else if(this.dieType == DieType.coward){
+            this.validSides.add(Sides.arrow);
+            this.validSides.add(Sides.beer);
+            this.validSides.add(Sides.one_shot);
+            this.validSides.add(Sides.double_beer);
+            this.validSides.add(Sides.broken_arrow);
+            this.validSides.add(Sides.dynamite);
+        }
+        else {
+            this.validSides.add(Sides.arrow);
+            this.validSides.add(Sides.whiskey_bottle);
+            this.validSides.add(Sides.duel);
+            this.validSides.add(Sides.duel);
+            this.validSides.add(Sides.gatling);
+            this.validSides.add(Sides.dynamite);
+        }
         whosGettingShot = -1;
         whosGettingABeer = -1;
-        this.side = sidesList[(int)(Math.random() * 5)];
+        this.side = validSides.get( (int)(Math.random() * 5) );
         this.locked = false;
         //math .random retunrs a value between 0 and 1 and we multiply by 5 to
         //get a value between 0 and 5 bc we have 6 sides
@@ -84,7 +137,7 @@ public class WhiteDie {
         return "error";
     }
     public Sides getSide(){
-        return side;
+        return this.side;
     }
     public void lockDie () {
         this.locked = true;
