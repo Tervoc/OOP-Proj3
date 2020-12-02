@@ -171,6 +171,13 @@ public class Player {
         return myChar;
     }
     
+    public int getNumRolls(){
+        return this.numRolls;
+    }
+    public void setNumRolls(int numRolls){
+        this.numRolls = numRolls;
+    }
+    
     //this is the player group set on the gui
     public void setPlayerGroup(Group playerGroup){
             this.playerGroup = playerGroup;
@@ -202,6 +209,11 @@ public class Player {
         Role = temp;
     }
     
+<<<<<<< Updated upstream
+=======
+  
+    
+>>>>>>> Stashed changes
     public int getBullets() { //returns number of bullets
         return bullets;
     }

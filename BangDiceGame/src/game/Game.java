@@ -53,9 +53,15 @@ public class Game {
         this.addCharacters();
         this.addPlayers();
 
+
         //this.initRoll(5, 0, 0, 0);
         currentPlayer = players.get(0);
         currentPlayerNumber = 0;
+
+        this.gameDice = new Dice(numGameDice);
+        this.currentPlayer = this.players.get(0);
+        this.currentPlayerNumber = 0;
+
 
     }
 
@@ -66,7 +72,21 @@ public class Game {
         } else {
             currentPlayerNumber++;
         }
-        currentPlayer = players.get(currentPlayerNumber);
+        boolean findNextPlayer = true;
+        while(findNextPlayer){
+            if (this.currentPlayerNumber == this.numPlayers) {
+                this.currentPlayerNumber = 0;
+            } else {
+                this.currentPlayerNumber++;
+            }
+            if(!this.players.get(this.currentPlayerNumber).amIDead()){
+                this.currentPlayer = this.players.get(this.currentPlayerNumber);
+
+                this.currentPlayer.setNumRolls(0); 
+                findNextPlayer = false;
+            }
+
+        }
     }
 
     private void addRoles() {
@@ -330,17 +350,25 @@ public class Game {
 
     }
 
+
     public void initRoll() {
         this.gameDice = new Dice(this.numWhiteDie, this.numCowardDie, this.numLoudmouthDie, this.numBlackDie);
+    }
+    public void rollDice() {
+        
+        gameDice.rollAllDice();
+
     }
 
     public void rollDice(int i) {
         this.gameDice.rollDice(i);
     }
+    
 
     public void useBeer(int die) {
         players.get(gameDice.getDice().get(die).getWhosGettingABeer()).addBullets(1, this);
     }
+    
 
     public void useOneShot(int die) {
         players.get(gameDice.getDice().get(die).getWhosGettingShot()).removeBullets(1, this);
