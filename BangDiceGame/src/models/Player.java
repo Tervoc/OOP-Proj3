@@ -201,7 +201,7 @@ public class Player {
     {
         Role = temp;
     }
-
+    
     public int getBullets() { //returns number of bullets
         return bullets;
     }

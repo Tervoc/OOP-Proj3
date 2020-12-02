@@ -66,11 +66,6 @@ public class Game {
 
     public void nextTurn() {
         turnRolls = 0;
-        if (currentPlayerNumber == numPlayers) {
-            currentPlayerNumber = 0;
-        } else {
-            currentPlayerNumber++;
-        }
         boolean findNextPlayer = true;
         while(findNextPlayer){
             if (this.currentPlayerNumber == this.numPlayers) {
@@ -80,7 +75,6 @@ public class Game {
             }
             if(!this.players.get(this.currentPlayerNumber).amIDead()){
                 this.currentPlayer = this.players.get(this.currentPlayerNumber);
- 
                 findNextPlayer = false;
             }
 
@@ -261,6 +255,7 @@ public class Game {
     }
 
     public void interpretRoll() {
+        this.turnRolls++;
         if (this.turnRolls == 1) {
             this.numDynamite = 0;
             this.numBeer = 0;
@@ -458,6 +453,15 @@ public class Game {
     public void setGameDice(Dice gameDice) {
         this.gameDice = gameDice;
     }
+
+    public int getTurnRolls() {
+        return turnRolls;
+    }
+
+    public void setTurnRolls(int turnRolls) {
+        this.turnRolls = turnRolls;
+    }
+    
 
     public boolean isSheriffWin() {
         return sheriffWin;

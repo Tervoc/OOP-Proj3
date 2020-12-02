@@ -59,7 +59,7 @@
             <CheckBox fx:id="die3_CheckBox" layoutX="170.0" layoutY="560.0" mnemonicParsing="false" onAction="#handleDie3_CheckBox" text="Die 3" />
             <CheckBox fx:id="die5_CheckBox" layoutX="319.0" layoutY="560.0" mnemonicParsing="false" onAction="#handleDie5_CheckBox" text="Die 5" />
             <Button layoutX="543.0" layoutY="556.0" mnemonicParsing="false" onAction="#handleConfirmDice_Button" text="Confirm Dice" />
-            <ImageView fitHeight="42.0" fitWidth="110.0" layoutX="279.0" layoutY="224.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="42.0" fitWidth="110.0" layoutX="279.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@ArrowCard.jpg" />
                </image>

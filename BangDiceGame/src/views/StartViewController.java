@@ -144,16 +144,16 @@ public class StartViewController {
             Player player = game.getPlayers().get(i);
             Group playerGroup = player.getPlayerGroup();
 
-            Label roleLabel = (Label) playerGroup.getChildren().get(2);
+            Label roleLabel = (Label) playerGroup.getChildren().get(3);
             roleLabel.setText("Role: " + player.getMyCharacter().getRole().getRoleAsString());
 
-            Label charLabel = (Label) playerGroup.getChildren().get(3);
+            Label charLabel = (Label) playerGroup.getChildren().get(4);
             charLabel.setText("Character: " + player.getMyCharacter().getCharType().getCharacterAsString());
 
-            Label bulletsLabel = (Label) playerGroup.getChildren().get(4);
+            Label bulletsLabel = (Label) playerGroup.getChildren().get(5);
             bulletsLabel.setText("Bullets: " + player.getBullets());
 
-            Label arrowLabel = (Label) playerGroup.getChildren().get(5);
+            Label arrowLabel = (Label) playerGroup.getChildren().get(6);
             arrowLabel.setText("Arrows: " + player.getArrows());
 
             playerGroup.getChildren().get(2).equals(roleLabel);
@@ -174,12 +174,16 @@ public class StartViewController {
     //Handles what heappens when the roll button is clicked
     private void handleRoll_Button(ActionEvent event) {
         //reroll tells us if the dice is to be re reolled or not. true meaning reroll
-        for(Integer i=0; i<5; i++){
-            if((!dice_CheckBoxes.get(i).isSelected() && game.getGameDice().getDice().get(i).getSide() != models.Die.Sides.dynamite)){
-                game.getGameDice().rollDice(i);
-                dice_ImageViews.get(i).setImage(new Image(StartViewController.class.getResourceAsStream(game.getGameDice().getDice().get(i).getSideImageFL())));
-                
+        if(!(game.getTurnRolls() >= 3)){
+            for(Integer i=0; i<5; i++){
+                if(game.getGameDice().getDice().get(i).isLocked()){
+                    game.getGameDice().rollDice(i);
+                    dice_ImageViews.get(i).setImage(new Image(StartViewController.class.getResourceAsStream(game.getGameDice().getDice().get(i).getSideImageFL())));
+
+                }
             }
+        }else{
+            messages_TextArea.setText("You are out of rolls, bitch");
         }
     }
     
@@ -248,6 +252,8 @@ public class StartViewController {
         int playerRightNumber= -1;
         int player2LeftNumber = -1;
         int player2RightNumber = -1;
+        
+        game.getGameDice().getDice().get(dieNum).lockDie();
         int currPlayerNum = game.getCurrentPlayerNumber();
         int numPlayers = game.getNumPlayers() -1;
         if(currPlayerNum > 1 && currPlayerNum < numPlayers - 1){
