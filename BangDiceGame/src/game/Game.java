@@ -29,6 +29,7 @@ public class Game {
     protected ArrayList<EnumRoles> rolesList = new ArrayList<EnumRoles>();
     protected ArrayList<EnumCharacters> charsList = new ArrayList<EnumCharacters>();
     protected ArrayList<Player> players = new ArrayList<Player>();
+    private ArrayList<Player> playersReference = new ArrayList<Player>();
     protected boolean sheriffWin = false;
     protected boolean outlawWin = false;
     protected boolean renegadeWin = false;
@@ -53,7 +54,7 @@ public class Game {
         this.addCharacters();
         this.addPlayers();
 
-
+        this.playersReference = players;
         currentPlayer = players.get(0);
         currentPlayerNumber = 0;
 
@@ -264,11 +265,11 @@ public class Game {
             this.numTwoShot = 0;
 
             for (int i = 0; i < this.numGameDice; i++) {
-                if ( (this.gameDice.getDice().get(i).getSide() == Die.Sides.arrow) && (this.currentPlayer.getMyCharacter().getCharType() != EnumCharacters.billNoFace) ){
-                    this.currentPlayer.addArrows(1, this);
-                    this.setArrowPile(this.getArrowPile() - 1);
+                if ((this.gameDice.getDice().get(i).getSide() == Die.Sides.arrow) && (this.currentPlayer.getMyCharacter().getCharType() != EnumCharacters.billNoFace) ){
+                    currentPlayer.addArrows(1, this);
+                    //this.setArrowPile(this.getArrowPile() - 1);
 
-                    if (this.getArrowPile() == 0) {
+                    if (this.getArrowPile() <= 0) {
                         this.indianAttack();
                     }
                 } 
@@ -286,11 +287,11 @@ public class Game {
         
         else if (turnRolls <= 3 || ( (currentPlayer.getMyCharacter().getCharType() == EnumCharacters.luckyDuke) && turnRolls <=4)) {
             for (int i = 0; i < numGameDice; i++) {
-                if (gameDice.getDice().get(i).getSide() == Die.Sides.arrow && gameDice.getDice().get(i).isLocked() && (this.currentPlayer.getMyCharacter().getCharType() != EnumCharacters.billNoFace)) {
+                if (gameDice.getDice().get(i).getSide() == Die.Sides.arrow && !gameDice.getDice().get(i).isLocked() && (this.currentPlayer.getMyCharacter().getCharType() != EnumCharacters.billNoFace)) {
                     currentPlayer.addArrows(1, this);
-                    this.setArrowPile(this.getArrowPile() - 1);
+                    //this.setArrowPile(this.getArrowPile() - 1);
 
-                    if (this.getArrowPile() == 0) {
+                    if (this.getArrowPile() <= 0) {
                         this.indianAttack();
                     }
                 } 
@@ -314,8 +315,9 @@ public class Game {
                     currentPlayer.addArrows(1, this);
                     this.setArrowPile(this.getArrowPile() - 1);
 
-                    if (this.getArrowPile() == 0) {
+                    if (this.getArrowPile() <= 0) {
                         this.indianAttack();
+                        this.arrowPile = 9;
                     }
                 }
                 else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.beer) {
@@ -365,8 +367,7 @@ public class Game {
         if (players.get(gameDice.getDice().get(die).getWhosGettingShot()).getMyCharacter().getCharType() == EnumCharacters.elGringo ){
             currentPlayer.addArrows(1, this);
         }
-        System.out.println("Whoes Getting shot 1: " + gameDice.getDice().get(die).getWhosGettingShot());
-                System.out.println("Die num: " + die);
+        
 
     }
 
@@ -375,8 +376,7 @@ public class Game {
         if (players.get(gameDice.getDice().get(die).getWhosGettingShot()).getMyCharacter().getCharType() == EnumCharacters.elGringo ){
             currentPlayer.addArrows(1, this);
         }
-        System.out.println("Whoes Getting shot 2: " + gameDice.getDice().get(die).getWhosGettingShot());
-        System.out.println("Die num: " + die);
+        
 
     }
 
@@ -413,6 +413,7 @@ public class Game {
     public int getNumPlayers(){
         return this.numPlayers;
     }
+    
 
     public ArrayList<Player> getPlayers() {
         return players;
@@ -421,6 +422,11 @@ public class Game {
     public void setPlayers(ArrayList<Player> playersIn) {
         this.players = playersIn;
     }
+
+    public ArrayList<Player> getPlayersReference() {
+        return playersReference;
+    }
+    
 
     public int getBulletPile() {
         return bulletPile;

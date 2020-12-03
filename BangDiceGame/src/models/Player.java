@@ -9,6 +9,7 @@ package models;
 import game.Game;
 import java.util.ArrayList;
 import javafx.scene.Group;
+import views.StartViewController;
 //import models.*;
 /**
  *
@@ -28,6 +29,7 @@ public class Player {
     private String number = "";
     private boolean AI = true;
     protected boolean amIDead = false;
+    private boolean hasConfirmedDice = false;
 
     
     public Player(Character myChar) {
@@ -53,9 +55,10 @@ public class Player {
         }
         
         this.bullets -= bullets;
+        
         theGame.setBulletPile(theGame.getBulletPile()+bullets);
         
-        if (this.bullets == 0) {
+        if (this.bullets <= 0) {
             this.killMe(theGame);
         }
     }
@@ -70,14 +73,15 @@ public class Player {
     
     public void killMe (Game theGame) {
         this.setDead();
-        for (int i = 0; i < theGame.getPlayers().size();i++) {
-            if(theGame.getPlayers().get(i).getMyCharacter().getCharType() == this.getMyCharacter().getCharType()) {
-                ArrayList <Player> temp = new ArrayList <Player> ();
-                temp = theGame.getPlayers();
-                temp.remove(i);
-                theGame.setPlayers(temp);
-            }
-        }
+        
+//        for (int i = 0; i < theGame.getPlayers().size();i++) {
+//            if(theGame.getPlayers().get(i).getMyCharacter().getCharType() == this.getMyCharacter().getCharType()) {
+//                ArrayList <Player> temp = new ArrayList <Player> ();
+//                temp = theGame.getPlayers();
+//                temp.remove(i);
+//                theGame.setPlayers(temp);
+//            }
+//        }
         if(this.getMyCharacter().role == EnumRoles.Outlaw) {
             theGame.setNumOutlaws(theGame.getNumOutlaws() - 1);
         }
@@ -182,6 +186,14 @@ public class Player {
     public String getAbility()
     {
         return ability;
+    }
+
+    public boolean isHasConfirmedDice() {
+        return hasConfirmedDice;
+    }
+
+    public void setHasConfirmedDice(boolean hasConfirmedDice) {
+        this.hasConfirmedDice = hasConfirmedDice;
     }
     
     public int getMaxBullets() {

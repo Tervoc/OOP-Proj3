@@ -133,16 +133,28 @@ public class StartViewController {
                 game.getPlayers().get(i).setPlayerGroup(player_Group);
 
             }
+            
             updateGamePane();
         } else {
             messages_TextArea.setText("Please enter a number between 4 and 8");
         }
+         for(Integer i=0; i<5; i++){
+            game.getGameDice().rollDice(i);
+            dice_ImageViews.get(i).setImage(new Image(StartViewController.class.getResourceAsStream(game.getGameDice().getDice().get(i).getSideImageFL())));
+
+        }
     }
 
     public void updateGamePane() {
+        
         for (int i = 0; i < game.getPlayers().size(); i++) {
             Player player = game.getPlayers().get(i);
             Group playerGroup = player.getPlayerGroup();
+            
+         
+            ImageView skullImage = (ImageView) playerGroup.getChildren().get(2);
+            skullImage.setVisible(player.amIDead());
+            
 
             Label roleLabel = (Label) playerGroup.getChildren().get(3);
             roleLabel.setText("Role: " + player.getMyCharacter().getRole().getRoleAsString());
@@ -175,13 +187,16 @@ public class StartViewController {
     private void handleRoll_Button(ActionEvent event) {
         //reroll tells us if the dice is to be re reolled or not. true meaning reroll
         if(!(game.getTurnRolls() >= 3)){
+           
             for(Integer i=0; i<5; i++){
-                if(game.getGameDice().getDice().get(i).isLocked()){
+                if(!game.getGameDice().getDice().get(i).isLocked()){
                     game.getGameDice().rollDice(i);
                     dice_ImageViews.get(i).setImage(new Image(StartViewController.class.getResourceAsStream(game.getGameDice().getDice().get(i).getSideImageFL())));
 
                 }
             }
+            game.interpretRoll();
+            this.updateGamePane();
         }else{
             messages_TextArea.setText("You are out of rolls, bitch");
         }
@@ -190,6 +205,7 @@ public class StartViewController {
     @FXML
     //rerolls all dice 
     private void handleNextTurn_Button(ActionEvent event){
+        game.getCurrentPlayer().setHasConfirmedDice(false);
         for(Integer i=0; i<5; i++){
             game.getGameDice().rollDice(i);
             dice_ImageViews.get(i).setImage(new Image(StartViewController.class.getResourceAsStream(game.getGameDice().getDice().get(i).getSideImageFL())));
@@ -206,21 +222,25 @@ public class StartViewController {
     
     @FXML
     private void handleConfirmDice_Button(ActionEvent event){
-        for(int i=0; i<5; i++){
-             models.Die.Sides currSide = game.getGameDice().getDice().get(i).getSide();
-            if(dice_CheckBoxes.get(i).isSelected()){
-                game.getGameDice().getDice().get(i).lockDie();
-                if(currSide == models.Die.Sides.one_shot || currSide == models.Die.Sides.two_shot){
-                    game.getGameDice().getDice().get(i).setWhosGettingShot(Integer.parseInt(dice_ChoiceBoxes.get(i).getValue().toString().substring(dice_ChoiceBoxes.get(i).getValue().toString().length()-1))-1);
-                    
-                }
-                else if(currSide == models.Die.Sides.beer){
-                    game.getGameDice().getDice().get(i).setWhosGettingABeer(Integer.parseInt(dice_ChoiceBoxes.get(i).getValue().toString().substring(dice_ChoiceBoxes.get(i).getValue().toString().length()-1))-1);
-                }
-            }
+        if(!game.getCurrentPlayer().isHasConfirmedDice()){
             
+            game.getCurrentPlayer().setHasConfirmedDice(true);
+            for(int i=0; i<5; i++){
+                 models.Die.Sides currSide = game.getGameDice().getDice().get(i).getSide();
+                if(dice_CheckBoxes.get(i).isSelected()){
+                    game.getGameDice().getDice().get(i).lockDie();
+                    if(currSide == models.Die.Sides.one_shot || currSide == models.Die.Sides.two_shot){
+                        game.getGameDice().getDice().get(i).setWhosGettingShot(Integer.parseInt(dice_ChoiceBoxes.get(i).getValue().toString().substring(dice_ChoiceBoxes.get(i).getValue().toString().length()-1))-1);
+
+                    }
+                    else if(currSide == models.Die.Sides.beer){
+                        game.getGameDice().getDice().get(i).setWhosGettingABeer(Integer.parseInt(dice_ChoiceBoxes.get(i).getValue().toString().substring(dice_ChoiceBoxes.get(i).getValue().toString().length()-1))-1);
+                    }
+                }
+
+            }
+           game.useRoll();
         }
-       game.useRoll();
        updateGamePane();
     }
     @FXML
@@ -253,7 +273,7 @@ public class StartViewController {
         int player2LeftNumber = -1;
         int player2RightNumber = -1;
         
-        game.getGameDice().getDice().get(dieNum).lockDie();
+        
         int currPlayerNum = game.getCurrentPlayerNumber();
         int numPlayers = game.getNumPlayers() -1;
         if(currPlayerNum > 1 && currPlayerNum < numPlayers - 1){
@@ -282,6 +302,12 @@ public class StartViewController {
             playerRightNumber = 0;
             player2RightNumber = 1;
         }
+        if(!dice_CheckBoxes.get(dieNum).isSelected()){
+            game.getGameDice().getDice().get(dieNum).unlockDie();
+        }
+        if(dice_CheckBoxes.get(dieNum).isSelected()){
+            game.getGameDice().getDice().get(dieNum).lockDie();
+        }
         
         
         models.Die.Sides currSide = game.getGameDice().getDice().get(dieNum).getSide();
@@ -298,6 +324,13 @@ public class StartViewController {
                 ObservableList<String> list = dice_ChoiceBoxes.get(dieNum).getItems();
                 list.add("Player " + (player2RightNumber+1));
                 list.add("Player " + (player2LeftNumber+1));
+            }
+            if(currSide == models.Die.Sides.beer){
+                dice_ChoiceBoxes.get(dieNum).getItems().clear();
+                ObservableList<String> list = dice_ChoiceBoxes.get(dieNum).getItems();
+                for(int i=0; i<game.getNumPlayers(); i++){
+                    list.add("Player " + (i+1));
+                }
             }
         }else{
             dice_ChoiceBoxes.get(dieNum).setDisable(true);
@@ -326,6 +359,7 @@ public class StartViewController {
         dice_ChoiceBoxes.add(die4_ChoiceBox);
         dice_ChoiceBoxes.add(die5_ChoiceBox);
         
+       
         
         this.main = main;
     }
