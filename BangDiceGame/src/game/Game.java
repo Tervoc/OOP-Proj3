@@ -15,12 +15,13 @@ import java.util.ArrayList;
  */
 public class Game {
 
-    protected int bulletPile;
+    protected int bulletPile = 100;
     protected int arrowPile;
     protected int chiefArrow;
     protected int numPlayers;
     protected int numDynamite;
     protected int numGatling;
+    protected int numDoubleGatling;
     protected int numBeer;
     protected int numOneShot;
     protected int numTwoShot;
@@ -33,6 +34,8 @@ public class Game {
     protected boolean sheriffWin = false;
     protected boolean outlawWin = false;
     protected boolean renegadeWin = false;
+    protected boolean takeChiefArrow = false;
+    protected boolean removeBrokenArrow = false;
     
     private int numGameDice = 5;
     private int numWhiteDie;
@@ -265,14 +268,27 @@ public class Game {
             this.numTwoShot = 0;
 
             for (int i = 0; i < this.numGameDice; i++) {
-                if ((this.gameDice.getDice().get(i).getSide() == Die.Sides.arrow) && (this.currentPlayer.getMyCharacter().getCharType() != EnumCharacters.billNoFace) ){
-                    currentPlayer.addArrows(1, this);
-                    //this.setArrowPile(this.getArrowPile() - 1);
+                if ( (this.gameDice.getDice().get(i).getSide() == Die.Sides.arrow) && (this.currentPlayer.getMyCharacter().getCharType() != EnumCharacters.billNoFace) ){
+                    if (takeChiefArrow && this.chiefArrow == 0) {
+                        this.currentPlayer.addChiefArrow(this);
+                        this.takeChiefArrow = false;
+                    }
+                    this.currentPlayer.addArrows(1, this);
 
                     if (this.getArrowPile() <= 0) {
                         this.indianAttack();
                     }
                 } 
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.broken_arrow) {
+                    if (removeBrokenArrow){
+                        this.currentPlayer.removeArrows(1, this);
+                    }
+                    this.removeBrokenArrow = false;
+                    
+                }
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.bullet) {
+                    this.currentPlayer.removeBullets(1, this);
+                }
                 else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.dynamite) {
                     this.numDynamite += 1;
                     this.gameDice.getDice().get(i).lockDie();
@@ -287,14 +303,27 @@ public class Game {
         
         else if (turnRolls <= 3 || ( (currentPlayer.getMyCharacter().getCharType() == EnumCharacters.luckyDuke) && turnRolls <=4)) {
             for (int i = 0; i < numGameDice; i++) {
-                if (gameDice.getDice().get(i).getSide() == Die.Sides.arrow && !gameDice.getDice().get(i).isLocked() && (this.currentPlayer.getMyCharacter().getCharType() != EnumCharacters.billNoFace)) {
-                    currentPlayer.addArrows(1, this);
-                    //this.setArrowPile(this.getArrowPile() - 1);
+                if (gameDice.getDice().get(i).getSide() == Die.Sides.arrow && gameDice.getDice().get(i).isLocked() && (this.currentPlayer.getMyCharacter().getCharType() != EnumCharacters.billNoFace)) {
+                    if (takeChiefArrow && this.chiefArrow == 0) {
+                        this.currentPlayer.addChiefArrow(this);
+                        this.takeChiefArrow = false;
+                    }
+                    this.currentPlayer.addArrows(1, this);
 
                     if (this.getArrowPile() <= 0) {
                         this.indianAttack();
                     }
                 } 
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.broken_arrow && gameDice.getDice().get(i).isLocked()) {
+                    if (removeBrokenArrow){
+                        this.currentPlayer.removeArrows(1, this);
+                    }
+                    this.removeBrokenArrow = false;
+                    
+                }
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.bullet && gameDice.getDice().get(i).isLocked()) {
+                    this.currentPlayer.removeBullets(1, this);
+                }
                 else if (gameDice.getDice().get(i).getSide() == Die.Sides.dynamite && gameDice.getDice().get(i).isLocked()) {
                     this.numDynamite += 1;
                     gameDice.getDice().get(i).lockDie();
@@ -313,7 +342,6 @@ public class Game {
             if(gameDice.getDice().get(i).isLocked() ) {
                 if ( (gameDice.getDice().get(i).getSide() == Die.Sides.arrow) && (currentPlayer.getMyCharacter().getCharType() == EnumCharacters.billNoFace) ) {
                     currentPlayer.addArrows(1, this);
-                    this.setArrowPile(this.getArrowPile() - 1);
 
                     if (this.getArrowPile() <= 0) {
                         this.indianAttack();
@@ -331,11 +359,33 @@ public class Game {
                 } 
                 else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.gatling) {
                     this.numGatling += 1;
+                }
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.double_one_shot) {
+                    this.useOneShot(i);
+                    this.useOneShot(i);
                 }  
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.double_two_shot) {
+                    this.useTwoShot(i);
+                    this.useTwoShot(i);
+                }  
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.double_gatling) {
+                    this.numDoubleGatling += 1;
+                }  
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.double_beer) {
+                    this.useBeer(i);
+                    this.useBeer(i);
+                }  
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.duel) {
+                    this.numGatling += 1;
+                }  
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.whiskey_bottle) {
+                    this.numGatling += 1;
+                }    
+                
             }
         }
        
-        if (this.numGatling >= 3 || (this.currentPlayer.getMyCharacter().getCharType() == EnumCharacters.willyTheKid && this.numGatling >= 2)) {
+        if ( (this.numGatling + (2*this.numDoubleGatling) ) >= 3 || (this.currentPlayer.getMyCharacter().getCharType() == EnumCharacters.willyTheKid && (this.numGatling + (2*this.numDoubleGatling) ) >= 2)) {
             this.useGatling();
         }
 
@@ -346,8 +396,7 @@ public class Game {
         this.gameDice = new Dice(this.numWhiteDie, this.numCowardDie, this.numLoudmouthDie, this.numBlackDie);
     }
     
-    public void rollDice() {
-        
+    public void rollDice() {  
         gameDice.rollAllDice();
 
     }
@@ -391,7 +440,7 @@ public class Game {
         }
         currentPlayer.clearArrows(this);
     }
-
+ 
     public void indianAttack() {
         for (int i = 0; i < this.players.size(); i++) {
             this.players.get(i).indianAttack(this);

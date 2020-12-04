@@ -32,8 +32,12 @@ public class Character {
         return bullets;
     }
     
-    public void pedroAbility(int bullets,Player myPlayer, Game theGame) {
+    public void pedroAbility(Player myPlayer, Game theGame) {
      
+    }
+    
+    public void apacheKidAbility(int arrows, Player playerIn, Game theGame) {
+        
     }
 
     public EnumCharacters getCharType() {

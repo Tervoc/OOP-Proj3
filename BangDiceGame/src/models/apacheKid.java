@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package models;
+import game.Game;
 
 /**
  *
@@ -11,8 +12,25 @@ package models;
  */
 public class apacheKid extends Character{
     
+    boolean takeChiefArrow = true;
+    
     public apacheKid (EnumRoles thisRole) {
         super (9, thisRole);
         this.charType = EnumCharacters.apacheKid;
+    }
+    
+    public void apacheKidAbility (int arrows, Player playerIn, Game theGame) {
+        if (takeChiefArrow) {
+            for (int i = 0; i < theGame.getNumPlayers(); i++) {
+                if (theGame.getPlayers().get(i).getChiefArrow() > 0 ) {
+                    theGame.getPlayers().get(i).removeChiefArrow(theGame);
+                    playerIn.addChiefArrow(theGame);
+                }
+            }
+        }
+        else {
+            playerIn.setArrows(playerIn.getArrows() + arrows);
+            theGame.setArrowPile(theGame.getArrowPile() - arrows);
+        }
     }
 }

@@ -51,7 +51,7 @@ public class Player {
 
     public void removeBullets(int bullets, Game theGame) { //remove a number of bullets from a character
         if (this.getMyCharacter().getCharType() == EnumCharacters.pedroRamirez) {
-            this.getMyCharacter().pedroAbility(bullets, this, theGame);
+            this.getMyCharacter().pedroAbility(this, theGame);
         }
         
         this.bullets -= bullets;
@@ -115,10 +115,19 @@ public class Player {
         this.chiefArrow = 0;
         theGame.setChiefArrow(1);
     }
+
+    public int getChiefArrow() {
+        return chiefArrow;
+    }
     
     public void addArrows(int arrows, Game theGame) { //add number of arrows to character
-        this.arrows += arrows;
-        theGame.setArrowPile(theGame.getArrowPile()-arrows);
+        if (theGame.getCurrentPlayer().getMyCharacter().getCharType() == EnumCharacters.apacheKid) {
+            theGame.getCurrentPlayer().getMyCharacter().apacheKidAbility(arrows, theGame.getCurrentPlayer(), theGame);
+        }
+        else {
+            this.arrows += arrows;
+            theGame.setArrowPile(theGame.getArrowPile()-arrows);
+        }
     }
 
     public void removeArrows(int arrows, Game theGame) { //remove number of arrows from character
@@ -223,5 +232,10 @@ public class Player {
        
         
     }
+
+    public void setArrows(int arrows) {
+        this.arrows = arrows;
+    }
+    
 
 }
