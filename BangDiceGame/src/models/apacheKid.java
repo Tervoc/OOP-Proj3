@@ -7,7 +7,7 @@ package models;
 import game.Game;
 
 /**
- *
+ * Character module for the Apache Kid
  * @author chris
  */
 public class apacheKid extends Character{

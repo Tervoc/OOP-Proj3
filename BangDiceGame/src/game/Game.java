@@ -8,36 +8,124 @@ package game;
 import models.Character;
 import models.*;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
- *
- * @author chris
+ * This is a game class for the game BANG!
+ * @see import models.Character
+ * @see import models.*
+ * @see java.util.ArrayList
+ * 
+ * @author Christian, Darrel, Andrew
+ * Java doc Editor Michael
  */
 public class Game {
 
     protected int bulletPile = 100;
+    /**
+     * Creates a integer variable <em> bulletPile </em> 
+     */
+
+    /**
+     * Creates a integer variable <em> arrowPile </em> 
+     */
     protected int arrowPile;
+
+    /**
+     * Creates a integer variable <em> chiefArrow </em> 
+     */
     protected int chiefArrow;
+
+    /**
+     * Creates a integer variable <em> numPlayers </em> 
+     */
     protected int numPlayers;
     protected int numBrokenArrow;
     protected int numBullet;
     protected int numDynamite;
     protected int numWhiskey;
-    protected int numOneShot;
-    protected int numTwoShot;
-     protected int numBeer;
+
+    /**
+     * Creates a integer variable <em> numDynamite </em> 
+     */
+
+    /**
+     * Creates a integer variable <em> numGatling </em> 
+     */
     protected int numGatling;
+    protected int numDoubleGatling;
+
+    /**
+     * Creates a integer variable <em> numBeer </em> 
+     */
+    protected int numBeer;
+
+    /**
+     * Creates a integer variable <em> numOneShot </em> 
+     */
+
+    protected int numOneShot;
+
+    /**
+     * Creates a integer variable <em> numTwoShot </em> 
+     */
+    protected int numTwoShot;
+
     protected int numDuel;
+
+    /**
+     * Creates a integer variable <em> numOutlaws </em> 
+     */
+
     protected int numOutlaws;
+
+    /**
+     * Creates a integer variable <em> numRenegades </em> 
+     */
     protected int numRenegades;
+
+    /**
+     * Creates an ArrayLisr of number of roles <em> enumRoles </em>
+     * Calls defined roleList
+     * And creates a <em> new ArrayList of enumRoles </em>
+     */
     protected ArrayList<EnumRoles> rolesList = new ArrayList<EnumRoles>();
+
+    /**
+     * Creates an ArrayLisr of number of Characters <em> enumCharacters </em>
+     * Calls defined charsList
+     * And creates a <em> new ArrayList of enumCharacters </em>
+     */
     protected ArrayList<EnumCharacters> charsList = new ArrayList<EnumCharacters>();
+
+    /**
+     * Creates an ArrayLisr of number of players <em> Player </em>
+     * Calls defined number of players
+     * And creates a <em> new ArrayList Player </em>
+     */
     protected ArrayList<Player> players = new ArrayList<Player>();
     private ArrayList<Player> playersReference = new ArrayList<Player>();
+    
     protected ArrayList <EnumDuelTokens> duelTokens = new ArrayList <EnumDuelTokens> ();
     protected int[] orderedDice = new int[5];
+
+    /**
+     * Creates a defaulted boolean for sherrifWin
+     * Sets <em> sherriifWin to False </em>
+     */
     protected boolean sheriffWin = false;
+
+    /**
+     * Creates a defaulted boolean for outlawWin
+     * Sets <em> outlawWin to False </em>
+     */
     protected boolean outlawWin = false;
+
+    /**
+     * Creates a defaulted boolean for renegadeWin
+     * Sets <em> renegadeWin to False </em>
+     */
     protected boolean renegadeWin = false;
     protected boolean takeChiefArrow = false;
     protected boolean removeBrokenArrow = false;
@@ -52,6 +140,10 @@ public class Game {
     private Player currentPlayer;
     private int currentPlayerNumber;
 
+    /**
+     *
+     * @param numPlayers the number of players
+     */
     public Game(int numPlayers) {
         this.bulletPile = 70;
         this.arrowPile = 9;
@@ -74,6 +166,9 @@ public class Game {
 
     }
 
+    /**
+     *
+     */
     public void nextTurn() {
         turnRolls = 0;
         for(int i=0; i<5; i++){
@@ -293,6 +388,9 @@ public class Game {
         }
     }
 
+    /**
+     *
+     */
     public void interpretRoll() {
         this.turnRolls++;
         if (this.turnRolls == 1) {
@@ -301,7 +399,6 @@ public class Game {
             this.numGatling = 0;
             this.numOneShot = 0;
             this.numTwoShot = 0;
-
             for (int i = 0; i < this.numGameDice; i++) {
                 if ( (this.gameDice.getDice().get(i).getSide() == Die.Sides.arrow) && (this.currentPlayer.getMyCharacter().getCharType() != EnumCharacters.billNoFace) ){
                     if (takeChiefArrow && this.chiefArrow == 0) {
@@ -374,6 +471,9 @@ public class Game {
         }
     }
 
+    /**
+     *
+     */
     public void useRoll() {
        Dice tempDice = this.gameDice;
 
@@ -443,21 +543,99 @@ public class Game {
 
     }
 
-
+    /**
+     *
+     */
     public void initRoll() {
         this.gameDice = new Dice(this.numWhiteDie, this.numCowardDie, this.numLoudmouthDie, this.numBlackDie);
     }
-    
-    public void rollDice() {  
+     
+    /**
+     *
+     */
+    public void rollDice() {
+        
         gameDice.rollAllDice();
 
     }
 
+    /**
+     *
+     * @param i
+     */
     public void rollDice(int i) {
         this.gameDice.rollDice(i);
     }
     
+   public void playsOutTurns () {
+       
+        Random rand = new Random();
+        for(int i = 0; i < numPlayers; i++)
+        {
+            
+           //initRoll();
+           for(int j = 0; j < numGameDice; j++) {
+            gameDice.rollDice(j);
+            interpretRoll();
+            //.gameDice.rollDice(i); 
+            //this.game.getGameDice().getDice().get(i).setWhosGettingShot(index in player list);
+            //this.game.getGameDice().getDice().get(i).setWhosGettingABeer(index in player list);
+            
+            if(gameDice.getDice().get(j).getSide() == Die.Sides.beer )
+            {    
+                //gameDice.getDice().get(j).isLocked();
+                int randValue = rand.nextInt() % 2;
+                if(randValue == 0)
+                {
+                    
+                }
+                else if(randValue == 1) 
+                {
+                gameDice.getDice().get(j).isLocked();  
+                }   
+            }
+            else if(gameDice.getDice().get(j).getSide() == Die.Sides.one_shot)
+            {
+                //gameDice.getDice().get(j).isLocked();
+                int randValue = rand.nextInt() % 2;
+                if(randValue == 0)
+                {
+                   
+                }
+                else if(randValue == 1) 
+                {
+                gameDice.getDice().get(j).isLocked();  
+                }
+            }
+            else if(gameDice.getDice().get(j).getSide() == Die.Sides.two_shot)
+            {
+                //gameDice.getDice().get(j).isLocked();
+                int randValue = rand.nextInt() % 2;
+                if(randValue == 0)
+                {
+                   
+                }
+                else if(randValue == 1) 
+                {
+                gameDice.getDice().get(j).isLocked();  
+                }
+            }
+            
+            this.gameDice.rollDice(j); //roll dice
+            useRoll(); //then use roll
+            nextTurn();//then next turn  
+           }
+        }
+   }
+       //this.players().get(gameDice)
+       //this.nextTurn().get(currentPlayer).get(gameDice) initRoll;
+           
+       
 
+    /**
+     *
+     * @param die
+     */
     public void useBeer(int die) {
         players.get(gameDice.getDice().get(die).getWhosGettingABeer()).addBullets(1, this);
     }
@@ -490,6 +668,10 @@ public class Game {
         }
     }
 
+    /**
+     *
+     * @param die
+     */
     public void useOneShot(int die) {
         players.get(gameDice.getDice().get(die).getWhosGettingShot()).removeBullets(1, this);
         if (players.get(gameDice.getDice().get(die).getWhosGettingShot()).getMyCharacter().getCharType() == EnumCharacters.elGringo ){
@@ -499,6 +681,10 @@ public class Game {
 
     }
 
+    /**
+     *
+     * @param die
+     */
     public void useTwoShot(int die) {
         players.get(gameDice.getDice().get(die).getWhosGettingShot()).removeBullets(1, this);
         if (players.get(gameDice.getDice().get(die).getWhosGettingShot()).getMyCharacter().getCharType() == EnumCharacters.elGringo ){
@@ -506,6 +692,9 @@ public class Game {
         }
     }
 
+    /**
+     *
+     */
     public void useGatling() {
         for (int i = 0; i < players.size(); i++) {
             if ( (players.get(i).getMyCharacter().getCharType() != currentPlayer.getMyCharacter().getCharType() ) || ( players.get(i).getMyCharacter().getCharType() != EnumCharacters.paulRegret) ) {
@@ -517,13 +706,20 @@ public class Game {
         }
         currentPlayer.clearArrows(this);
     }
- 
+
+    /**
+     *
+     */
     public void indianAttack() {
         for (int i = 0; i < this.players.size(); i++) {
             this.players.get(i).indianAttack(this);
         }
     }
 
+    /**
+     *
+     * @param charIn
+     */
     public void playerTurn(Character charIn) {
         initRoll();
     }
@@ -555,23 +751,44 @@ public class Game {
         }
     }
     
+    /**
+     *
+     * @return
+     */
+
     public Player getCurrentPlayer(){
         return currentPlayer;
     }
     
+    /**
+     *
+     * @return
+     */
     public int getCurrentPlayerNumber(){
         return currentPlayerNumber;
     }
     
+    /**
+     *
+     * @return
+     */
     public int getNumPlayers(){
         return this.numPlayers;
     }
     
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
+    /**
+     *
+     * @param playersIn
+     */
     public void setPlayers(ArrayList<Player> playersIn) {
         this.players = playersIn;
     }
@@ -581,83 +798,162 @@ public class Game {
     }
     
 
+    /**
+     *
+     * @return
+     */
     public int getBulletPile() {
         return bulletPile;
     }
 
+    /**
+     *
+     * @param bulletPile
+     */
     public void setBulletPile(int bulletPile) {
         this.bulletPile = bulletPile;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getArrowPile() {
         return arrowPile;
     }
 
+    /**
+     *
+     * @param arrowPile
+     */
     public void setArrowPile(int arrowPile) {
         this.arrowPile = arrowPile;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getChiefArrow() {
         return chiefArrow;
     }
 
+    /**
+     *
+     * @param chiefArrow
+     */
     public void setChiefArrow(int chiefArrow) {
         this.chiefArrow = chiefArrow;
     }
 
+    /**
+     *
+     * @return
+     */
     public Dice getGameDice() {
         return gameDice;
     }
 
+    /**
+     *
+     * @param gameDice
+     */
     public void setGameDice(Dice gameDice) {
         this.gameDice = gameDice;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTurnRolls() {
         return turnRolls;
     }
 
+    /**
+     *
+     * @param turnRolls
+     */
     public void setTurnRolls(int turnRolls) {
         this.turnRolls = turnRolls;
     }
     
-
+    /**
+     *
+     * @return
+     */
     public boolean isSheriffWin() {
         return sheriffWin;
     }
 
+    /**
+     *
+     * @param sheriffWin
+     */
     public void setSheriffWin(boolean sheriffWin) {
         this.sheriffWin = sheriffWin;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isOutlawWin() {
         return outlawWin;
     }
 
+    /**
+     *
+     * @param outlawWin
+     */
     public void setOutlawWin(boolean outlawWin) {
         this.outlawWin = outlawWin;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isRenegadeWin() {
         return renegadeWin;
     }
 
+    /**
+     *
+     * @param renegadeWin
+     */
     public void setRenegadeWin(boolean renegadeWin) {
         this.renegadeWin = renegadeWin;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumOutlaws() {
         return numOutlaws;
     }
 
+    /**
+     *
+     * @param numOutlaws
+     */
     public void setNumOutlaws(int numOutlaws) {
         this.numOutlaws = numOutlaws;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumRenegades() {
         return numRenegades;
     }
 
+    /**
+     *
+     * @param numRenegades
+     */
     public void setNumRenegades(int numRenegades) {
         this.numRenegades = numRenegades;
     }

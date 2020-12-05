@@ -13,9 +13,26 @@ import java.util.HashMap;
  * @author chris
  */
 public enum EnumRoles {
+
+    /**
+     * Enum Roles creates each specific role involved in the game
+     * Role Sheriff
+     */
     Sheriff("Sheriff"),
+
+    /**
+     * Role Deputy
+     */
     Deputy("Deputy"),
+
+    /**
+     * Role Outlaw
+     */
     Outlaw("Outlaw"),
+
+    /**
+     * Role Renegade
+     */
     Renegade("Renegade");
     
     private final String value;
@@ -29,10 +46,20 @@ public enum EnumRoles {
             map.put(role.value, role);
         }
     }
+
+    /**
+     * 
+     * @param role
+     * @return each role to each player
+     */
     public static EnumRoles stringToRole(String role){
         return (EnumRoles) map.get(role);
     }
     
+    /**
+     * set role as a string
+     * @return
+     */
     public String getRoleAsString(){
         return value;
     }

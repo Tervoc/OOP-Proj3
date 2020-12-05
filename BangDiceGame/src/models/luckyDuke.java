@@ -6,7 +6,8 @@
 package models;
 
 /**
- *
+ * Character Module for Lucky Duke
+ * Located in the game.java class in interpret role
  * @author Darrel
  */
 public class luckyDuke extends Character{

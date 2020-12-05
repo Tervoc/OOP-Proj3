@@ -7,7 +7,7 @@ package models;
 import game.Game;
 
 /**
- *
+ * Character Module for Pedro Ramirez
  * @author chris
  */
 public class pedroRamirez extends Character {

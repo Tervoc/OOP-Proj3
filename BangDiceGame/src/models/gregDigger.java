@@ -6,7 +6,7 @@
 package models;
 
 /**
- *
+ * Character Module for Greg Digger.
  * @author mtbol
  */
 public class gregDigger extends Character {

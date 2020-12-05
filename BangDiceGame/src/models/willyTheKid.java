@@ -6,10 +6,10 @@
 package models;
 
 /**
- *
- * @author mtbol
+ * Character Module for Willy The Kid
+ * @author Michael
+ * Relocated to the game class and is in the function use role. 
  */
-//hopefully this man fucking survives this time
 public class willyTheKid extends Character{
     
     public willyTheKid(EnumRoles thisRole) {

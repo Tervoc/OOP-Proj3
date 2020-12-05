@@ -6,9 +6,38 @@
 package models;
 
 /**
- *
- * @author Troll
+ * Defined variables for EnumPlayerGroupLabels for Java.fx Gui
+ * @author Andrew
  */
 public enum EnumPlayerGroupLabels {
-    circle, playerNum, role, character, health, arrows
+
+    /**
+     * Defined Java.fx for Gui
+     */
+    circle,
+
+    /**
+     * Defined player number in Java.fx for the Gui
+     */
+    playerNum,
+
+    /**
+     * Defined player roles in Java.fx for the Gui
+     */
+    role,
+
+    /**
+     * Defined player characters in Java.fx for the Gui
+     */
+    character,
+
+    /**
+     * Defined player health in Java.fx for the Gui
+     */
+    health,
+
+    /**
+     * Defined the amount of player arrows in Java.fx for the Gui
+     */
+    arrows
 }
