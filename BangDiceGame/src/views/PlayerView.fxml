@@ -5,20 +5,27 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <Group fx:id="player_Group" layoutX="224.0" layoutY="9.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.StartViewController">
     <children>
-        <Circle fill="#d71e09" layoutX="21.0" layoutY="28.0" radius="29.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="3.0" />
-        <Label fx:id="player_Label" layoutX="-4" layoutY="19.0" text="Player " textFill="WHITE" />
-      <ImageView fx:id="skull_ImageView" fitHeight="105.0" fitWidth="64.0" layoutX="-11.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e6d4a4" height="108.0" layoutX="-38.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" width="215.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ed1b24" height="23.0" layoutX="84.0" layoutY="13.0" stroke="BLACK" strokeType="INSIDE" width="74.0" />
+        <Label fx:id="player_Label" layoutX="88.0" layoutY="11.0" text="Player ">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <ImageView fx:id="skull_ImageView" fitHeight="85.0" fitWidth="91.0" layoutX="-34.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@skull.png" />
+            <Image url="@CharImages/gregDigger.PNG" />
          </image>
       </ImageView>
-        <Label fx:id="role_Label" layoutX="78.0" text="Role: " />
-        <Label fx:id="character_Label" layoutX="51.0" layoutY="10.0" text="Character: " />
-        <Label fx:id="health_Label" layoutX="67.0" layoutY="23.0" text="Health: " />
-        <Label fx:id="arrows_Label" layoutX="65.0" layoutY="34.0" text="Arrows: " />
+        <Label fx:id="role_Label" layoutX="68.0" layoutY="45.0" text="Role: " />
+        <Label fx:id="character_Label" layoutX="-32.0" layoutY="95.0" text="Character: " />
+        <Label fx:id="health_Label" layoutX="56.0" layoutY="60.0" text="Health: " />
+        <Label fx:id="arrows_Label" layoutX="55.0" layoutY="75.0" text="Arrows: " />
+      <Circle fill="#3dff1f" layoutX="168.0" layoutY="103.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
        
     </children>
 </Group>

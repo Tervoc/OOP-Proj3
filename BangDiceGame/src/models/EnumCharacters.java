@@ -41,4 +41,7 @@ public enum EnumCharacters {
     public String getCharacterAsString(){
         return value;
     }
+    public String getCharImageFL(){   
+        return "CharImages/"+getCharacterAsString() + ".PNG";
+    }
 }

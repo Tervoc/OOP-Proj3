@@ -76,6 +76,9 @@ public class Game {
 
     public void nextTurn() {
         turnRolls = 0;
+        for(int i=0; i<5; i++){
+            gameDice.getDice().get(i).unlockDie();
+        }
         boolean findNextPlayer = true;
         while(findNextPlayer){
             if (this.currentPlayerNumber == this.numPlayers) {
@@ -326,6 +329,7 @@ public class Game {
                     this.gameDice.getDice().get(i).lockDie();
                     if (this.numDynamite >= 3) {
                         this.currentPlayer.removeBullets(1, this);
+                        this.turnRolls = 3;
                         //next turn?
                         break;
                     }
@@ -346,20 +350,21 @@ public class Game {
                         this.indianAttack();
                     }
                 } 
-                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.broken_arrow ) {
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.broken_arrow) {
                     if (removeBrokenArrow){
                         this.currentPlayer.removeArrows(1, this);
                     }
                     this.removeBrokenArrow = false;
                     
                 }
-                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.bullet ) {
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.bullet) {
                     this.currentPlayer.removeBullets(1, this);
                 }
-                else if (gameDice.getDice().get(i).getSide() == Die.Sides.dynamite ) {
+                else if (gameDice.getDice().get(i).getSide() == Die.Sides.dynamite) {
                     this.numDynamite += 1;
                     gameDice.getDice().get(i).lockDie();
                     if (this.numDynamite >= 3) {
+                        this.turnRolls = 3;
                         this.currentPlayer.removeBullets(1, this);
                         //next turn?
                         break;

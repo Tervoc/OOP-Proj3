@@ -66,8 +66,10 @@ public class Die {
             this.validSides.add(Sides.beer);
             this.validSides.add(Sides.one_shot);
             this.validSides.add(Sides.two_shot);
-            this.validSides.add(Sides.gatling);
             this.validSides.add(Sides.dynamite);
+            this.validSides.add(Sides.gatling);
+            
+            
         }
         else if(this.dieType == DieType.loudmouth){
             this.validSides.add(Sides.arrow);
@@ -95,7 +97,7 @@ public class Die {
         }
         whosGettingShot = -1;
         whosGettingABeer = -1;
-        this.side = validSides.get( (int)(Math.random() * 5) );
+        this.side = validSides.get( (int)(Math.random() * 6) );
         this.locked = false;
         //math .random retunrs a value between 0 and 1 and we multiply by 5 to
         //get a value between 0 and 5 bc we have 6 sides
@@ -123,17 +125,17 @@ public class Die {
     public String getSideImageFL(){
         switch(side){
             case arrow:
-                return "DiceImages/Arrow.jpg";
+                return "DiceImages/Arrow.PNG";
             case dynamite:
-                return "DiceImages/Dynamite.jpg";
+                return "DiceImages/Dynamite.PNG";
             case gatling:
-                return "DiceImages/Gatling.jpg";
+                return "DiceImages/Gatling.PNG";
             case one_shot:
-                return "DiceImages/One.jpg";
+                return "DiceImages/One.PNG";
             case two_shot:
-                return "DiceImages/Two.jpg";
+                return "DiceImages/Two.PNG";
             case beer:
-                return "DiceImages/Beer.jpg";           
+                return "DiceImages/Beer.PNG";           
         }
         return "error";
     }
