@@ -202,8 +202,20 @@ public class Die {
                 return "DiceImages/One.PNG";
             case two_shot:
                 return "DiceImages/Two.PNG";
+            case bullet:
+                return "DiceImages/Bullet.PNG";
             case beer:
-                return "DiceImages/Beer.PNG";           
+                return "DiceImages/Beer.PNG";
+            case double_one_shot:
+                return "DiceImages/doubleOneShot.PNG";
+            case double_two_shot:
+                return "DiceImages/DoubleTwoShot.PNG";
+            case double_beer:
+                return "DiceImages/DoubleBeer.PNG";
+            case double_gatling:
+                return "DiceImages/DoubleGatling.PNG";
+            case broken_arrow:
+                return "DiceImages/brokenArrow.PNG";
         }
         return "error";
     }

@@ -75,7 +75,16 @@ public class StartViewController {
     private ChoiceBox die5_ChoiceBox;
     @FXML
     private  Label rollsLeft_Label;
-         
+    @FXML
+    private CheckBox isExpansionSelected_CheckBox;
+    @FXML
+    private CheckBox coward_CheckBox;
+    @FXML
+    private CheckBox loudMouth_CheckBox;
+    @FXML
+    private CheckBox normal_CheckBox;
+    @FXML
+    private Group expansionDice_Group;
     @FXML
     private Rectangle playArea_Rectangle;
     
@@ -101,7 +110,13 @@ public class StartViewController {
         int numPlayers = Integer.parseInt(numPlayers_TextField.getText());
         if (numPlayers > 3 && numPlayers < 9) {
             //create the game
-            game = new Game(numPlayers);
+            
+            game = new Game(numPlayers, isExpansionSelected_CheckBox.isSelected());
+           if(isExpansionSelected_CheckBox.isSelected()){
+               expansionDice_Group.setVisible(true);
+           }else{
+               expansionDice_Group.setVisible(false);
+           }
             arrowPile_Label.setText("Arrows: " + game.getArrowPile());
             //find the center of theGame_Pane
             double centerX = (playArea_Rectangle.getWidth() - theGame_Pane.getLayoutX()) / 2 - 50;
@@ -153,7 +168,6 @@ public class StartViewController {
     }
 
     public void updateGamePane() {
-        
         for (int i = 0; i < game.getPlayers().size(); i++) {
             Player player = game.getPlayers().get(i);
             Group playerGroup = player.getPlayerGroup();
@@ -210,6 +224,9 @@ public class StartViewController {
     //Handles what heappens when the roll button is clicked
     private void handleRoll_Button(ActionEvent event) {
         //reroll tells us if the dice is to be re reolled or not. true meaning reroll
+        coward_CheckBox.setDisable(true);
+        loudMouth_CheckBox.setDisable(true);
+        normal_CheckBox.setDisable(true);
         if(!(game.getTurnRolls() >= 3)){
            
             for(Integer i=0; i<5; i++){
@@ -232,25 +249,24 @@ public class StartViewController {
     //rerolls all dice 
     private void handleNextTurn_Button(ActionEvent event){
         game.getCurrentPlayer().setHasConfirmedDice(false);
+        coward_CheckBox.setDisable(false);
+        loudMouth_CheckBox.setDisable(false);
+        normal_CheckBox.setDisable(false);
         //confirmDice_Button.setDisable(false);
         for(Integer i=0; i<5; i++){
             
             dice_ImageViews.get(i).setVisible(false);
             dice_ChoiceBoxes.get(i).setDisable(true);
-            dice_CheckBoxes.get(i).setSelected(false);
-            
-            
-        }
-        
+            dice_CheckBoxes.get(i).setSelected(false);   
+        }      
         game.nextTurn();
         updateGamePane();
-        
     }
     
     @FXML
     private void handleConfirmDice_Button(ActionEvent event){
         
-        if(!game.getCurrentPlayer().isHasConfirmedDice()){
+        
            // confirmDice_Button.setDisable(true);
         game.setTurnRolls(3);
             game.getCurrentPlayer().setHasConfirmedDice(true);
@@ -258,41 +274,43 @@ public class StartViewController {
                  models.Die.Sides currSide = game.getGameDice().getDice().get(i).getSide();
                 if(dice_CheckBoxes.get(i).isSelected()){
                     game.getGameDice().getDice().get(i).lockDie();
-                    if(currSide == models.Die.Sides.one_shot || currSide == models.Die.Sides.two_shot){
+                    if((currSide == models.Die.Sides.one_shot || currSide == models.Die.Sides.two_shot) && dice_ChoiceBoxes.get(i).getValue()!=null){
+                       
+                        
                         game.getGameDice().getDice().get(i).setWhosGettingShot(Integer.parseInt(dice_ChoiceBoxes.get(i).getValue().toString().substring(dice_ChoiceBoxes.get(i).getValue().toString().length()-1))-1);
-
+                         System.out.println("Whos getting shot: "+game.getGameDice().getDice().get(i).getWhosGettingShot());
                     }
-                    else if(currSide == models.Die.Sides.beer){
+                    else if((currSide == models.Die.Sides.beer) && dice_ChoiceBoxes.get(i).getValue()!=null){
                         game.getGameDice().getDice().get(i).setWhosGettingABeer(Integer.parseInt(dice_ChoiceBoxes.get(i).getValue().toString().substring(dice_ChoiceBoxes.get(i).getValue().toString().length()-1))-1);
                     }
                 }
 
             }
            game.useRoll();
-        }
+        
        updateGamePane();
     }
     @FXML
-    private void handleDie1_CheckBox(){
+    private void handleDie1_CheckBox(ActionEvent event){
         handleDice_CheckBoxes(0);
        
     }
     @FXML
-    private void handleDie2_CheckBox(){
+    private void handleDie2_CheckBox(ActionEvent event){
         handleDice_CheckBoxes(1);
 
     }
     @FXML
-    private void handleDie3_CheckBox(){
+    private void handleDie3_CheckBox(ActionEvent event){
         handleDice_CheckBoxes(2);
 }
     @FXML
-    private void handleDie4_CheckBox(){
+    private void handleDie4_CheckBox(ActionEvent event){
         handleDice_CheckBoxes(3);
 
     }
     @FXML
-    private void handleDie5_CheckBox(){
+    private void handleDie5_CheckBox(ActionEvent event){
         handleDice_CheckBoxes(4);
     }
     
@@ -363,6 +381,28 @@ public class StartViewController {
             }
         }else{
             dice_ChoiceBoxes.get(dieNum).setDisable(true);
+        }
+    }
+    @FXML
+    private void handleCoward_CheckBox(ActionEvent event){
+        if(coward_CheckBox.isSelected()){
+            loudMouth_CheckBox.setSelected(false);
+            normal_CheckBox.setSelected(false);
+        }
+        
+    }
+    @FXML
+    private void handleLoudMouth_CheckBox(ActionEvent event){
+        if(loudMouth_CheckBox.isSelected()){
+            coward_CheckBox.setSelected(false);
+            normal_CheckBox.setSelected(false);
+        }
+    }
+    @FXML
+    private void handleNormal_CheckBox(ActionEvent event){
+        if(normal_CheckBox.isSelected()){
+            loudMouth_CheckBox.setSelected(false);
+            coward_CheckBox.setSelected(false);
         }
     }
 

@@ -176,11 +176,7 @@ public class Game {
     private Player currentPlayer;
     private int currentPlayerNumber;
 
-    /**
-     * Sets the parameters for the game on bullets arrows players ....
-     * @param numPlayers the number of players
-     */
-    public Game(int numPlayers) {
+    public Game(int numPlayers, boolean isExpansionSelected) {
         this.bulletPile = 70;
         this.arrowPile = 9;
         this.chiefArrow = 1;
@@ -194,8 +190,11 @@ public class Game {
         this.playersReference = players;
         currentPlayer = players.get(0);
         currentPlayerNumber = 0;
-
-        this.gameDice = new Dice(5, 0, 0, 0);
+        if(isExpansionSelected){
+            this.gameDice = new Dice(4,1,1,0);
+        }else{
+            this.gameDice = new Dice(5, 0, 0, 0);
+        }
         this.currentPlayer = this.players.get(0);
         this.currentPlayerNumber = 0;
 
@@ -512,22 +511,22 @@ public class Game {
      * Takes the game dice and re-rolls all 5 dice
      */
     public void useRoll() {
-       Dice tempDice = this.gameDice;
-
-       for (int i = 0; i < numGameDice; i++) {
-           orderedDice[i] = this.gameDice.getDice().get(i).getSide().ordinal();
-       }
+//       Dice tempDice = this.gameDice;
+//
+//       for (int i = 0; i < numGameDice; i++) {
+//           orderedDice[i] = this.gameDice.getDice().get(i).getSide().ordinal();
+//       }
+//       
+//       Arrays.sort(orderedDice);
+//       
+//       for(int i = 0; i < orderedDice.length;i++) {
+//           tempDice.getDice().get(i).setSide(Die.sidesList[orderedDice[i]] );
+//       }
+//       
+//       this.gameDice = tempDice;
        
-       Arrays.sort(orderedDice);
-       
-       for(int i = 0; i < orderedDice.length;i++) {
-           tempDice.getDice().get(i).setSide(Die.sidesList[orderedDice[i]] );
-       }
-       
-       this.gameDice = tempDice;
-       
-       for(int i = 0; i < orderedDice.length;i++) {
-           switch(orderedDice[i]) {
+       for(int i = 0; i < this.numGameDice;i++) {
+           switch(this.gameDice.getDice().get(i).getSide().ordinal()) {
                case (0): 
                     if ( (currentPlayer.getMyCharacter().getCharType() == EnumCharacters.billNoFace) ) {
                     currentPlayer.addArrows(1, this);
@@ -734,6 +733,7 @@ public class Game {
      * @param die
      */
     public void useTwoShot(int die) {
+        
         players.get(gameDice.getDice().get(die).getWhosGettingShot()).removeBullets(1, this);
         if (players.get(gameDice.getDice().get(die).getWhosGettingShot()).getMyCharacter().getCharType() == EnumCharacters.elGringo ){
             currentPlayer.addArrows(1, this);
