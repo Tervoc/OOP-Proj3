@@ -7,7 +7,7 @@ package game;
 
 import models.Character;
 import models.*;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  *
@@ -19,18 +19,23 @@ public class Game {
     protected int arrowPile;
     protected int chiefArrow;
     protected int numPlayers;
+    protected int numBrokenArrow;
+    protected int numBullet;
     protected int numDynamite;
-    protected int numGatling;
-    protected int numDoubleGatling;
-    protected int numBeer;
+    protected int numWhiskey;
     protected int numOneShot;
     protected int numTwoShot;
+     protected int numBeer;
+    protected int numGatling;
+    protected int numDuel;
     protected int numOutlaws;
     protected int numRenegades;
     protected ArrayList<EnumRoles> rolesList = new ArrayList<EnumRoles>();
     protected ArrayList<EnumCharacters> charsList = new ArrayList<EnumCharacters>();
     protected ArrayList<Player> players = new ArrayList<Player>();
     private ArrayList<Player> playersReference = new ArrayList<Player>();
+    protected ArrayList <EnumDuelTokens> duelTokens = new ArrayList <EnumDuelTokens> ();
+    protected int[] orderedDice = new int[5];
     protected boolean sheriffWin = false;
     protected boolean outlawWin = false;
     protected boolean renegadeWin = false;
@@ -56,6 +61,7 @@ public class Game {
         this.addRoles();
         this.addCharacters();
         this.addPlayers();
+        this.addDuelTokens();
 
         this.playersReference = players;
         currentPlayer = players.get(0);
@@ -257,6 +263,32 @@ public class Game {
         }
 
     }
+    
+    private void addDuelTokens () {
+        this.duelTokens.add(EnumDuelTokens.beer);
+        this.duelTokens.add(EnumDuelTokens.beer);
+        this.duelTokens.add(EnumDuelTokens.beer);
+        this.duelTokens.add(EnumDuelTokens.oneShot);
+        this.duelTokens.add(EnumDuelTokens.oneShot);
+        this.duelTokens.add(EnumDuelTokens.oneShot);
+        this.duelTokens.add(EnumDuelTokens.oneShot);
+        this.duelTokens.add(EnumDuelTokens.oneShot);
+        this.duelTokens.add(EnumDuelTokens.twoShot);
+        this.duelTokens.add(EnumDuelTokens.twoShot);
+        this.duelTokens.add(EnumDuelTokens.twoShot);
+        this.duelTokens.add(EnumDuelTokens.twoShot);
+        this.duelTokens.add(EnumDuelTokens.twoShot);
+        this.duelTokens.add(EnumDuelTokens.dynamite);
+        this.duelTokens.add(EnumDuelTokens.dynamite);
+        
+        for (int i = 0; i < this.duelTokens.size(); i++) {
+            int swapLocation = (int) (Math.random() * this.duelTokens.size());
+            EnumDuelTokens tempCard1 = this.duelTokens.get(swapLocation);
+            EnumDuelTokens tempCard2 = this.duelTokens.get(i);
+            this.duelTokens.set(i, tempCard1);
+            this.duelTokens.set(swapLocation, tempCard2);
+        }
+    }
 
     public void interpretRoll() {
         this.turnRolls++;
@@ -278,7 +310,7 @@ public class Game {
                     if (this.getArrowPile() <= 0) {
                         this.indianAttack();
                     }
-                } 
+                }
                 else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.broken_arrow) {
                     if (removeBrokenArrow){
                         this.currentPlayer.removeArrows(1, this);
@@ -303,7 +335,7 @@ public class Game {
         
         else if (turnRolls <= 3 || ( (currentPlayer.getMyCharacter().getCharType() == EnumCharacters.luckyDuke) && turnRolls <=4)) {
             for (int i = 0; i < numGameDice; i++) {
-                if (gameDice.getDice().get(i).getSide() == Die.Sides.arrow && gameDice.getDice().get(i).isLocked() && (this.currentPlayer.getMyCharacter().getCharType() != EnumCharacters.billNoFace)) {
+                if (gameDice.getDice().get(i).getSide() == Die.Sides.arrow && (this.currentPlayer.getMyCharacter().getCharType() != EnumCharacters.billNoFace)) {
                     if (takeChiefArrow && this.chiefArrow == 0) {
                         this.currentPlayer.addChiefArrow(this);
                         this.takeChiefArrow = false;
@@ -314,17 +346,17 @@ public class Game {
                         this.indianAttack();
                     }
                 } 
-                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.broken_arrow && gameDice.getDice().get(i).isLocked()) {
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.broken_arrow ) {
                     if (removeBrokenArrow){
                         this.currentPlayer.removeArrows(1, this);
                     }
                     this.removeBrokenArrow = false;
                     
                 }
-                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.bullet && gameDice.getDice().get(i).isLocked()) {
+                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.bullet ) {
                     this.currentPlayer.removeBullets(1, this);
                 }
-                else if (gameDice.getDice().get(i).getSide() == Die.Sides.dynamite && gameDice.getDice().get(i).isLocked()) {
+                else if (gameDice.getDice().get(i).getSide() == Die.Sides.dynamite ) {
                     this.numDynamite += 1;
                     gameDice.getDice().get(i).lockDie();
                     if (this.numDynamite >= 3) {
@@ -338,54 +370,69 @@ public class Game {
     }
 
     public void useRoll() {
-        for (int i = 0; i < numGameDice; i++) {
-            if(gameDice.getDice().get(i).isLocked() ) {
-                if ( (gameDice.getDice().get(i).getSide() == Die.Sides.arrow) && (currentPlayer.getMyCharacter().getCharType() == EnumCharacters.billNoFace) ) {
+       Dice tempDice = this.gameDice;
+
+       for (int i = 0; i < numGameDice; i++) {
+           orderedDice[i] = this.gameDice.getDice().get(i).getSide().ordinal();
+       }
+       
+       Arrays.sort(orderedDice);
+       
+       for(int i = 0; i < orderedDice.length;i++) {
+           tempDice.getDice().get(i).setSide(Die.sidesList[orderedDice[i]] );
+       }
+       
+       this.gameDice = tempDice;
+       
+       for(int i = 0; i < orderedDice.length;i++) {
+           switch(orderedDice[i]) {
+               case (0): 
+                    if ( (currentPlayer.getMyCharacter().getCharType() == EnumCharacters.billNoFace) ) {
                     currentPlayer.addArrows(1, this);
 
                     if (this.getArrowPile() <= 0) {
                         this.indianAttack();
                         this.arrowPile = 9;
+                        }
                     }
-                }
-                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.beer) {
-                    this.useBeer(i);
-                } 
-                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.one_shot) {
-                    this.useOneShot(i);
-                } 
-                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.two_shot) {
-                    this.useTwoShot(i);
-                } 
-                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.gatling) {
-                    this.numGatling += 1;
-                }
-                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.double_one_shot) {
-                    this.useOneShot(i);
-                    this.useOneShot(i);
-                }  
-                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.double_two_shot) {
-                    this.useTwoShot(i);
-                    this.useTwoShot(i);
-                }  
-                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.double_gatling) {
-                    this.numDoubleGatling += 1;
-                }  
-                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.double_beer) {
-                    this.useBeer(i);
-                    this.useBeer(i);
-                }  
-                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.duel) {
-                    this.numGatling += 1;
-                }  
-                else if (this.gameDice.getDice().get(i).getSide() == Die.Sides.whiskey_bottle) {
-                    this.numGatling += 1;
-                }    
-                
-            }
-        }
+                   break;
+               case (4):
+                   this.useWhiskey();
+                   break;
+               case (5):
+                   this.useOneShot(i);
+                   break;
+               case (6):
+                   this.useOneShot(i);
+                   this.useOneShot(i);
+                   break;
+               case (7):
+                   this.useTwoShot(i);
+                   break;
+               case (8):
+                   this.useTwoShot(i);
+                   this.useTwoShot(i);
+                   break;
+               case (9):
+                   this.useBeer(i);
+                   break;
+               case (10):
+                   this.useBeer(i);
+                   this.useBeer(i);
+                   break;
+               case (11):
+                   this.numGatling++;
+                   break;
+               case (12):
+                   this.numGatling += 2;
+                   break;
+               case (13):
+                   this.duel(gameDice.getDice().get(i).getWhosGettingDueled());
+                   break;
+           }
+       }
        
-        if ( (this.numGatling + (2*this.numDoubleGatling) ) >= 3 || (this.currentPlayer.getMyCharacter().getCharType() == EnumCharacters.willyTheKid && (this.numGatling + (2*this.numDoubleGatling) ) >= 2)) {
+        if ( (this.numGatling >= 3 ) || ( (this.currentPlayer.getMyCharacter().getCharType() == EnumCharacters.willyTheKid) && (this.numGatling  >= 2) ) ) {
             this.useGatling();
         }
 
@@ -410,6 +457,33 @@ public class Game {
         players.get(gameDice.getDice().get(die).getWhosGettingABeer()).addBullets(1, this);
     }
     
+    public void useWhiskey () {
+        this.currentPlayer.addBullets(1, this);
+        if (this.currentPlayer.getMyDuelTokens().size() > 0) {
+            this.removeDuelToken(currentPlayer);
+        }
+    }
+    
+    public void duel (int playerToDuel) {
+        Die duelDie = new Die(Die.DieType.black);
+        if(duelDie.getSide() != Die.Sides.duel) {
+            this.giveDuelToken(this.players.get(playerToDuel));
+        }
+        else {
+            while (true) {
+                duelDie.roll();
+                if(duelDie.getSide() != Die.Sides.duel) {
+                    this.giveDuelToken(this.currentPlayer);
+                    break;
+                }
+                duelDie.roll();
+                if(duelDie.getSide() != Die.Sides.duel) {
+                    this.giveDuelToken(this.players.get(playerToDuel));
+                    break;
+                }
+            }
+        }
+    }
 
     public void useOneShot(int die) {
         players.get(gameDice.getDice().get(die).getWhosGettingShot()).removeBullets(1, this);
@@ -425,8 +499,6 @@ public class Game {
         if (players.get(gameDice.getDice().get(die).getWhosGettingShot()).getMyCharacter().getCharType() == EnumCharacters.elGringo ){
             currentPlayer.addArrows(1, this);
         }
-        
-
     }
 
     public void useGatling() {
@@ -449,6 +521,33 @@ public class Game {
 
     public void playerTurn(Character charIn) {
         initRoll();
+    }
+    
+    public void giveDuelToken (Player playerIn) { 
+        boolean giveToken = true;
+        for (int i = 0; i < playerIn.getMyDuelTokens().size(); i++) {
+            if (this.duelTokens.get(0) == playerIn.getMyDuelTokens().get(i)) {
+                giveToken = false;
+            }
+        }
+        if (giveToken) {
+            playerIn.getMyDuelTokens().add(this.duelTokens.get(0));
+            this.duelTokens.remove(0);
+        }
+    }
+    
+    public void removeDuelToken (Player playerIn) {
+        if (playerIn.getMyDuelTokens().size() > 0) {
+            this.duelTokens.add(playerIn.getMyDuelTokens().get(0));
+            playerIn.getMyDuelTokens().remove(0);
+        }
+    }
+    
+    public void removeAllDuelTokens () {
+        for (int i = 0; i < this.currentPlayer.getMyDuelTokens().size();i++) {
+            this.duelTokens.add(this.currentPlayer.getMyDuelTokens().get(i));
+            this.currentPlayer.getMyDuelTokens().remove(i);
+        }
     }
     
     public Player getCurrentPlayer(){
@@ -557,6 +656,7 @@ public class Game {
     public void setNumRenegades(int numRenegades) {
         this.numRenegades = numRenegades;
     }
+   
     
 
 }

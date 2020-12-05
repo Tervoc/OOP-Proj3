@@ -15,19 +15,20 @@ import java.util.ArrayList;
 public class Die {
     public enum Sides{
         arrow,
-        dynamite,
-        gatling,
-        one_shot,
-        two_shot,
-        beer,
-        double_one_shot,
-        double_two_shot,
-        double_gatling,
-        bullet,
-        double_beer,
         broken_arrow,
-        duel,
-        whiskey_bottle
+        bullet,
+        dynamite,
+        whiskey_bottle,
+        one_shot,
+        double_one_shot,
+        two_shot,
+        double_two_shot,
+        beer,
+        double_beer,
+        gatling,
+        double_gatling,
+        duel
+        
     }; 
     public enum DieType {
       white,
@@ -38,7 +39,7 @@ public class Die {
     //To use the Sides enum in other classes ues Die.Sides.arrow or whichever
     //you need.
     
-    public Sides[] sidesList = Sides.values();
+    public static Sides[] sidesList = Sides.values();
     //sidesList is created so we can access the sides enum by index Sides.values
     //retunrs the values of the enum as an array. This is used in the roll function
 
@@ -47,6 +48,7 @@ public class Die {
     protected boolean locked = false;
     protected int whosGettingShot = -1;
     protected int whosGettingABeer = -1;
+    protected int whosGettingDueled = -1;
     private DieType dieType;
     private ArrayList <Sides> validSides = new ArrayList <Sides>();
     
@@ -138,6 +140,9 @@ public class Die {
     public Sides getSide(){
         return this.side;
     }
+    public void setSide(Die.Sides sideIn){
+        this.side = sideIn;
+    }
     public void lockDie () {
         this.locked = true;
     }
@@ -159,6 +164,12 @@ public class Die {
     }
     public int getWhosGettingABeer(){
         return this.whosGettingABeer;
+    }
+    public void setWhosGettingDueled(int player){
+        this.whosGettingDueled = player;
+    }
+    public int getWhosGettingDueled(){
+        return this.whosGettingDueled;
     }
     
 }

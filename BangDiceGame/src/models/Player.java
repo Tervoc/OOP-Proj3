@@ -30,6 +30,7 @@ public class Player {
     private boolean AI = true;
     protected boolean amIDead = false;
     private boolean hasConfirmedDice = false;
+    protected ArrayList <EnumDuelTokens> myDuelTokens = new ArrayList <EnumDuelTokens> ();
 
     
     public Player(Character myChar) {
@@ -236,6 +237,13 @@ public class Player {
     public void setArrows(int arrows) {
         this.arrows = arrows;
     }
-    
+
+    public ArrayList<EnumDuelTokens> getMyDuelTokens() {
+        return this.myDuelTokens;
+    }
+
+    public void setMyDuelTokens(ArrayList<EnumDuelTokens> myDuelTokens) {
+        this.myDuelTokens = myDuelTokens;
+    }
 
 }
