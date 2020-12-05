@@ -10,8 +10,24 @@ package models;
  * @author chris
  */
 public enum EnumDuelTokens {
+
+    /**
+     * Created Variable Beer for duel tokens
+     */
     beer,
+
+    /**
+     * Created Variable oneShot for duel tokens
+     */
     oneShot,
+
+    /**
+     *Created Variable twoShot for duel tokens
+     */
     twoShot,
+
+    /**
+     * Created Variable dynamite for duel tokens
+     */
     dynamite
 }

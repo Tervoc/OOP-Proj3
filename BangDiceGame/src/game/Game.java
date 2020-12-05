@@ -22,10 +22,10 @@ import java.util.Random;
  */
 public class Game {
 
-    protected int bulletPile = 100;
     /**
      * Creates a integer variable <em> bulletPile </em> 
      */
+    protected int bulletPile = 100;
 
     /**
      * Creates a integer variable <em> arrowPile </em> 
@@ -41,19 +41,35 @@ public class Game {
      * Creates a integer variable <em> numPlayers </em> 
      */
     protected int numPlayers;
+
+    /**
+     * Creates a integer variable <em> numBrokenArrow </em> 
+     */
     protected int numBrokenArrow;
+
+    /**
+     * Creates a integer variable <em> numBullets </em> 
+     */
     protected int numBullet;
-    protected int numDynamite;
-    protected int numWhiskey;
 
     /**
      * Creates a integer variable <em> numDynamite </em> 
      */
+    protected int numDynamite;
+
+    /**
+     * Creates a integer variable <em> numWhiskey </em> 
+     */
+    protected int numWhiskey;
 
     /**
      * Creates a integer variable <em> numGatling </em> 
      */
     protected int numGatling;
+
+    /**
+     * Creates a integer variable <em> numDoubleGatling </em> 
+     */
     protected int numDoubleGatling;
 
     /**
@@ -72,6 +88,9 @@ public class Game {
      */
     protected int numTwoShot;
 
+    /**
+     * Creates a integer variable <em> numDuel </em> 
+     */
     protected int numDuel;
 
     /**
@@ -107,7 +126,14 @@ public class Game {
     protected ArrayList<Player> players = new ArrayList<Player>();
     private ArrayList<Player> playersReference = new ArrayList<Player>();
     
+    /**
+     * Creates an ArrayList of number of duel tokens <em> duelTokens </em>
+     */
     protected ArrayList <EnumDuelTokens> duelTokens = new ArrayList <EnumDuelTokens> ();
+
+    /**
+     * Creates an int array of ordered dice of a total of 5
+     */
     protected int[] orderedDice = new int[5];
 
     /**
@@ -127,7 +153,17 @@ public class Game {
      * Sets <em> renegadeWin to False </em>
      */
     protected boolean renegadeWin = false;
+
+    /**
+     * Creates a defaulted boolean for taking the chief arrow
+     * Sets <em> takeChieffArrow to false </em>
+     */
     protected boolean takeChiefArrow = false;
+
+    /**
+     * Creates a defaulted boolean for removing broken arrow
+     * Sets <em> removeBrokenarrow to false </em>
+     */
     protected boolean removeBrokenArrow = false;
     
     private int numGameDice = 5;
@@ -141,7 +177,7 @@ public class Game {
     private int currentPlayerNumber;
 
     /**
-     *
+     * Sets the parameters for the game on bullets arrows players ....
      * @param numPlayers the number of players
      */
     public Game(int numPlayers) {
@@ -167,7 +203,7 @@ public class Game {
     }
 
     /**
-     *
+     * Function to figure out which player is next in turn
      */
     public void nextTurn() {
         turnRolls = 0;
@@ -472,7 +508,8 @@ public class Game {
     }
 
     /**
-     *
+     * Function to use roll
+     * Takes the game dice and re-rolls all 5 dice
      */
     public void useRoll() {
        Dice tempDice = this.gameDice;
@@ -544,14 +581,15 @@ public class Game {
     }
 
     /**
-     *
+     * Function to set the initial roll to be between any of the dice listed
+     * white, coward, loudmouth, and black
      */
     public void initRoll() {
         this.gameDice = new Dice(this.numWhiteDie, this.numCowardDie, this.numLoudmouthDie, this.numBlackDie);
     }
      
     /**
-     *
+     * function to take all the dice and roll them
      */
     public void rollDice() {
         
@@ -560,14 +598,17 @@ public class Game {
     }
 
     /**
-     *
+     * Creates an integer i for each dice being rolled from 1 - 5
      * @param i
      */
     public void rollDice(int i) {
         this.gameDice.rollDice(i);
     }
     
-   public void playsOutTurns () {
+    /**
+     * Function for AI capability to play the game through the GUI with computers as other players
+     */
+    public void playsOutTurns () {
        
         Random rand = new Random();
         for(int i = 0; i < numPlayers; i++)
@@ -633,13 +674,16 @@ public class Game {
        
 
     /**
-     *
+     * Function to use beer if the die rolls beer
      * @param die
      */
     public void useBeer(int die) {
         players.get(gameDice.getDice().get(die).getWhosGettingABeer()).addBullets(1, this);
     }
     
+    /**
+     * Function to use Whiskey Bottle if die rolls Whiskey Bottle
+     */
     public void useWhiskey () {
         this.currentPlayer.addBullets(1, this);
         if (this.currentPlayer.getMyDuelTokens().size() > 0) {
@@ -647,6 +691,10 @@ public class Game {
         }
     }
     
+    /**
+     * 
+     * @param playerToDuel
+     */
     public void duel (int playerToDuel) {
         Die duelDie = new Die(Die.DieType.black);
         if(duelDie.getSide() != Die.Sides.duel) {
@@ -669,7 +717,7 @@ public class Game {
     }
 
     /**
-     *
+     * Function to use one shot on which players left or right of the player
      * @param die
      */
     public void useOneShot(int die) {
@@ -682,7 +730,7 @@ public class Game {
     }
 
     /**
-     *
+     * Function to use two shot on which players are two down left or right from the current player in turn
      * @param die
      */
     public void useTwoShot(int die) {
@@ -693,7 +741,8 @@ public class Game {
     }
 
     /**
-     *
+     * Function for using Gatling
+     * Paul Regret and el Gringo are apart of this function based on there character abilities
      */
     public void useGatling() {
         for (int i = 0; i < players.size(); i++) {
@@ -708,7 +757,7 @@ public class Game {
     }
 
     /**
-     *
+     * Function to affect all players for indian attack
      */
     public void indianAttack() {
         for (int i = 0; i < this.players.size(); i++) {
@@ -717,13 +766,17 @@ public class Game {
     }
 
     /**
-     *
+     * Function to initiate role on a player turn
      * @param charIn
      */
     public void playerTurn(Character charIn) {
         initRoll();
     }
     
+    /**
+     * Function to give duel tokens to other players in the game
+     * @param playerIn
+     */
     public void giveDuelToken (Player playerIn) { 
         boolean giveToken = true;
         for (int i = 0; i < playerIn.getMyDuelTokens().size(); i++) {
@@ -737,6 +790,10 @@ public class Game {
         }
     }
     
+    /**
+     * Function to remove duel tokens from players in the game
+     * @param playerIn
+     */
     public void removeDuelToken (Player playerIn) {
         if (playerIn.getMyDuelTokens().size() > 0) {
             this.duelTokens.add(playerIn.getMyDuelTokens().get(0));
@@ -744,6 +801,9 @@ public class Game {
         }
     }
     
+    /**
+     * Function to remove all duel tokens in the play of the game
+     */
     public void removeAllDuelTokens () {
         for (int i = 0; i < this.currentPlayer.getMyDuelTokens().size();i++) {
             this.duelTokens.add(this.currentPlayer.getMyDuelTokens().get(i));
@@ -752,7 +812,7 @@ public class Game {
     }
     
     /**
-     *
+     * Getter to get the current player
      * @return
      */
 
@@ -761,7 +821,7 @@ public class Game {
     }
     
     /**
-     *
+     * Getter for current players number
      * @return
      */
     public int getCurrentPlayerNumber(){
@@ -769,7 +829,7 @@ public class Game {
     }
     
     /**
-     *
+     * Getter for finding how many players are in the game
      * @return
      */
     public int getNumPlayers(){
@@ -778,7 +838,7 @@ public class Game {
     
 
     /**
-     *
+     * Getter for ArrayList of players
      * @return
      */
     public ArrayList<Player> getPlayers() {
@@ -786,20 +846,24 @@ public class Game {
     }
 
     /**
-     *
+     * Sets the players in the ArrayList
      * @param playersIn
      */
     public void setPlayers(ArrayList<Player> playersIn) {
         this.players = playersIn;
     }
 
+    /**
+     * ArrayList of players
+     * @return
+     */
     public ArrayList<Player> getPlayersReference() {
         return playersReference;
     }
     
 
     /**
-     *
+     * Getter for the bullet pile involved in the game for max amount of bullets
      * @return
      */
     public int getBulletPile() {
@@ -807,7 +871,7 @@ public class Game {
     }
 
     /**
-     *
+     * Set the amount of Bullets available in the game reference to the players
      * @param bulletPile
      */
     public void setBulletPile(int bulletPile) {
@@ -815,7 +879,7 @@ public class Game {
     }
 
     /**
-     *
+     * Getter for the arrow pile in the game which can be distributed to all players
      * @return
      */
     public int getArrowPile() {
@@ -823,7 +887,7 @@ public class Game {
     }
 
     /**
-     *
+     * Sets the arrow pile for the game
      * @param arrowPile
      */
     public void setArrowPile(int arrowPile) {
@@ -831,7 +895,7 @@ public class Game {
     }
 
     /**
-     *
+     * Getter for chief arrow
      * @return
      */
     public int getChiefArrow() {
@@ -839,7 +903,7 @@ public class Game {
     }
 
     /**
-     *
+     * Sets the chief arrow into the current game
      * @param chiefArrow
      */
     public void setChiefArrow(int chiefArrow) {
@@ -847,7 +911,7 @@ public class Game {
     }
 
     /**
-     *
+     * getter for the game dice
      * @return
      */
     public Dice getGameDice() {
@@ -855,7 +919,7 @@ public class Game {
     }
 
     /**
-     *
+     * Setting the game dice available for the current game
      * @param gameDice
      */
     public void setGameDice(Dice gameDice) {
@@ -863,7 +927,7 @@ public class Game {
     }
 
     /**
-     *
+     * getter for turn rolls
      * @return
      */
     public int getTurnRolls() {
@@ -871,7 +935,7 @@ public class Game {
     }
 
     /**
-     *
+     * sets the turn rolls for each player
      * @param turnRolls
      */
     public void setTurnRolls(int turnRolls) {
@@ -879,15 +943,15 @@ public class Game {
     }
     
     /**
-     *
-     * @return
+     * Defined boolean if sheriff wins
+     * @return sheriff wins
      */
     public boolean isSheriffWin() {
         return sheriffWin;
     }
 
     /**
-     *
+     * Sets the sheriff to win if the boolean is true
      * @param sheriffWin
      */
     public void setSheriffWin(boolean sheriffWin) {
@@ -895,15 +959,15 @@ public class Game {
     }
 
     /**
-     *
-     * @return
+     * Defined boolean if outlaws wins
+     * @return outlaws wins
      */
     public boolean isOutlawWin() {
         return outlawWin;
     }
 
     /**
-     *
+     * sets outlaws to win if the boolean is true
      * @param outlawWin
      */
     public void setOutlawWin(boolean outlawWin) {
@@ -911,15 +975,15 @@ public class Game {
     }
 
     /**
-     *
-     * @return
+     * Defined boolean if renegade wins
+     * @return renegades wins
      */
     public boolean isRenegadeWin() {
         return renegadeWin;
     }
 
     /**
-     *
+     * sets renegade to win of the boolean is true
      * @param renegadeWin
      */
     public void setRenegadeWin(boolean renegadeWin) {
@@ -927,7 +991,7 @@ public class Game {
     }
 
     /**
-     *
+     * getter for number of outlaws depending on the amount of players
      * @return
      */
     public int getNumOutlaws() {
@@ -935,7 +999,7 @@ public class Game {
     }
 
     /**
-     *
+     * sets the number of outlaws based on the number of players in the game
      * @param numOutlaws
      */
     public void setNumOutlaws(int numOutlaws) {
@@ -943,7 +1007,7 @@ public class Game {
     }
 
     /**
-     *
+     * getter for the number of renegades in the game
      * @return
      */
     public int getNumRenegades() {
@@ -951,7 +1015,7 @@ public class Game {
     }
 
     /**
-     *
+     * sets the number of renegades in the game based on the amount of players
      * @param numRenegades
      */
     public void setNumRenegades(int numRenegades) {
