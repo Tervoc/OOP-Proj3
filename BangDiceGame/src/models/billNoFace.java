@@ -6,7 +6,8 @@
 package models;
 
 /**
- *
+ * Character Module for Bill No Face
+ * Code for Bill No Face is located in Game.Java in interpreted role
  * @author chris
  */
 public class billNoFace extends Character{
@@ -16,3 +17,4 @@ public class billNoFace extends Character{
         this.charType = EnumCharacters.billNoFace;
     }
 }
+

@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,85 +16,96 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="root" prefHeight="825.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.StartViewController">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="907.0" prefWidth="885.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.StartViewController">
    <children>
-      <ImageView fitHeight="825.0" fitWidth="759.0" pickOnBounds="true">
+      <ImageView fitHeight="966.0" fitWidth="1060.0" layoutY="-16.0" pickOnBounds="true">
          <image>
             <Image url="@WoodTexture.jpg" />
          </image>
       </ImageView>
-      <Pane fx:id="theGame_Pane" layoutX="52.0" layoutY="97.0" prefHeight="619.0" prefWidth="655.0">
+      <Pane fx:id="theGame_Pane" layoutX="52.0" layoutY="97.0" prefHeight="800.0" prefWidth="950.0" visible="false">
          <children>
-            <Rectangle fx:id="playArea_Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffaa00" height="497.0" layoutY="-8.0" smooth="false" stroke="BLACK" strokeType="INSIDE" width="655.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ed1b24" height="132.0" layoutY="487.0" stroke="BLACK" strokeType="INSIDE" width="655.0" />
-            <ImageView fx:id="die1_ImageView" fitHeight="64.0" fitWidth="72.0" layoutX="14.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+            <Rectangle fx:id="playArea_Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#ffaa00" height="800.0" layoutY="-8.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="950.0">
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </Rectangle>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ed1b24" height="131.0" layoutY="660.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="950.0">
+               <effect>
+                  <InnerShadow />
+               </effect></Rectangle>
+            <ImageView fx:id="die1_ImageView" fitHeight="64.0" fitWidth="72.0" layoutX="14.0" layoutY="670.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@DiceImages/One.jpg" />
+                  <Image url="@DiceImages/Arrow.PNG" />
                </image>
             </ImageView>
-            <ImageView fx:id="die2_ImageView" fitHeight="64.0" fitWidth="72.0" layoutX="89.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="die2_ImageView" fitHeight="64.0" fitWidth="72.0" layoutX="89.0" layoutY="670.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@DiceImages/Two.jpg" />
+                  <Image url="@DiceImages/Beer.PNG" />
                </image>
             </ImageView>
-            <ImageView fx:id="die3_ImageView" fitHeight="64.0" fitWidth="72.0" layoutX="163.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="die3_ImageView" fitHeight="64.0" fitWidth="72.0" layoutX="163.0" layoutY="670.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@DiceImages/Gatling.jpg" />
+                  <Image url="@DiceImages/Dynamite.PNG" />
                </image>
             </ImageView>
-            <ImageView fx:id="die4_ImageView" fitHeight="64.0" fitWidth="72.0" layoutX="237.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="die4_ImageView" fitHeight="64.0" fitWidth="72.0" layoutX="237.0" layoutY="670.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@DiceImages/Dynamite.jpg" />
+                  <Image url="@DiceImages/One.PNG" />
                </image>
             </ImageView>
-            <ImageView fx:id="die5_ImageView" fitHeight="64.0" fitWidth="72.0" layoutX="312.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="die5_ImageView" fitHeight="64.0" fitWidth="72.0" layoutX="312.0" layoutY="670.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@DiceImages/Arrow.jpg" />
+                  <Image url="@DiceImages/Two.PNG" />
                </image>
             </ImageView>
-            <Button fx:id="nextTurn_Button" layoutX="543.0" layoutY="496.0" mnemonicParsing="false" onAction="#handleNextTurn_Button" prefHeight="25.0" prefWidth="85.0" text="Next Turn" />
-            <Button fx:id="roll_Button" layoutX="543.0" layoutY="526.0" mnemonicParsing="false" onAction="#handleRoll_Button" prefHeight="25.0" prefWidth="85.0" text="Roll" />
-            <CheckBox fx:id="die1_CheckBox" layoutX="21.0" layoutY="560.0" mnemonicParsing="false" onAction="#handleDie1_CheckBox" text="Die 1" />
-            <CheckBox fx:id="die2_CheckBox" layoutX="96.0" layoutY="560.0" mnemonicParsing="false" onAction="#handleDie2_CheckBox" text="Die 2" />
-            <CheckBox fx:id="die4_CheckBox" layoutX="244.0" layoutY="560.0" mnemonicParsing="false" onAction="#handleDie4_CheckBox" text="Die 4" />
-            <CheckBox fx:id="die3_CheckBox" layoutX="170.0" layoutY="560.0" mnemonicParsing="false" onAction="#handleDie3_CheckBox" text="Die 3" />
-            <CheckBox fx:id="die5_CheckBox" layoutX="319.0" layoutY="560.0" mnemonicParsing="false" onAction="#handleDie5_CheckBox" text="Die 5" />
-            <Button layoutX="543.0" layoutY="556.0" mnemonicParsing="false" onAction="#handleConfirmDice_Button" text="Confirm Dice" />
-            <ImageView fitHeight="42.0" fitWidth="110.0" layoutX="279.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true">
+            <Button fx:id="nextTurn_Button" layoutX="836.0" layoutY="674.0" mnemonicParsing="false" onAction="#handleNextTurn_Button" prefHeight="25.0" prefWidth="85.0" text="Next Turn" />
+            <Button fx:id="roll_Button" layoutX="836.0" layoutY="711.0" mnemonicParsing="false" onAction="#handleRoll_Button" prefHeight="25.0" prefWidth="85.0" text="Roll" />
+            <CheckBox fx:id="die1_CheckBox" layoutX="21.0" layoutY="734.0" mnemonicParsing="false" onAction="#handleDie1_CheckBox" text="Die 1" />
+            <CheckBox fx:id="die2_CheckBox" layoutX="96.0" layoutY="734.0" mnemonicParsing="false" onAction="#handleDie2_CheckBox" text="Die 2" />
+            <CheckBox fx:id="die4_CheckBox" layoutX="244.0" layoutY="734.0" mnemonicParsing="false" onAction="#handleDie4_CheckBox" text="Die 4" />
+            <CheckBox fx:id="die3_CheckBox" layoutX="170.0" layoutY="734.0" mnemonicParsing="false" onAction="#handleDie3_CheckBox" text="Die 3" />
+            <CheckBox fx:id="die5_CheckBox" layoutX="319.0" layoutY="734.0" mnemonicParsing="false" onAction="#handleDie5_CheckBox" text="Die 5" />
+            <Button layoutX="836.0" layoutY="748.0" mnemonicParsing="false" onAction="#handleConfirmDice_Button" text="Confirm Dice" />
+            <ImageView fitHeight="42.0" fitWidth="110.0" layoutX="437.0" layoutY="297.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@ArrowCard.jpg" />
                </image>
             </ImageView>
-            <Label fx:id="arrowPile_Label" layoutX="291.0" layoutY="266.0" text="Arrows: " />
-            <ChoiceBox fx:id="die1_ChoiceBox" disable="true" layoutX="14.0" layoutY="581.0" prefHeight="25.0" prefWidth="64.0" />
-            <ChoiceBox fx:id="die2_ChoiceBox" disable="true" layoutX="88.0" layoutY="581.0" prefHeight="25.0" prefWidth="64.0" />
-            <ChoiceBox fx:id="die3_ChoiceBox" disable="true" layoutX="162.0" layoutY="581.0" prefHeight="25.0" prefWidth="64.0" />
-            <ChoiceBox fx:id="die4_ChoiceBox" disable="true" layoutX="236.0" layoutY="581.0" prefHeight="25.0" prefWidth="64.0" />
-            <ChoiceBox fx:id="die5_ChoiceBox" disable="true" layoutX="311.0" layoutY="581.0" prefHeight="25.0" prefWidth="64.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e6d4a4" height="28.0" layoutX="437.0" layoutY="345.0" stroke="BLACK" strokeType="INSIDE" width="75.0" />
+            <Label fx:id="arrowPile_Label" layoutX="446.0" layoutY="351.0" text="Arrows: " />
+            <ChoiceBox fx:id="die1_ChoiceBox" disable="true" layoutX="14.0" layoutY="755.0" prefHeight="25.0" prefWidth="64.0" />
+            <ChoiceBox fx:id="die2_ChoiceBox" disable="true" layoutX="88.0" layoutY="755.0" prefHeight="25.0" prefWidth="64.0" />
+            <ChoiceBox fx:id="die3_ChoiceBox" disable="true" layoutX="162.0" layoutY="755.0" prefHeight="25.0" prefWidth="64.0" />
+            <ChoiceBox fx:id="die4_ChoiceBox" disable="true" layoutX="236.0" layoutY="755.0" prefHeight="25.0" prefWidth="64.0" />
+            <ChoiceBox fx:id="die5_ChoiceBox" disable="true" layoutX="311.0" layoutY="755.0" prefHeight="25.0" prefWidth="64.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e6d4a4" height="28.0" layoutX="737.0" layoutY="672.0" stroke="BLACK" strokeType="INSIDE" width="75.0" />
+            <Label fx:id="rollsLeft_Label" layoutX="742.0" layoutY="677.0" prefHeight="17.0" prefWidth="64.0" text="Rolls Left:" />
+            <CheckBox layoutX="655.0" layoutY="678.0" mnemonicParsing="false" text="CheckBox" />
          </children>
       </Pane>
-      <Pane fx:id="gameSetup_Pane" layoutX="52.0" layoutY="89.0" prefHeight="627.0" prefWidth="655.0" visible="false">
+      <Pane fx:id="gameSetup_Pane" layoutX="30.0" layoutY="65.0" prefHeight="824.0" prefWidth="972.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffaa00" height="619.0" stroke="BLACK" strokeType="INSIDE" width="655.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e6d4a4" height="25.0" layoutX="256.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" width="144.0" />
-            <Label layoutX="61.0" layoutY="51.0" text="Number of players" />
-            <CheckBox fx:id="isExpansionSelected_CheckBox" layoutX="39.0" layoutY="83.0" mnemonicParsing="false" text="Use Expansion" />
-            <TextField fx:id="numPlayers_TextField" layoutX="13.0" layoutY="47.0" prefHeight="25.0" prefWidth="35.0" />
-            <Label layoutX="276.0" layoutY="4.0" text="Game Setup">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffaa00" height="257.0" layoutX="125.0" layoutY="257.0" stroke="BLACK" strokeType="INSIDE" width="723.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e6d4a4" height="25.0" layoutX="414.0" layoutY="272.0" stroke="BLACK" strokeType="INSIDE" width="144.0" />
+            <Label layoutX="201.0" layoutY="310.0" text="Number of players" />
+            <CheckBox fx:id="isExpansionSelected_CheckBox" layoutX="185.0" layoutY="342.0" mnemonicParsing="false" text="Use Expansion" />
+            <TextField fx:id="numPlayers_TextField" layoutX="159.0" layoutY="306.0" prefHeight="25.0" prefWidth="35.0" />
+            <Label layoutX="435.0" layoutY="271.0" text="Game Setup">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <Button fx:id="enterSettings_Button" layoutX="551.0" layoutY="551.0" mnemonicParsing="false" onAction="#handleEnterSettings" text="Enter Settings" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e6d4a4" height="374.0" layoutX="33.0" layoutY="165.0" stroke="BLACK" strokeType="INSIDE" width="569.0" />
-            <Label alignment="TOP_LEFT" layoutX="39.0" layoutY="171.0" prefHeight="233.0" prefWidth="555.0" text="Instructions:                                                                                                                                                    No body knows how to play this game try just clicking some random buttons and see what happens. " wrapText="true" />
+            <Button fx:id="enterSettings_Button" layoutX="846.0" layoutY="743.0" mnemonicParsing="false" onAction="#handleEnterSettings" text="Enter Settings" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e6d4a4" height="250.0" layoutX="48.0" layoutY="506.0" stroke="BLACK" strokeType="INSIDE" width="775.0" />
+            <Label alignment="TOP_LEFT" layoutX="102.0" layoutY="608.0" prefHeight="233.0" prefWidth="751.0" text="The game is played in turns, in clockwise order. On your turn, you will:• Roll all fi ve dice• You may then choose to keep the dice or re-roll some or all of them up totwo times. If you roll a third time, you may also re-roll any dice you didn’tchoose to re-roll on your second roll. You must accept the third roll.• When you are satisfi ed with your dice roll (or you’re out of re-rolls),resolve the dice results.• Your turn is over and play passes to the player on your left.Important: Any Dynamite rolled cannot be re-rolled (see below).Note: Any Arrows rolled must be resolved immediately after each roll (see below)." wrapText="true" />
          </children>
       </Pane>
-      <Button fx:id="exiit_Button" layoutX="622.0" layoutY="745.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Exit" />
-      <TextArea fx:id="messages_TextArea" layoutX="149.0" layoutY="738.0" prefHeight="42.0" prefWidth="317.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e6d4a4" height="42.0" layoutX="55.0" layoutY="738.0" stroke="BLACK" strokeType="INSIDE" width="103.0" />
-      <Label layoutX="80.0" layoutY="751.0" text="Messages" />
-      <ImageView fitHeight="76.0" fitWidth="109.0" layoutX="320.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="exiit_Button" layoutX="918.0" layoutY="903.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Exit" />
+      <TextArea fx:id="messages_TextArea" layoutX="164.0" layoutY="897.0" prefHeight="42.0" prefWidth="317.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e6d4a4" height="42.0" layoutX="59.0" layoutY="895.0" stroke="BLACK" strokeType="INSIDE" width="103.0" />
+      <Label layoutX="84.0" layoutY="908.0" text="Messages" />
+      <ImageView fitHeight="76.0" fitWidth="109.0" layoutX="460.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Logo3.jpg" />
          </image>

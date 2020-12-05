@@ -8,7 +8,8 @@ package models;
 import game.*;
 
 /**
- *
+ * Character Module for El Gringo
+ * Located in the game.java for one shot, two shot, gatling when receiving damage
  * @author Jared
  */
 public class elGringo extends Character {

@@ -17,9 +17,24 @@ import views.StartViewController;
  */
 public class Player {
 
+    /**
+     * Created variable for maxBullets
+     */
     protected int maxBullets;
+
+    /**
+     * Created variable for bullets
+     */
     protected int bullets;
+
+    /**
+     * Created variable for arrows
+     */
     protected int arrows;
+
+    /**
+     * Created variable for the chief arrow from expansion
+     */
     protected int chiefArrow;
     private Group playerGroup;
     private Character myChar;
@@ -28,10 +43,22 @@ public class Player {
     private String ability = "";
     private String number = "";
     private boolean AI = true;
+
+    /**
+     * Created a boolean to check if player or players are dead
+     */
     protected boolean amIDead = false;
     private boolean hasConfirmedDice = false;
 
-    
+    /**
+     * Created ArrayList for duel tokens
+     */
+    protected ArrayList <EnumDuelTokens> myDuelTokens = new ArrayList <EnumDuelTokens> ();
+
+    /**
+     * Function to give characters max bullets depending on what character they are
+     * @param myChar
+     */
     public Player(Character myChar) {
         this.myChar = myChar;
         this.maxBullets = myChar.maxBullets;
@@ -39,6 +66,11 @@ public class Player {
         this.arrows = 0;
     }
     
+    /**
+     * Function to add bullets if healed from beer ...
+     * @param bullets
+     * @param theGame
+     */
     public void addBullets(int bullets, Game theGame) { //add a number of bullets to character
         if (this.bullets != this.maxBullets) {
             this.bullets += bullets;
@@ -49,9 +81,14 @@ public class Player {
         }
     }
 
+    /**
+     * Function to remove bullets incase player takes damage from one shot two shot gatling indian attack...
+     * @param bullets
+     * @param theGame
+     */
     public void removeBullets(int bullets, Game theGame) { //remove a number of bullets from a character
         if (this.getMyCharacter().getCharType() == EnumCharacters.pedroRamirez) {
-            this.getMyCharacter().pedroAbility(bullets, this, theGame);
+            this.getMyCharacter().pedroAbility(this, theGame);
         }
         
         this.bullets -= bullets;
@@ -63,14 +100,25 @@ public class Player {
         }
     }
     
-     public boolean amIDead() {
+    /**
+     * Created Boolean to check if currentPLayer or player is dead
+     * @return amIDead
+     */
+    public boolean amIDead() {
         return amIDead;
     }
 
+    /**
+     * Sets a person to dead if they run out of bullets
+     */
     public void setDead() {
         this.amIDead = true;
     }
     
+    /**
+     * Force kill a player if they run out of bullets
+     * @param theGame
+     */
     public void killMe (Game theGame) {
         this.setDead();
         
@@ -97,6 +145,10 @@ public class Player {
         }
     }
     
+    /**
+     * Function to get arrows
+     * @return
+     */
     public int getArrows() { //return current number of arrows
         if (this.chiefArrow > 0) {
             return this.arrows + 2;
@@ -106,26 +158,61 @@ public class Player {
         }
     }
     
+    /**
+     * Function to add the chief arrow to game if needed for expansion
+     * @param theGame
+     */
     public void addChiefArrow(Game theGame) {
         this.chiefArrow = 1;
         theGame.setChiefArrow(0);
     }
     
+    /**
+     * Function to remove chief arrow
+     * @param theGame
+     */
     public void removeChiefArrow(Game theGame) {
         this.chiefArrow = 0;
         theGame.setChiefArrow(1);
     }
+
+    /**
+     * Getter for Chief arrow
+     * @return
+     */
+    public int getChiefArrow() {
+        return chiefArrow;
+    }
     
+    /**
+     * Function to add arrows to each player if they roll an arrow
+     * @param arrows
+     * @param theGame
+     */
     public void addArrows(int arrows, Game theGame) { //add number of arrows to character
-        this.arrows += arrows;
-        theGame.setArrowPile(theGame.getArrowPile()-arrows);
+        if (theGame.getCurrentPlayer().getMyCharacter().getCharType() == EnumCharacters.apacheKid) {
+            theGame.getCurrentPlayer().getMyCharacter().apacheKidAbility(arrows, theGame.getCurrentPlayer(), theGame);
+        }
+        else {
+            this.arrows += arrows;
+            theGame.setArrowPile(theGame.getArrowPile()-arrows);
+        }
     }
 
+    /**
+     * Remove a number of arrows if indian attack occurs or special character ability
+     * @param arrows
+     * @param theGame
+     */
     public void removeArrows(int arrows, Game theGame) { //remove number of arrows from character
         this.arrows -= arrows;
         theGame.setArrowPile(theGame.getArrowPile()+arrows);
     }
 
+    /**
+     * Clear all arrows from currently assigned player
+     * @param theGame
+     */
     public void clearArrows(Game theGame) { //clear the number of arrows currently assigned to player
         theGame.setArrowPile(theGame.getArrowPile() + this.arrows);
         theGame.setChiefArrow(theGame.getChiefArrow() + this.chiefArrow);
@@ -133,6 +220,10 @@ public class Player {
         this.chiefArrow = 0;
     }
 
+    /**
+     * Function for if the last arrow is taken indian attack occurs to all players.
+     * @param theGame
+     */
     public void indianAttack(Game theGame) {
         int maxArrows = 0;
         if(this.chiefArrow > 0){
@@ -171,57 +262,130 @@ public class Player {
         }
     }
     
+    /**
+     * Getter for what character
+     * @return
+     */
     public Character getMyCharacter(){
         return myChar;
     }
     
     //this is the player group set on the gui
+
+    /**
+     *
+     * @param playerGroup
+     */
     public void setPlayerGroup(Group playerGroup){
             this.playerGroup = playerGroup;
     }
+
+    /**
+     *
+     * @return
+     */
     public Group getPlayerGroup(){
         return playerGroup;
     }
 
+    /**
+     * Get ability for certain character
+     * @return
+     */
     public String getAbility()
     {
         return ability;
     }
 
+    /**
+     * boolean to make sure player has correct dice
+     * @return
+     */
     public boolean isHasConfirmedDice() {
         return hasConfirmedDice;
     }
 
+    /**
+     * set the confirmed dice to the player
+     * @param hasConfirmedDice
+     */
     public void setHasConfirmedDice(boolean hasConfirmedDice) {
         this.hasConfirmedDice = hasConfirmedDice;
     }
     
+    /**
+     * getter for max bullets
+     * @return
+     */
     public int getMaxBullets() {
         return maxBullets;
     }
     
+    /**
+     *
+     */
     public void setUser(){
         AI = false;
     }
     
+    /**
+     * get role for character
+     * @return
+     */
     public String getRole()
     {
         return Role;
     }
     
+    /**
+     * set role to the character at start of game
+     * @param temp
+     */
     public void setRole(String temp)
     {
         Role = temp;
     }
     
+    /**
+     * gets number of bullets equivalent to character health
+     * @return
+     */
     public int getBullets() { //returns number of bullets
         return bullets;
     }
     
+    /**
+     * Sets character specific traits
+     * @param num
+     */
     public void setCharacterTraits(int num)
     {
        
         
+    }
+
+    /**
+     * sets required arrows to game
+     * @param arrows
+     */
+    public void setArrows(int arrows) {
+        this.arrows = arrows;
+    }
+
+    /**
+     * ArrayList of the duel tokens
+     * @return
+     */
+    public ArrayList<EnumDuelTokens> getMyDuelTokens() {
+        return this.myDuelTokens;
+    }
+
+    /**
+     * Sets my duel tokens
+     * @param myDuelTokens
+     */
+    public void setMyDuelTokens(ArrayList<EnumDuelTokens> myDuelTokens) {
+        this.myDuelTokens = myDuelTokens;
     }
 
 }

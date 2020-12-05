@@ -18,11 +18,18 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import views.StartViewController;
 
+/**
+ *
+ * @author Andrew
+ */
 public class bangMain extends Application {
     private Stage primaryStage;
     
     private StartViewController startViewController;
     
+    /**
+     * Called to display the games GUI to the user
+     */
     public void showStartView() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -48,6 +55,10 @@ public class bangMain extends Application {
         showStartView();
     }
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }

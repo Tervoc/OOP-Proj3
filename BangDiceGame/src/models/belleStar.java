@@ -5,9 +5,11 @@
  */
 package models;
 
+import game.Game;
+
 /**
- *
- * @author mtbol
+ * Character Module for Belle Star
+ * @author Michael 
  */
 public class belleStar extends Character {
    
@@ -16,6 +18,14 @@ public class belleStar extends Character {
         this.charType = EnumCharacters.belleStar;
     }
 
+        boolean dynamiteToGatling = true;
+    
+        public void dynamiteToGatling(int dynamite, int gatling, Game theGame) {
+        if(this.dynamite >= 1 && this.dynamite < 3){ 
+            this.dynamite -= 1;
+            this.gatling += 1;
+        }
+    }
     
     
 }

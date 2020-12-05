@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import models.Dice;
+import models.Die;
 import models.Player;
 
 public class StartViewController {
@@ -32,6 +33,10 @@ public class StartViewController {
     private Pane theGame_Pane;
     @FXML
     private Button enterSettings_Button;
+    @FXML
+    private Button confirmDice_Button;
+    @FXML
+    private Button roll_Button;
     @FXML
     private TextArea messages_TextArea;
     @FXML
@@ -68,6 +73,8 @@ public class StartViewController {
     private ChoiceBox die4_ChoiceBox;
     @FXML
     private ChoiceBox die5_ChoiceBox;
+    @FXML
+    private  Label rollsLeft_Label;
          
     @FXML
     private Rectangle playArea_Rectangle;
@@ -82,7 +89,7 @@ public class StartViewController {
     //int numPlayers = 7;
     //the distance in poxels that the player circles are from the center of
     //theGame_Pane
-    double distance = 200;
+    double distance = 300;
 
     @FXML
     //the gui opens with inputting the settings for the game, after pressing
@@ -98,7 +105,7 @@ public class StartViewController {
             arrowPile_Label.setText("Arrows: " + game.getArrowPile());
             //find the center of theGame_Pane
             double centerX = (playArea_Rectangle.getWidth() - theGame_Pane.getLayoutX()) / 2 - 50;
-            double centerY = (playArea_Rectangle.getHeight() - theGame_Pane.getLayoutY()) / 2 + 25;
+            double centerY = (playArea_Rectangle.getHeight() - theGame_Pane.getLayoutY()) / 2 - 100;
 
             //Swithc from gameSetup_Pane to theGame_Pane
             gameSetup_Pane.setVisible(false);
@@ -115,16 +122,16 @@ public class StartViewController {
 
                 //we do some trig to that they are placed in a circle around the
                 //center of theGame_Pane
-                player_Group.setLayoutX(centerX + distance * Math.cos(3 * Math.PI / 2 + 2 * Math.PI * (i) / (numPlayers)));
-                player_Group.setLayoutY(centerY + distance * Math.sin(3 * Math.PI / 2 + 2 * Math.PI * (i) / (numPlayers)));
+                player_Group.setLayoutX(centerX + (distance+50) * Math.cos(3 * Math.PI / 2 + 2 * Math.PI * (i) / (numPlayers)));
+                player_Group.setLayoutY(centerY + (distance - 50) * Math.sin(3 * Math.PI / 2 + 2 * Math.PI * (i) / (numPlayers)));
 
                 //get the player label and add the player number. The player label
                 //is a child of the group. When getting the children we cant
                 //determine what its index is easily so it is hard coded in as the
                 //second child
-                Label label = (Label) player_Group.getChildren().get(1);
+                Label label = (Label) player_Group.getChildren().get(2);
                 label.setText(label.getText() + " " + (i + 1));
-                player_Group.getChildren().get(1).equals(label);
+                player_Group.getChildren().get(2).equals(label);
 
                 //add the group to theGame_Pane
                 theGame_Pane.getChildren().add(player_Group);
@@ -151,31 +158,48 @@ public class StartViewController {
             Player player = game.getPlayers().get(i);
             Group playerGroup = player.getPlayerGroup();
             
-         
-            ImageView skullImage = (ImageView) playerGroup.getChildren().get(2);
-            skullImage.setVisible(player.amIDead());
             
+            ImageView skullImage = (ImageView) playerGroup.getChildren().get(3);
+            skullImage.setVisible(true);
+            if(player.amIDead()){
+                skullImage.setImage(new Image(StartViewController.class.getResourceAsStream("skull.png")));
+            }else{
+                skullImage.setImage(new Image(StartViewController.class.getResourceAsStream(player.getMyCharacter().getCharType().getCharImageFL())));
+            }
 
-            Label roleLabel = (Label) playerGroup.getChildren().get(3);
+            Label roleLabel = (Label) playerGroup.getChildren().get(4);
             roleLabel.setText("Role: " + player.getMyCharacter().getRole().getRoleAsString());
 
-            Label charLabel = (Label) playerGroup.getChildren().get(4);
+            Label charLabel = (Label) playerGroup.getChildren().get(5);
             charLabel.setText("Character: " + player.getMyCharacter().getCharType().getCharacterAsString());
 
-            Label bulletsLabel = (Label) playerGroup.getChildren().get(5);
+            Label bulletsLabel = (Label) playerGroup.getChildren().get(6);
             bulletsLabel.setText("Bullets: " + player.getBullets());
 
-            Label arrowLabel = (Label) playerGroup.getChildren().get(6);
+            Label arrowLabel = (Label) playerGroup.getChildren().get(7);
             arrowLabel.setText("Arrows: " + player.getArrows());
-
-            playerGroup.getChildren().get(2).equals(roleLabel);
-            playerGroup.getChildren().get(3).equals(charLabel);
-            playerGroup.getChildren().get(4).equals(bulletsLabel);
-            playerGroup.getChildren().get(5).equals(arrowLabel);
-
-            player.setPlayerGroup(playerGroup);
+            
+            Circle currentPlayerCirlce = (Circle)  playerGroup.getChildren().get(8);
+            if(game.getCurrentPlayer() == player){
+                 currentPlayerCirlce.setVisible(true);
+            }else{
+                currentPlayerCirlce.setVisible(false);
+            }        
 
             
+            playerGroup.getChildren().get(4).equals(roleLabel);
+            playerGroup.getChildren().get(5).equals(charLabel);
+            playerGroup.getChildren().get(6).equals(bulletsLabel);
+            playerGroup.getChildren().get(7).equals(arrowLabel);
+            playerGroup.getChildren().get(8).equals(currentPlayerCirlce);
+            player.setPlayerGroup(playerGroup);
+            
+            rollsLeft_Label.setText("Rolls Left: " + (3-game.getTurnRolls()));
+            if(game.getTurnRolls() >= 3){
+                roll_Button.setDisable(true);
+            }else{
+                roll_Button.setDisable(false);
+            }
 
         }
         messages_TextArea.setText("CurrentPlayer: Player " + (game.getCurrentPlayerNumber() + 1));
@@ -192,13 +216,15 @@ public class StartViewController {
                 if(!game.getGameDice().getDice().get(i).isLocked()){
                     game.getGameDice().rollDice(i);
                     dice_ImageViews.get(i).setImage(new Image(StartViewController.class.getResourceAsStream(game.getGameDice().getDice().get(i).getSideImageFL())));
-
-                }
+                } 
             }
             game.interpretRoll();
             this.updateGamePane();
         }else{
             messages_TextArea.setText("You are out of rolls, bitch");
+        }
+        for(int i=0; i<5; i++){
+            dice_ImageViews.get(i).setVisible(true);
         }
     }
     
@@ -206,9 +232,10 @@ public class StartViewController {
     //rerolls all dice 
     private void handleNextTurn_Button(ActionEvent event){
         game.getCurrentPlayer().setHasConfirmedDice(false);
+        //confirmDice_Button.setDisable(false);
         for(Integer i=0; i<5; i++){
-            game.getGameDice().rollDice(i);
-            dice_ImageViews.get(i).setImage(new Image(StartViewController.class.getResourceAsStream(game.getGameDice().getDice().get(i).getSideImageFL())));
+            
+            dice_ImageViews.get(i).setVisible(false);
             dice_ChoiceBoxes.get(i).setDisable(true);
             dice_CheckBoxes.get(i).setSelected(false);
             
@@ -222,8 +249,10 @@ public class StartViewController {
     
     @FXML
     private void handleConfirmDice_Button(ActionEvent event){
+        
         if(!game.getCurrentPlayer().isHasConfirmedDice()){
-            
+           // confirmDice_Button.setDisable(true);
+        game.setTurnRolls(3);
             game.getCurrentPlayer().setHasConfirmedDice(true);
             for(int i=0; i<5; i++){
                  models.Die.Sides currSide = game.getGameDice().getDice().get(i).getSide();
@@ -302,7 +331,7 @@ public class StartViewController {
             playerRightNumber = 0;
             player2RightNumber = 1;
         }
-        if(!dice_CheckBoxes.get(dieNum).isSelected()){
+        if(!dice_CheckBoxes.get(dieNum).isSelected() && game.getGameDice().getDice().get(dieNum).getSide() != Die.Sides.dynamite){
             game.getGameDice().getDice().get(dieNum).unlockDie();
         }
         if(dice_CheckBoxes.get(dieNum).isSelected()){
@@ -359,7 +388,9 @@ public class StartViewController {
         dice_ChoiceBoxes.add(die4_ChoiceBox);
         dice_ChoiceBoxes.add(die5_ChoiceBox);
         
-       
+       for(int i=0; i<5; i++){
+           dice_ImageViews.get(i).setVisible(false);
+       }
         
         this.main = main;
     }

@@ -7,7 +7,8 @@ package models;
 import game.Game;
 
 /**
- *
+ *Character module for Jourdonnais 
+ * Located in the indian attack for player.java
  * @author Darrel
  */
 public class jourdonnais extends Character{

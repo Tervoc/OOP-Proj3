@@ -7,7 +7,7 @@ package models;
 import game.Game;
 
 /**
- *
+ * Character Module for Pedro Ramirez
  * @author chris
  */
 public class pedroRamirez extends Character {
@@ -19,7 +19,7 @@ public class pedroRamirez extends Character {
         this.charType = EnumCharacters.pedroRamirez;
     }
     
-    public void pedroAbility(int bullets,Player myPlayer, Game theGame) {
+    public void pedroAbility(Player myPlayer, Game theGame) {
         if(myPlayer.getArrows() != 0 && discard){
             myPlayer.removeArrows(1, theGame); 
         }
